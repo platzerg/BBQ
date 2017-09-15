@@ -1,0 +1,92 @@
+
+<!--p-messages [value]="msgs" *ngIf="isDebug"></p-messages-->
+
+<div class="ui-widget-header align-globalfilter">
+  <i class="fa fa-search search-globalfilter"></i>
+  <input #gb type="text" pInputText size="50" placeholder="Global Filter">
+</div>
+<p-dataTable [value]="spices" [immutable]="false" selectionMode="single"
+             sortMode="multiple" (onSort)="onSort($event)"
+             [editable]="false"
+             resizableColumns="true"
+             reorderableColumns="true"
+             scrollable="false" scrollHeight="600px"
+             [(selection)]="selectedSpice"
+             (onRowDblclick)="onRowDblClickCRUD($event)"
+             (onRowUnselect)="onRowUnselect($event)"
+             (onSort)="onSort($event)"
+             [(selection)]="selectedSpice"
+             [paginator]="true" paginatorPosition="both" [responsive]="true" [rows]="5" [alwaysShowPaginator]="true" (onPage)="onPage($event)" [pageLinks]="3" [rowsPerPageOptions]="[5, 10,15,20]"
+             [globalFilter]="gb"
+             #datatable
+             (onFilter)="onFilter($event)">
+  <p-header>
+    <div style="text-align:left">
+      <p-multiSelect [options]="columnOptions" [(ngModel)]="cols"></p-multiSelect>
+    </div>
+  </p-header>
+  <p-column *ngFor="let col of cols" [field]="col.field" [header]="col.header" [sortable]="col.sortable" [filter]="col.filter" [editable]="col.editable" [filterMatchMode]="col.filterMatchMode" [filterPlaceholder]="col.fPlaceholder"></p-column>
+  <p-footer>
+    <button pButton type="button" label="Add" icon="fa-plus" (click)="add()"></button>
+    <button pButton type="button" label="Edit" icon="fa-pencil" (click)="edit()"
+            [disabled]="!selectedSpice"></button>
+    <button pButton type="button" label="Remove" icon="fa-trash-o" (click)="remove()"
+            [disabled]="!selectedSpice"></button>
+  </p-footer>
+</p-dataTable>
+
+<h3>Content with Filters</h3>
+<p-dropdown name="customizedselect" [options]="gewuerzArten" [(ngModel)]="selectedGewuerzArt"
+            filter="filter" [autoWidth]="false" [style]="{'width':'150px'}">
+</p-dropdown>
+
+<p-dialog header="Spices Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
+  <form #spiceForm="ngForm" novalidate>
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="spice">
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-12 ui-md-3 ui-label">
+          <label for="name">Name</label>
+        </div>
+        <div class="ui-g-12 ui-md-9">
+          <input pInputText id="name" name="name" required
+                 [(ngModel)]="spice.name"/>
+        </div>
+      </div>
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-12 ui-md-3 ui-label">
+          <label for="art">Art</label>
+        </div>
+        <div class="ui-g-12 ui-md-9">
+          <input pInputText id="art" name="art" required
+                 [(ngModel)]="spice.art"/>
+        </div>
+      </div>
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-12 ui-md-3 ui-label">
+          <label for="beschreibung">Beschreibung</label>
+        </div>
+        <div class="ui-g-12 ui-md-9">
+          <input pInputText id="beschreibung" name="beschreibung" required
+                 [(ngModel)]="spice.beschreibung"/>
+        </div>
+      </div>
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-12 ui-md-3 ui-label">
+          <label for="url">URL</label>
+        </div>
+        <div class="ui-g-12 ui-md-9">
+          <input pInputText id="url" name="Url" required
+                 [(ngModel)]="spice.url"/>
+        </div>
+      </div>
+    </div>
+  </form>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" pButton icon="fa-close" (click)="delete()" label="Delete"></button>
+      <button type="submit" pButton icon="fa-check" (click)="save()" label="Save" [disabled]="!spiceForm.form.valid"></button>
+    </div>
+  </p-footer>
+</p-dialog>
+
+<!--p-growl [value]="msgs"></p-growl-->

@@ -1,0 +1,61 @@
+
+<div *ngIf="rub">
+  <form #rubForm="ngForm" novalidate>
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="rub">
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-2 ui-md-1 ui-label">
+          <label for="name">ID</label>
+        </div>
+        <div class="ui-g-5 ui-md-8">
+          <input pInputText id="id" name="id" readonly
+                 [(ngModel)]="rub.id"/>
+        </div>
+      </div>
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-2 ui-md-1 ui-label">
+          <label for="name">Name</label>
+        </div>
+        <div class="ui-g-5 ui-md-8">
+          <input pInputText id="name" name="name" required
+                 [(ngModel)]="rub.name"/>
+        </div>
+      </div>
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-2 ui-md-1 ui-label">
+          <label for="art">Beschreibung</label>
+        </div>
+        <div class="ui-g-5 ui-md-8">
+          <input pInputText id="art" name="art" required
+                 [(ngModel)]="rub.beschreibung"/>
+        </div>
+      </div>
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-2 ui-md-1 ui-label">
+          <label for="beschreibung">Herkunft</label>
+        </div>
+        <div class="ui-g-5 ui-md-8">
+          <input pInputText id="beschreibung" name="beschreibung" required
+                 [(ngModel)]="rub.herkunft"/>
+        </div>
+      </div>
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-2 ui-md-1 ui-label">
+          <label for="url">URL</label>
+        </div>
+        <div class="ui-g-5 ui-md-8">
+          <input pInputText id="url" name="Url" required
+                 [(ngModel)]="rub.url"/>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <button type="submit" pButton  (click)="save()" label="Save" [disabled]="!rubForm.form.valid"></button>
+
+</div>
+
+
+<button pButton type="button" (click)="goBack()" label="Back" icon="fa-arrow-left"></button>
+
+
+

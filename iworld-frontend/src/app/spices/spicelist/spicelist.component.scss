@@ -1,0 +1,46 @@
+body .ui-datatable .ui-datatable-thead > tr > th,
+body .ui-datatable .ui-datatable-tfoot > tr > td {
+  padding: .45em;
+}
+
+.ui-dialog .ui-grid {
+  max-width: 450px;
+}
+
+.ui-dialog .ui-fluid .ui-g div {
+  text-align: left;
+  border: none;
+}
+
+.ui-dialog .ui-fluid .ui-g .ui-label {
+  text-align: right;
+  white-space: nowrap;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 640px) {
+  .ui-dialog .ui-fluid .ui-g .ui-label {
+    text-align: left;
+  }
+}
+
+.dropdown-width {
+  width: 200px;
+}
+
+.book-title {
+  text-align: center;
+}
+
+.component-title{
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.layout-format {
+  margin: auto;
+  border: 1px solid #ccc !important;
+  border-radius: 16px !important;
+  padding: 10px 60px 60px 60px;
+  width: 350px;
+}

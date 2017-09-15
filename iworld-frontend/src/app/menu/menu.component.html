@@ -1,0 +1,10 @@
+<nav>
+  <a routerLink="/rublist" routerLinkActive="active" *ngIf="auth.isLoggedIn()">Rubs</a>
+  <a routerLink="/rubdetail" routerLinkActive="active" *ngIf="auth.isLoggedIn()">Rub detail</a>
+  <a routerLink="/spices" [queryParams]="{ page: 99 }" routerLinkActive="active" *ngIf="auth.isLoggedIn()">Gewürze</a>
+  <a routerLink="/spicemixlist" routerLinkActive="active" *ngIf="auth.isLoggedIn()">Gewürzmischungen</a>
+  <a routerLink="/coretemperaturelist" routerLinkActive="active" *ngIf="auth.isLoggedIn()">Kerntemperaturen</a>
+  <a (click)="logout()" *ngIf="auth.isLoggedIn()">Logout</a>
+</nav>
+
+
