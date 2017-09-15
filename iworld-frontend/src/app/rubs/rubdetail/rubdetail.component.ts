@@ -159,6 +159,18 @@ export class RubdetailComponent implements OnInit {
 
   }
 
+  addSpiceMix() {
+    console.log('added');
+  }
+
+  editSpiceMix() {
+    console.log('edited');
+  }
+
+  removeSpiceMix() {
+    console.log('edited');
+  }
+
   logIt(msg: string) {
     if(this.isLoggingEnabled) {
       console.log("--- GPL --- " + msg);

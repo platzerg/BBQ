@@ -62,6 +62,15 @@
       </div>
     </p-header>
     <p-column *ngFor="let col of cols" [field]="col.field" [header]="col.header" [sortable]="col.sortable" [filter]="col.filter" [editable]="col.editable" [filterMatchMode]="col.filterMatchMode" [filterPlaceholder]="col.fPlaceholder"></p-column>
+
+    <p-footer>
+      <button pButton type="button" label="Add" icon="fa-plus" (click)="addSpiceMix()"></button>
+      <button pButton type="button" label="Edit" icon="fa-pencil" (click)="editSpiceMix()"
+              [disabled]="!selectedSpiceMix"></button>
+      <button pButton type="button" label="Remove" icon="fa-trash-o" (click)="removeSpiceMix()"
+              [disabled]="!selectedSpiceMix"></button>
+    </p-footer>
+
   </p-dataTable>
 
   <button type="submit" pButton  (click)="save()" label="Save" [disabled]="!rubForm.form.valid"></button>
