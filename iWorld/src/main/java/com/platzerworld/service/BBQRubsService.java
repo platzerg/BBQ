@@ -86,7 +86,8 @@ public class BBQRubsService {
     }
 
     public void deleteRubById(int id) {
-        bbqDAO.deleteGewuerz(id);
+        BBQRub rub = bbqDAO.find(BBQRub.class, id);
+        bbqDAO.deleteRub(rub.getId());
     }
 
     public BBQRubDTO addGewurzMischungenToRub(int rubId, List<BBQGewuerzMischungDTO> gewuerzMischungen) {

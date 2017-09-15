@@ -5,6 +5,7 @@ import Spice from './spice';
 
 export class MySpice implements Spice {
 
+
   constructor(public id: number, public lockVersion: number,
               public creationDate: number, public modificationDate: number,
               public createdUser: string, public modificationUser: string,

@@ -1,5 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {Rub} from '../../model/rub';
+import SpiceMix from '../../model/spicemix';
+import { MySpiceMix } from '../../model/mySpiceMix';
+import {MySpice} from '../../model/mySpice';
 
 import {RubService} from '../services/rub.service';
 
@@ -20,6 +23,7 @@ export class RublistComponent implements OnInit, OnDestroy {
   selectedRub: Rub;
 
   get$: Subscription;
+  delete$: Subscription;
 
   cols: any[];
 
@@ -61,11 +65,59 @@ export class RublistComponent implements OnInit, OnDestroy {
   onRowDblClickCRUD(event: any) {
     var rub = event.data;
     console.log(rub);
+
     this.router.navigate(['/rubdetail', rub.id]);
+  }
+
+  onSort(event: any) {
+    console.log("sort");
+  }
+
+  add() {
+    console.log("add");
+    this.router.navigate(['/rubdetail', 0]);
+  }
+
+  edit(){
+    console.log("edit");
+    console.log(this.selectedRub);
+
+    this.router.navigate(['/rubdetail', this.selectedRub.id]);
+  }
+
+  remove() {
+    if (this.selectedRub === null) {
+      return;
+    }
+
+    let index = this.findSelectedRubIndex();
+
+    this.delete$ = this.rublistService.deleteRub(this.selectedRub.id)
+      .finally(() => {
+        this.selectedRub = null;
+      })
+      .subscribe(
+        () => {
+          this.rubs = this.rubs.filter(
+            (element: Rub) => element.id !== this.selectedRub.id);
+          this.showSuccess('Rub was successfully removed');
+        },
+        error => this.showSuccess(error)
+      );
+
+    console.log("remove");
+  }
+
+  findSelectedRubIndex(): number {
+    return this.rubs.indexOf(this.selectedRub);
   }
 
   private showError(errMsg: string) {
     console.log("Error: " + errMsg);
+  }
+
+  private showSuccess(msg: string) {
+    console.log("Sucess: " + msg);
   }
 
 }

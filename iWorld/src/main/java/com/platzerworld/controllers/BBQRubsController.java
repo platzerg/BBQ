@@ -12,6 +12,8 @@ import javax.json.JsonObjectBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,6 +46,31 @@ public class BBQRubsController {
         JsonObject jsonObj = jsonObjBuilder.build();
 
         return Response.status( Response.Status.OK ).entity( allGewuerze).build();
+    }
+
+    @Path("/rub/template")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRubTemplate() {
+        BBQRubDTO rubDTO = new BBQRubDTO();
+
+        rubDTO.setId(0);
+        rubDTO.setLockVersion(0);
+        rubDTO.setCreationDate(new Date());
+        rubDTO.setModificationDate(new Date());
+        rubDTO.setCreatedUser("");
+        rubDTO.setModificationUser("");
+        rubDTO.setName("");
+        rubDTO.setBeschreibung("");
+        rubDTO.setHerkunft("");
+        rubDTO.setUrl("");
+        rubDTO.setGewuerzMischung(new ArrayList<>());
+
+        JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+
+        JsonObject jsonObj = jsonObjBuilder.build();
+
+        return Response.status( Response.Status.OK ).entity( rubDTO).build();
     }
 
     @Path("/gewuerze")
@@ -139,10 +166,14 @@ public class BBQRubsController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public BBQRubDTO addRub(final BBQRubDTO rubDTO) {
+    public Response addRub(final BBQRubDTO rubDTO) {
         BBQRubDTO newRRubDTO = this.rubsService.addBBQRub(rubDTO);
 
-        return newRRubDTO;
+        JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+        jsonObjBuilder.add( "message", "delete method ok" );
+        JsonObject jsonObj = jsonObjBuilder.build();
+
+        return Response.status( Response.Status.OK ).entity(newRRubDTO).build();
     }
 
     @Path("/rub/{id}")
@@ -209,6 +240,20 @@ public class BBQRubsController {
         this.rubsService.deleteRubById(id);
         return "@DELETE/delete/" +id +" OK";
     }
+
+    @Path("/delete/{id}")
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteRubById(@PathParam("id") int id) {
+        this.rubsService.deleteRubById(id);
+        JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+        jsonObjBuilder.add( "message", "delete method ok" );
+        JsonObject jsonObj = jsonObjBuilder.build();
+
+        return Response.status( Response.Status.ACCEPTED ).entity( jsonObj.toString() ).build();
+    }
+
 
     @Path("/deletebyname/{name}")
     @DELETE

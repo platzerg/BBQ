@@ -16,7 +16,7 @@
              (onRowUnselect)="onRowUnselect($event)"
              (onSort)="onSort($event)"
              [(selection)]="selectedSpice"
-             [paginator]="true" paginatorPosition="both" [responsive]="true" [rows]="5" [alwaysShowPaginator]="true" (onPage)="onPage($event)" [pageLinks]="3" [rowsPerPageOptions]="[5, 10,15,20]"
+             [paginator]="true" paginatorPosition="bottom" [responsive]="true" [rows]="5" [alwaysShowPaginator]="true" (onPage)="onPage($event)" [pageLinks]="3" [rowsPerPageOptions]="[5, 10,15,20]"
              [globalFilter]="gb"
              #datatable
              (onFilter)="onFilter($event)">

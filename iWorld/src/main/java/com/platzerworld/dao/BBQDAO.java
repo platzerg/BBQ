@@ -54,6 +54,14 @@ public class BBQDAO extends DAO {
         this.delete(BBQGewuerz.class, id);
     }
 
+    public void deleteGewuerzmischung(int id) {
+        this.delete(BBQGewuerzMischung.class, id);
+    }
+
+    public void deleteRub(int id) {
+        this.delete(BBQRub.class, id);
+    }
+
     public Biergarten getBiergartenById(int biergartenId) {
         Biergarten biergrten = this.find(Biergarten.class, biergartenId);
         if (biergrten == null) {

@@ -55,7 +55,7 @@ public class BBQGewuerzMischung implements Creatable, Updatable{
     @JoinColumn(name="rub_id")
     private BBQRub rub;
 
-    @OneToOne (fetch = FetchType.EAGER, cascade = {CascadeType.ALL} )
+    @OneToOne (fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH} )
     private BBQGewuerz gewuerz;
 
     public BBQGewuerzMischung() {

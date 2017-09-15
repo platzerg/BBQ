@@ -42,5 +42,40 @@ export class RubService {
       .map(response => response.json() as Rub)
       .catch(RubService.handleError);
   }
+  getRubTemplate(): Observable<Rub> {
+    return this.http.get(encodeURI('http://localhost:8080/iWorld/bbq/rubs/rub/template'))
+      .map(response => response.json() as Rub)
+      .catch(RubService.handleError);
+  }
+
+  updateRub(rub: Rub): Observable<Rub> {
+    console.log("update Rub");
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    let body = JSON.stringify(rub);
+    console.log("createSpice" + JSON.parse(body));
+    return this.http.put('http://localhost:8080/iWorld/bbq/rubs/rub/update', body, options)
+      .map(response => response.json())
+      .catch(RubService.handleError);
+  }
+
+  createRub(rub: Rub): Observable<Rub> {
+    console.log("createRub");
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    let body = JSON.stringify(rub);
+    console.log("createRub" + JSON.parse(body));
+
+    return this.http.post('http://localhost:8080/iWorld/bbq/rubs/add', body, options)
+      .map(response => response.json() as Rub)
+      .catch(RubService.handleError);
+  }
+
+  deleteRub(id: number): Observable<any> {
+    console.log("Delete Rub for id: " + id);
+    return this.http.delete('http://localhost:8080/iWorld/bbq/rubs/delete/' + id)
+      .map(response => response.json())
+      .catch(RubService.handleError);
+  }
 
 }
