@@ -22,8 +22,8 @@ public class BBQDAO extends DAO {
         }
 
         for (BBQGewuerzMischung gewuerzMischung : gewuerzMischungen) {
-            gewuerzMischung.setRub(rub);
-            this.update(gewuerzMischung);
+            rub.setGewuerzMischung(gewuerzMischungen);
+            this.update(rub);
 
         }
 
@@ -36,10 +36,26 @@ public class BBQDAO extends DAO {
             throw new IllegalArgumentException("comment with id " + id + " not found");
         }
 
-        bbqGewuerzMischung.setRub(rub);
-        this.update(bbqGewuerzMischung);
+        rub.getGewuerzMischung().add(bbqGewuerzMischung);
+        this.update(rub);
 
         return this.find(BBQRub.class, id);
+    }
+
+    public BBQGewuerzMischung addBBQGewuerzmischung(int id, BBQGewuerzMischung bbqGewuerzMischung) {
+        bbqGewuerzMischung.setRubId(id);
+        BBQGewuerz gewuerz = this.find(BBQGewuerz.class, 1);
+        bbqGewuerzMischung.setGewuerz(gewuerz);
+
+        BBQGewuerzMischung newBBQGewuerzMischung = this.create(bbqGewuerzMischung);
+
+        return newBBQGewuerzMischung;
+    }
+
+    public BBQGewuerzMischung updateBBQGewuerzmischung(int id, BBQGewuerzMischung bbqGewuerzMischung) {
+        BBQGewuerzMischung updatedBBQGewuerzMischung = this.update(bbqGewuerzMischung);
+
+        return updatedBBQGewuerzMischung;
     }
 
     public BBQGewuerz updateBBQGewuerz(BBQGewuerz gewuerz) {
@@ -55,7 +71,11 @@ public class BBQDAO extends DAO {
     }
 
     public void deleteGewuerzmischung(int id) {
-        this.delete(BBQGewuerzMischung.class, id);
+        BBQGewuerzMischung gewuerzMischung = this.find(BBQGewuerzMischung.class, id);
+        if (gewuerzMischung == null) {
+            throw new IllegalArgumentException("BBQGewuerzMischung with id " + id + " not found");
+        }
+        this.delete(BBQGewuerzMischung.class, gewuerzMischung.getId());
     }
 
     public void deleteRub(int id) {

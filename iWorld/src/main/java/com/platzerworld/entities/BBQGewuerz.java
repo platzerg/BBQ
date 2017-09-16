@@ -24,6 +24,7 @@ public class BBQGewuerz implements Creatable, Updatable{
     public static final String FIND_ALL = "BBQGewuerz.findAll";
 
     @Id
+    @Column(name="SPICE_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 

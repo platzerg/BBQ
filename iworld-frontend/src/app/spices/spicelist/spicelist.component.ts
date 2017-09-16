@@ -42,9 +42,6 @@ export class SpicelistComponent implements OnInit, OnDestroy {
 
   engines: SelectItem[];
 
-  gewuerzArten: SelectItem[];
-  selectedGewuerzArt: SelectItem;
-
   grades: SelectItem[];
 
   expandedRows: any[];
@@ -130,11 +127,6 @@ export class SpicelistComponent implements OnInit, OnDestroy {
     this.grades.push({label: 'B', value: 'B'});
     this.grades.push({label: 'C', value: 'C'});
 
-    this.gewuerzArten = [];
-    this.gewuerzArten.push({label: 'gemahlen', value: 'gemahlen'});
-    this.gewuerzArten.push({label: 'getrocknet', value: 'getrocknet'});
-    this.gewuerzArten.push({label: 'Granulat', value: 'Granulat'});
-    this.gewuerzArten.push({label: 'geräuchert', value: 'geraeuchert'});
   }
 
   ngOnDestroy() {

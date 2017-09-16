@@ -78,4 +78,11 @@ export class RubService {
       .catch(RubService.handleError);
   }
 
+  deleteSpiceMix(rubid: number, id: number): Observable<any> {
+    console.log("Delete SpiceMix for id: " + id + ' for rub: ' + rubid);
+    return this.http.delete('http://localhost:8080/iWorld/bbq/rubs/' + rubid +'/gewuerzmischungen/' + id)
+      .map(response => response.json())
+      .catch(RubService.handleError);
+  }
+
 }

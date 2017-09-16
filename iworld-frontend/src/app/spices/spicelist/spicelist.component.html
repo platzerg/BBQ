@@ -35,11 +35,6 @@
   </p-footer>
 </p-dataTable>
 
-<h3>Content with Filters</h3>
-<p-dropdown name="customizedselect" [options]="gewuerzArten" [(ngModel)]="selectedGewuerzArt"
-            filter="filter" [autoWidth]="false" [style]="{'width':'150px'}">
-</p-dropdown>
-
 <p-dialog header="Spices Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
   <form #spiceForm="ngForm" novalidate>
     <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="spice">

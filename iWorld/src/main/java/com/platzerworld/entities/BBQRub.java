@@ -27,6 +27,7 @@ public class BBQRub implements Creatable, Updatable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="RUB_ID")
     private Integer id;
 
     @Column(name = "lockVersion", nullable = true)
@@ -58,7 +59,8 @@ public class BBQRub implements Creatable, Updatable{
     @Column(name = "url", nullable = true)
     private String url;
 
-    @OneToMany(mappedBy="rub", fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinColumn(name="RUB_ID", referencedColumnName="RUB_ID")
     private List<BBQGewuerzMischung> gewuerzMischung = new ArrayList<>();
 
     public BBQRub() {

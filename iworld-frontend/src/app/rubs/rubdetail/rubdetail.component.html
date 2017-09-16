@@ -54,6 +54,7 @@
                sortMode="multiple"
                [editable]="true"
                [(selection)]="selectedSpiceMix"
+               (onRowDblclick)="onRowDblClickCRUD($event)"
                [paginator]="true" paginatorPosition="bottom" [responsive]="true" [rows]="5" [alwaysShowPaginator]="true"  [pageLinks]="3" [rowsPerPageOptions]="[5, 10,15,20]"
                #datatable>
     <p-header>
@@ -83,4 +84,77 @@
 <button pButton type="button" (click)="goBack()" label="Back" icon="fa-arrow-left"></button>
 
 
+<p-dialog header="SpiceMix Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
+  <form #spiceMixForm="ngForm" novalidate>
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="spiceMix">
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-12 ui-md-3 ui-label">
+          <label for="name">Menge</label>
+        </div>
+        <div class="ui-g-12 ui-md-9">
+          <input pInputText id="menge" name="menge" required
+                 [(ngModel)]="spiceMix.menge"/>
+        </div>
+      </div>
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-12 ui-md-3 ui-label">
+          <label for="art">Einheit</label>
+        </div>
+        <div class="ui-g-12 ui-md-9">
+          <input pInputText id="mengeneinheit" name="mengeneinheit" required
+                 [(ngModel)]="spiceMix.mengeneinheit"/>
+        </div>
+      </div>
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-12 ui-md-3 ui-label">
+          <label for="art">Name</label>
+        </div>
+        <div class="ui-g-12 ui-md-9">
+          <input pInputText id="gewuerz.name" name="gewuerz.name" required
+                 [(ngModel)]="spiceMix.gewuerz.name"/>
+        </div>
+      </div>
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-12 ui-md-3 ui-label">
+          <label for="art">Art</label>
+        </div>
+        <div class="ui-g-12 ui-md-9">
+          <input pInputText id="gewuerz.art" name="gewuerz.art" required
+                 [(ngModel)]="spiceMix.gewuerz.art"/>
+        </div>
+      </div>
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-12 ui-md-3 ui-label">
+          <label for="art">Beschreibung</label>
+        </div>
+        <div class="ui-g-12 ui-md-9">
+          <input pInputText id="gewuerz.beschreibung" name="gewuerz.beschreibung" required
+                 [(ngModel)]="spiceMix.gewuerz.beschreibung"/>
+        </div>
+      </div>
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-12 ui-md-3 ui-label">
+          <label for="art">URL</label>
+        </div>
+        <div class="ui-g-12 ui-md-9">
+          <input pInputText id="gewuerz.url" name="gewuerz.url" required
+                 [(ngModel)]="spiceMix.gewuerz.url"/>
+        </div>
+      </div>
+    </div>
+  </form>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" pButton icon="fa-close" (click)="deleteSpiceMix()" label="Delete"></button>
+      <button type="submit" pButton icon="fa-check" (click)="saveSpiceMix()" label="Save" [disabled]="!spiceMixForm.form.valid"></button>
+    </div>
+  </p-footer>
+</p-dialog>
 
+
+
+<!--p-dataTable [value]="spices" [editable]="true">
+  <p-column field="name" header="Name" [editable]="true"></p-column>
+  <p-column field="art" header="Art" [editable]="true"></p-column>
+  <p-column field="beschreibung" header="Beschreibung" [editable]="true"></p-column>
+</p-dataTable-->

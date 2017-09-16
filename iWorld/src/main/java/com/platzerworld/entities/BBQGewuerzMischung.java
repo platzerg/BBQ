@@ -25,6 +25,7 @@ public class BBQGewuerzMischung implements Creatable, Updatable{
     public static final String FIND_ALL = "BBQGewuerzMischung.findAll";
 
     @Id
+    @Column(name="SPICE_MIX_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -51,9 +52,8 @@ public class BBQGewuerzMischung implements Creatable, Updatable{
     @Column(name = "mengeneinheit", nullable = true)
     private String mengeneinheit;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinColumn(name="rub_id")
-    private BBQRub rub;
+    @Column(name="RUB_ID")
+    private Integer rubId;
 
     @OneToOne (fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH} )
     private BBQGewuerz gewuerz;
@@ -126,12 +126,12 @@ public class BBQGewuerzMischung implements Creatable, Updatable{
         this.mengeneinheit = mengeneinheit;
     }
 
-    public BBQRub getRub() {
-        return rub;
+    public Integer getRubId() {
+        return rubId;
     }
 
-    public void setRub(BBQRub rub) {
-        this.rub = rub;
+    public void setRubId(Integer rubId) {
+        this.rubId = rubId;
     }
 
     public BBQGewuerz getGewuerz() {

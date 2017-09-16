@@ -3588,7 +3588,7 @@ exports.DataTableModule = DataTableModule;
 /***/ "7mW6":
 /***/ (function(module, exports) {
 
-module.exports = "\n<div *ngIf=\"rub\">\n  <form #rubForm=\"ngForm\" novalidate>\n    <div class=\"ui-grid ui-grid-responsive ui-fluid\" *ngIf=\"rub\">\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-2 ui-md-1 ui-label\">\n          <label for=\"name\">ID</label>\n        </div>\n        <div class=\"ui-g-5 ui-md-8\">\n          <input pInputText id=\"id\" name=\"id\" readonly\n                 [(ngModel)]=\"rub.id\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-2 ui-md-1 ui-label\">\n          <label for=\"name\">Name</label>\n        </div>\n        <div class=\"ui-g-5 ui-md-8\">\n          <input pInputText id=\"name\" name=\"name\" required\n                 [(ngModel)]=\"rub.name\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-2 ui-md-1 ui-label\">\n          <label for=\"art\">Beschreibung</label>\n        </div>\n        <div class=\"ui-g-5 ui-md-8\">\n          <input pInputText id=\"art\" name=\"art\" required\n                 [(ngModel)]=\"rub.beschreibung\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-2 ui-md-1 ui-label\">\n          <label for=\"beschreibung\">Herkunft</label>\n        </div>\n        <div class=\"ui-g-5 ui-md-8\">\n          <input pInputText id=\"beschreibung\" name=\"beschreibung\" required\n                 [(ngModel)]=\"rub.herkunft\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-2 ui-md-1 ui-label\">\n          <label for=\"url\">URL</label>\n        </div>\n        <div class=\"ui-g-5 ui-md-8\">\n          <input pInputText id=\"url\" name=\"Url\" required\n                 [(ngModel)]=\"rub.url\"/>\n        </div>\n      </div>\n    </div>\n  </form>\n\n  <p-dataTable [value]=\"gewuerzMischung\" [immutable]=\"false\" selectionMode=\"single\"\n               sortMode=\"multiple\"\n               [editable]=\"true\"\n               [(selection)]=\"selectedSpiceMix\"\n               [paginator]=\"true\" paginatorPosition=\"bottom\" [responsive]=\"true\" [rows]=\"5\" [alwaysShowPaginator]=\"true\"  [pageLinks]=\"3\" [rowsPerPageOptions]=\"[5, 10,15,20]\"\n               #datatable>\n    <p-header>\n      <div style=\"text-align:left\">\n        <p-multiSelect [options]=\"columnOptions\" [(ngModel)]=\"cols\"></p-multiSelect>\n      </div>\n    </p-header>\n    <p-column *ngFor=\"let col of cols\" [field]=\"col.field\" [header]=\"col.header\" [sortable]=\"col.sortable\" [filter]=\"col.filter\" [editable]=\"col.editable\" [filterMatchMode]=\"col.filterMatchMode\" [filterPlaceholder]=\"col.fPlaceholder\"></p-column>\n\n    <p-footer>\n      <button pButton type=\"button\" label=\"Add\" icon=\"fa-plus\" (click)=\"addSpiceMix()\"></button>\n      <button pButton type=\"button\" label=\"Edit\" icon=\"fa-pencil\" (click)=\"editSpiceMix()\"\n              [disabled]=\"!selectedSpiceMix\"></button>\n      <button pButton type=\"button\" label=\"Remove\" icon=\"fa-trash-o\" (click)=\"removeSpiceMix()\"\n              [disabled]=\"!selectedSpiceMix\"></button>\n    </p-footer>\n\n  </p-dataTable>\n\n  <button type=\"submit\" pButton  (click)=\"save()\" label=\"Save\" [disabled]=\"!rubForm.form.valid\"></button>\n\n\n\n</div>\n\n\n<button pButton type=\"button\" (click)=\"goBack()\" label=\"Back\" icon=\"fa-arrow-left\"></button>\n\n\n\n"
+module.exports = "\n<div *ngIf=\"rub\">\n  <form #rubForm=\"ngForm\" novalidate>\n    <div class=\"ui-grid ui-grid-responsive ui-fluid\" *ngIf=\"rub\">\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-2 ui-md-1 ui-label\">\n          <label for=\"name\">ID</label>\n        </div>\n        <div class=\"ui-g-5 ui-md-8\">\n          <input pInputText id=\"id\" name=\"id\" readonly\n                 [(ngModel)]=\"rub.id\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-2 ui-md-1 ui-label\">\n          <label for=\"name\">Name</label>\n        </div>\n        <div class=\"ui-g-5 ui-md-8\">\n          <input pInputText id=\"name\" name=\"name\" required\n                 [(ngModel)]=\"rub.name\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-2 ui-md-1 ui-label\">\n          <label for=\"art\">Beschreibung</label>\n        </div>\n        <div class=\"ui-g-5 ui-md-8\">\n          <input pInputText id=\"art\" name=\"art\" required\n                 [(ngModel)]=\"rub.beschreibung\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-2 ui-md-1 ui-label\">\n          <label for=\"beschreibung\">Herkunft</label>\n        </div>\n        <div class=\"ui-g-5 ui-md-8\">\n          <input pInputText id=\"beschreibung\" name=\"beschreibung\" required\n                 [(ngModel)]=\"rub.herkunft\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-2 ui-md-1 ui-label\">\n          <label for=\"url\">URL</label>\n        </div>\n        <div class=\"ui-g-5 ui-md-8\">\n          <input pInputText id=\"url\" name=\"Url\" required\n                 [(ngModel)]=\"rub.url\"/>\n        </div>\n      </div>\n    </div>\n  </form>\n\n  <p-dataTable [value]=\"gewuerzMischung\" [immutable]=\"false\" selectionMode=\"single\"\n               sortMode=\"multiple\"\n               [editable]=\"true\"\n               [(selection)]=\"selectedSpiceMix\"\n               (onRowDblclick)=\"onRowDblClickCRUD($event)\"\n               [paginator]=\"true\" paginatorPosition=\"bottom\" [responsive]=\"true\" [rows]=\"5\" [alwaysShowPaginator]=\"true\"  [pageLinks]=\"3\" [rowsPerPageOptions]=\"[5, 10,15,20]\"\n               #datatable>\n    <p-header>\n      <div style=\"text-align:left\">\n        <p-multiSelect [options]=\"columnOptions\" [(ngModel)]=\"cols\"></p-multiSelect>\n      </div>\n    </p-header>\n    <p-column *ngFor=\"let col of cols\" [field]=\"col.field\" [header]=\"col.header\" [sortable]=\"col.sortable\" [filter]=\"col.filter\" [editable]=\"col.editable\" [filterMatchMode]=\"col.filterMatchMode\" [filterPlaceholder]=\"col.fPlaceholder\"></p-column>\n\n    <p-footer>\n      <button pButton type=\"button\" label=\"Add\" icon=\"fa-plus\" (click)=\"addSpiceMix()\"></button>\n      <button pButton type=\"button\" label=\"Edit\" icon=\"fa-pencil\" (click)=\"editSpiceMix()\"\n              [disabled]=\"!selectedSpiceMix\"></button>\n      <button pButton type=\"button\" label=\"Remove\" icon=\"fa-trash-o\" (click)=\"removeSpiceMix()\"\n              [disabled]=\"!selectedSpiceMix\"></button>\n    </p-footer>\n\n  </p-dataTable>\n\n  <button type=\"submit\" pButton  (click)=\"save()\" label=\"Save\" [disabled]=\"!rubForm.form.valid\"></button>\n\n\n\n</div>\n\n\n<button pButton type=\"button\" (click)=\"goBack()\" label=\"Back\" icon=\"fa-arrow-left\"></button>\n\n\n<p-dialog header=\"SpiceMix Details\" [(visible)]=\"displayDialog\" [responsive]=\"true\" showEffect=\"fade\" [modal]=\"true\">\n  <form #spiceMixForm=\"ngForm\" novalidate>\n    <div class=\"ui-grid ui-grid-responsive ui-fluid\" *ngIf=\"spiceMix\">\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"name\">Menge</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"menge\" name=\"menge\" required\n                 [(ngModel)]=\"spiceMix.menge\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"art\">Einheit</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"mengeneinheit\" name=\"mengeneinheit\" required\n                 [(ngModel)]=\"spiceMix.mengeneinheit\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"art\">Name</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"gewuerz.name\" name=\"gewuerz.name\" required\n                 [(ngModel)]=\"spiceMix.gewuerz.name\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"art\">Art</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"gewuerz.art\" name=\"gewuerz.art\" required\n                 [(ngModel)]=\"spiceMix.gewuerz.art\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"art\">Beschreibung</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"gewuerz.beschreibung\" name=\"gewuerz.beschreibung\" required\n                 [(ngModel)]=\"spiceMix.gewuerz.beschreibung\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"art\">URL</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"gewuerz.url\" name=\"gewuerz.url\" required\n                 [(ngModel)]=\"spiceMix.gewuerz.url\"/>\n        </div>\n      </div>\n    </div>\n  </form>\n  <p-footer>\n    <div class=\"ui-dialog-buttonpane ui-helper-clearfix\">\n      <button type=\"button\" pButton icon=\"fa-close\" (click)=\"deleteSpiceMix()\" label=\"Delete\"></button>\n      <button type=\"submit\" pButton icon=\"fa-check\" (click)=\"saveSpiceMix()\" label=\"Save\" [disabled]=\"!spiceMixForm.form.valid\"></button>\n    </div>\n  </p-footer>\n</p-dialog>\n\n\n\n<!--p-dataTable [value]=\"spices\" [editable]=\"true\">\n  <p-column field=\"name\" header=\"Name\" [editable]=\"true\"></p-column>\n  <p-column field=\"art\" header=\"Art\" [editable]=\"true\"></p-column>\n  <p-column field=\"beschreibung\" header=\"Beschreibung\" [editable]=\"true\"></p-column>\n</p-dataTable-->\n"
 
 /***/ }),
 
@@ -73159,6 +73159,12 @@ var rub_service_RubService = RubService_1 = (function () {
             .map(function (response) { return response.json(); })
             .catch(RubService_1.handleError);
     };
+    RubService.prototype.deleteSpiceMix = function (rubid, id) {
+        console.log("Delete SpiceMix for id: " + id + ' for rub: ' + rubid);
+        return this.http.delete('http://localhost:8080/iWorld/bbq/rubs/' + rubid + '/gewuerzmischungen/' + id)
+            .map(function (response) { return response.json(); })
+            .catch(RubService_1.handleError);
+    };
     return RubService;
 }());
 rub_service_RubService = RubService_1 = tslib_es6["a" /* __decorate */]([
@@ -73260,9 +73266,134 @@ RublistComponent = tslib_es6["a" /* __decorate */]([
 ], RublistComponent);
 
 
+// CONCATENATED MODULE: ./app/model/mySpiceMix.ts
+var MySpiceMix = (function () {
+    function MySpiceMix(id, lockVersion, creationDate, modificationDate, createdUser, modificationUser, menge, mengeneinheit, gewuerz) {
+        this.id = id;
+        this.lockVersion = lockVersion;
+        this.creationDate = creationDate;
+        this.modificationDate = modificationDate;
+        this.createdUser = createdUser;
+        this.modificationUser = modificationUser;
+        this.menge = menge;
+        this.mengeneinheit = mengeneinheit;
+        this.gewuerz = gewuerz;
+    }
+    return MySpiceMix;
+}());
+
+
 // EXTERNAL MODULE: ../node_modules/rxjs/add/operator/switchMap.js
 var switchMap = __webpack_require__("FMUF");
 var switchMap_default = /*#__PURE__*/__webpack_require__.n(switchMap);
+
+// CONCATENATED MODULE: ./app/spices/spicelist/services/spicelist.service.ts
+
+
+
+
+
+
+
+var spicelist_service_SpicelistService = SpicelistService_1 = (function () {
+    function SpicelistService(http) {
+        this.http = http;
+    }
+    SpicelistService.handleError = function (error) {
+        // In a real world app, you might use a remote logging infrastructure
+        var errMsg;
+        if (error instanceof http_es5_Response) {
+            if (error.status === 404) {
+                errMsg = "Resource " + error.url + " was not found";
+            }
+            else {
+                var body = error.json() || '';
+                var err = body.error || JSON.stringify(body);
+                errMsg = error.status + " - " + (error.statusText || '') + " " + err;
+            }
+        }
+        else {
+            errMsg = error.message ? error.message : error.toString();
+        }
+        return Observable["Observable"].throw(errMsg);
+    };
+    SpicelistService.prototype.getEmployees = function () {
+        return this.http.get(encodeURI('http://localhost:8080/iWorld/bbq/rubs/gewuerze'))
+            .map(function (response) { return response.json(); })
+            .catch(SpicelistService_1.handleError);
+    };
+    SpicelistService.prototype.createSpice = function (spice) {
+        console.log("createSpice");
+        var headers = new Headers({ 'Content-Type': 'application/json' });
+        var options = new RequestOptions({ headers: headers });
+        var body = JSON.stringify(spice);
+        console.log("createSpice" + JSON.parse(body));
+        return this.http.post('http://localhost:8080/iWorld/bbq/rubs/gewuerze', body, options)
+            .map(function (response) { return response.json(); })
+            .catch(SpicelistService_1.handleError);
+    };
+    SpicelistService.prototype.updateSpice = function (spice) {
+        console.log("updateSpice");
+        var headers = new Headers({ 'Content-Type': 'application/json' });
+        var options = new RequestOptions({ headers: headers });
+        var body = JSON.stringify(spice);
+        console.log("createSpice" + JSON.parse(body));
+        return this.http.put('http://localhost:8080/iWorld/bbq/rubs/gewuerze', body, options)
+            .map(function (response) { return response.json(); })
+            .catch(SpicelistService_1.handleError);
+    };
+    SpicelistService.prototype.deleteSpice = function (id) {
+        console.log("Delete Spice for id: " + id);
+        return this.http.delete('http://localhost:8080/iWorld/bbq/rubs/gewuerze/' + id)
+            .map(function (response) { return response.json(); })
+            .catch(SpicelistService_1.handleError);
+    };
+    SpicelistService.prototype.createSpiceMix = function (rubId, spiceMix) {
+        console.log("createSpiceMix");
+        var headers = new Headers({ 'Content-Type': 'application/json' });
+        var options = new RequestOptions({ headers: headers });
+        var body = JSON.stringify(spiceMix);
+        console.log("createSpice" + JSON.parse(body));
+        return this.http.post('http://localhost:8080/iWorld/bbq/rubs/rub/' + rubId + '/rubmix', body, options)
+            .map(function (response) { return response.json(); })
+            .catch(SpicelistService_1.handleError);
+    };
+    SpicelistService.prototype.updateSpiceMix = function (rubId, spiceMix) {
+        console.log("updateSpice");
+        var headers = new Headers({ 'Content-Type': 'application/json' });
+        var options = new RequestOptions({ headers: headers });
+        var body = JSON.stringify(spiceMix);
+        console.log("createSpiceMix" + JSON.parse(body));
+        return this.http.put('http://localhost:8080/iWorld/bbq/rubs/rub/' + rubId + '/rubmix/' + spiceMix.id, body, options)
+            .map(function (response) { return response.json(); })
+            .catch(SpicelistService_1.handleError);
+    };
+    return SpicelistService;
+}());
+spicelist_service_SpicelistService = SpicelistService_1 = tslib_es6["a" /* __decorate */]([
+    Object(core_es5["Injectable"])(),
+    tslib_es6["c" /* __metadata */]("design:paramtypes", [Http])
+], spicelist_service_SpicelistService);
+
+var SpicelistService_1;
+
+// CONCATENATED MODULE: ./app/model/mySpice.ts
+var MySpice = (function () {
+    function MySpice(id, lockVersion, creationDate, modificationDate, createdUser, modificationUser, name, art, beschreibung, url) {
+        this.id = id;
+        this.lockVersion = lockVersion;
+        this.creationDate = creationDate;
+        this.modificationDate = modificationDate;
+        this.createdUser = createdUser;
+        this.modificationUser = modificationUser;
+        this.name = name;
+        this.art = art;
+        this.beschreibung = beschreibung;
+        this.url = url;
+    }
+    return MySpice;
+}());
+
 
 // CONCATENATED MODULE: ./app/rubs/rubdetail/rubdetail.component.ts
 
@@ -73273,11 +73404,16 @@ var switchMap_default = /*#__PURE__*/__webpack_require__.n(switchMap);
 
 
 
-var RubdetailComponent = (function () {
-    function RubdetailComponent(loggingToken, rubService, route, location) {
+
+
+
+var rubdetail_component_RubdetailComponent = (function () {
+    function RubdetailComponent(loggingToken, rubService, spicelistService, route, location) {
         this.rubService = rubService;
+        this.spicelistService = spicelistService;
         this.route = route;
         this.location = location;
+        this.spiceMix = new MySpiceMix(0, 0, 0, 0, "", "", 0, "", new MySpice(0, 0, 0, 0, "", "", "", "", "", ""));
         this.isLoggingEnabled = loggingToken;
     }
     RubdetailComponent.prototype.ngOnInit = function () {
@@ -73285,6 +73421,18 @@ var RubdetailComponent = (function () {
         this.logIt("GPL Detail init");
         this.id = this.route.snapshot.params['id'];
         this.logIt(this.route.snapshot.params['id']);
+        this.arten = [];
+        this.arten.push({ label: 'gemahlen', value: 'gemahlen' });
+        this.arten.push({ label: 'getrocknet', value: 'getrocknet' });
+        this.arten.push({ label: 'geröstet', value: 'geröstet' });
+        this.arten.push({ label: 'ganz', value: 'ganz' });
+        this.spicelistService.getEmployees().subscribe(function (employees) {
+            if (_this.spices !== undefined) {
+                console.log("gesamte Gewuerze: " + _this.spices.length);
+            }
+            _this.spices = employees;
+        }, function (error) { return _this.showError(error); });
+        debugger;
         if (this.id !== null && this.id > 0) {
             this.rubService.getRub(this.id).subscribe(function (rub) {
                 _this.rub = rub;
@@ -73351,6 +73499,13 @@ var RubdetailComponent = (function () {
     RubdetailComponent.prototype.goBack = function () {
         this.location.back();
     };
+    RubdetailComponent.prototype.onRowDblClickCRUD = function (event) {
+        // create a clone of the selected employee
+        this.newspiceMix = false;
+        console.log("onRowSelectCRUD: " + JSON.stringify(event.data));
+        this.spiceMix = Object.assign({}, event.data);
+        this.displayDialog = true;
+    };
     RubdetailComponent.prototype.save = function () {
         var _this = this;
         console.log("GPL Rub detail save: ");
@@ -73371,14 +73526,95 @@ var RubdetailComponent = (function () {
             }, function (error) { return _this.showError(error); });
         }
     };
+    RubdetailComponent.prototype.saveSpiceMix = function () {
+        var _this = this;
+        console.log("saveSpiceMix");
+        var gewuerzMischung = this.gewuerzMischung.slice();
+        if (this.newspiceMix) {
+            gewuerzMischung.push(this.spiceMix);
+        }
+        else {
+            gewuerzMischung[this.findSelectedSpiceMixIndex()] = this.spiceMix;
+        }
+        if (this.spiceMix.id && this.spiceMix.id > 0) {
+            console.log("update");
+            // update
+            this.editSpiceMix$ = this.spicelistService.updateSpiceMix(this.id, this.spiceMix)
+                .finally(function () {
+                debugger;
+                _this.spiceMix = null;
+                _this.displayDialog = false;
+            })
+                .subscribe(function () {
+                _this.gewuerzMischung.some(function (element, index) {
+                    debugger;
+                    if (element.id === _this.spiceMix.id) {
+                        _this.gewuerzMischung[index] = Object.assign({}, _this.spiceMix);
+                        _this.gewuerzMischung = _this.gewuerzMischung.slice();
+                        _this.selectedSpiceMix = _this.gewuerzMischung[index];
+                        return true;
+                    }
+                });
+                _this.logIt('Spice was successfully updated');
+            }, function (error) { return _this.showError(error); });
+        }
+        else {
+            // create
+            console.log("create");
+            this.addSpiceMix$ = this.spicelistService.createSpiceMix(this.id, this.spiceMix)
+                .finally(function () {
+                debugger;
+                _this.spiceMix = null;
+                _this.selectedSpiceMix = null;
+                _this.displayDialog = false;
+            })
+                .subscribe(function (spiceMix) {
+                debugger;
+                _this.gewuerzMischung = _this.gewuerzMischung.concat([spiceMix]);
+                _this.logIt('Spice was successfully created');
+            }, function (error) { return _this.showError(error); });
+        }
+    };
+    RubdetailComponent.prototype.deleteSpiceMix = function () {
+        console.log("deleteSpiceMix start");
+        this.removeSpiceMix();
+        console.log("deleteSpiceMix end");
+    };
     RubdetailComponent.prototype.addSpiceMix = function () {
-        console.log('added');
+        console.log("addSpiceMix start");
+        // create an empty employee
+        this.newspiceMix = true;
+        new MySpiceMix(0, 0, 0, 0, "", "", 0, "", new MySpice(0, 0, 0, 0, "", "", "", "", "", ""));
+        this.spiceMix = new MySpiceMix(0, 0, 0, 0, "", "", 0, "", new MySpice(0, 0, 0, 0, "", "", "", "", "", ""));
+        this.displayDialog = true;
+        console.log("addSpiceMix end");
     };
     RubdetailComponent.prototype.editSpiceMix = function () {
-        console.log('edited');
+        console.log("editSpiceMix start");
+        // create a clone of the selected employee
+        this.spiceMix = Object.assign({}, this.selectedSpiceMix);
+        this.displayDialog = true;
+        console.log("editSpiceMix end");
     };
     RubdetailComponent.prototype.removeSpiceMix = function () {
-        console.log('edited');
+        var _this = this;
+        console.log('removeSpiceMix');
+        if (this.selectedSpiceMix === null) {
+            return;
+        }
+        var index = this.findSelectedSpiceMixIndex();
+        this.delete$ = this.rubService.deleteSpiceMix(this.rub.id, this.selectedSpiceMix.id)
+            .finally(function () {
+            _this.selectedSpiceMix = null;
+        })
+            .subscribe(function () {
+            _this.gewuerzMischung = _this.gewuerzMischung.filter(function (element) { return element.id !== _this.selectedSpiceMix.id; });
+            _this.logIt('Rub was successfully removed');
+        }, function (error) { return _this.showError(error); });
+        console.log("removed");
+    };
+    RubdetailComponent.prototype.findSelectedSpiceMixIndex = function () {
+        return this.gewuerzMischung.indexOf(this.selectedSpiceMix);
     };
     RubdetailComponent.prototype.logIt = function (msg) {
         if (this.isLoggingEnabled) {
@@ -73390,104 +73626,17 @@ var RubdetailComponent = (function () {
     };
     return RubdetailComponent;
 }());
-RubdetailComponent = tslib_es6["a" /* __decorate */]([
+rubdetail_component_RubdetailComponent = tslib_es6["a" /* __decorate */]([
     Object(core_es5["Component"])({
         selector: 'rubdetail',
         template: __webpack_require__("7mW6")
     }),
     tslib_es6["d" /* __param */](0, Object(core_es5["Inject"])(MY_LOGGING_TOKEN)),
     tslib_es6["c" /* __metadata */]("design:paramtypes", [Boolean, rub_service_RubService,
+        spicelist_service_SpicelistService,
         router_es5["ActivatedRoute"],
         common_es5["Location"]])
-], RubdetailComponent);
-
-
-// CONCATENATED MODULE: ./app/spices/spicelist/services/spicelist.service.ts
-
-
-
-
-
-
-
-var spicelist_service_SpicelistService = SpicelistService_1 = (function () {
-    function SpicelistService(http) {
-        this.http = http;
-    }
-    SpicelistService.handleError = function (error) {
-        // In a real world app, you might use a remote logging infrastructure
-        var errMsg;
-        if (error instanceof http_es5_Response) {
-            if (error.status === 404) {
-                errMsg = "Resource " + error.url + " was not found";
-            }
-            else {
-                var body = error.json() || '';
-                var err = body.error || JSON.stringify(body);
-                errMsg = error.status + " - " + (error.statusText || '') + " " + err;
-            }
-        }
-        else {
-            errMsg = error.message ? error.message : error.toString();
-        }
-        return Observable["Observable"].throw(errMsg);
-    };
-    SpicelistService.prototype.getEmployees = function () {
-        return this.http.get(encodeURI('http://localhost:8080/iWorld/bbq/rubs/gewuerze'))
-            .map(function (response) { return response.json(); })
-            .catch(SpicelistService_1.handleError);
-    };
-    SpicelistService.prototype.createSpice = function (spice) {
-        console.log("createSpice");
-        var headers = new Headers({ 'Content-Type': 'application/json' });
-        var options = new RequestOptions({ headers: headers });
-        var body = JSON.stringify(spice);
-        console.log("createSpice" + JSON.parse(body));
-        return this.http.post('http://localhost:8080/iWorld/bbq/rubs/gewuerze', body, options)
-            .map(function (response) { return response.json(); })
-            .catch(SpicelistService_1.handleError);
-    };
-    SpicelistService.prototype.updateSpice = function (spice) {
-        console.log("updateSpice");
-        var headers = new Headers({ 'Content-Type': 'application/json' });
-        var options = new RequestOptions({ headers: headers });
-        var body = JSON.stringify(spice);
-        console.log("createSpice" + JSON.parse(body));
-        return this.http.put('http://localhost:8080/iWorld/bbq/rubs/gewuerze', body, options)
-            .map(function (response) { return response.json(); })
-            .catch(SpicelistService_1.handleError);
-    };
-    SpicelistService.prototype.deleteSpice = function (id) {
-        console.log("Delete Spice for id: " + id);
-        return this.http.delete('http://localhost:8080/iWorld/bbq/rubs/gewuerze/' + id)
-            .map(function (response) { return response.json(); })
-            .catch(SpicelistService_1.handleError);
-    };
-    return SpicelistService;
-}());
-spicelist_service_SpicelistService = SpicelistService_1 = tslib_es6["a" /* __decorate */]([
-    Object(core_es5["Injectable"])(),
-    tslib_es6["c" /* __metadata */]("design:paramtypes", [Http])
-], spicelist_service_SpicelistService);
-
-var SpicelistService_1;
-
-// CONCATENATED MODULE: ./app/model/mySpice.ts
-var MySpice = (function () {
-    function MySpice(id, lockVersion, creationDate, modificationDate, createdUser, modificationUser, name, art, beschreibung, url) {
-        this.id = id;
-        this.lockVersion = lockVersion;
-        this.creationDate = creationDate;
-        this.modificationDate = modificationDate;
-        this.createdUser = createdUser;
-        this.modificationUser = modificationUser;
-        this.name = name;
-        this.art = art;
-        this.beschreibung = beschreibung;
-        this.url = url;
-    }
-    return MySpice;
-}());
+], rubdetail_component_RubdetailComponent);
 
 
 // CONCATENATED MODULE: ./app/spices/spicelist/spicelist.component.ts
@@ -73560,11 +73709,6 @@ var spicelist_component_SpicelistComponent = (function () {
         this.grades.push({ label: 'A', value: 'A' });
         this.grades.push({ label: 'B', value: 'B' });
         this.grades.push({ label: 'C', value: 'C' });
-        this.gewuerzArten = [];
-        this.gewuerzArten.push({ label: 'gemahlen', value: 'gemahlen' });
-        this.gewuerzArten.push({ label: 'getrocknet', value: 'getrocknet' });
-        this.gewuerzArten.push({ label: 'Granulat', value: 'Granulat' });
-        this.gewuerzArten.push({ label: 'geräuchert', value: 'geraeuchert' });
     };
     SpicelistComponent.prototype.ngOnDestroy = function () {
         //this.get$.unsubscribe();
@@ -74039,7 +74183,7 @@ var login_component_LoginComponent = (function () {
     }
     LoginComponent.prototype.ngOnInit = function () {
         if (this.auth.isLoggedIn()) {
-            this.router.navigate(['/spices']);
+            this.router.navigate(['/rublist']);
         }
     };
     LoginComponent.prototype.onSubmit = function (form) {
@@ -74053,7 +74197,7 @@ var login_component_LoginComponent = (function () {
             .subscribe(function (data) {
             console.log("response von auth server" + data);
             _this.auth.setToken(data.token);
-            _this.router.navigate(['/spices']);
+            _this.router.navigate(['/rublist']);
         });
     };
     LoginComponent.handleError = function (error) {
@@ -74136,7 +74280,7 @@ var routes = [
     },
     {
         path: 'rubdetail/:id',
-        component: RubdetailComponent
+        component: rubdetail_component_RubdetailComponent
     },
     {
         path: 'rubdetail',
@@ -74281,7 +74425,7 @@ AppModule = tslib_es6["a" /* __decorate */]([
             login_component_LoginComponent,
             MenuComponent,
             RublistComponent,
-            RubdetailComponent
+            rubdetail_component_RubdetailComponent
         ],
         imports: [
             platform_browser_es5["a" /* BrowserModule */],
@@ -88800,7 +88944,7 @@ module.exports = "\n<div class=\"ui-widget-header align-globalfilter\">\n  <i cl
 /***/ "nxRJ":
 /***/ (function(module, exports) {
 
-module.exports = "\n<!--p-messages [value]=\"msgs\" *ngIf=\"isDebug\"></p-messages-->\n\n<div class=\"ui-widget-header align-globalfilter\">\n  <i class=\"fa fa-search search-globalfilter\"></i>\n  <input #gb type=\"text\" pInputText size=\"50\" placeholder=\"Global Filter\">\n</div>\n<p-dataTable [value]=\"spices\" [immutable]=\"false\" selectionMode=\"single\"\n             sortMode=\"multiple\" (onSort)=\"onSort($event)\"\n             [editable]=\"false\"\n             resizableColumns=\"true\"\n             reorderableColumns=\"true\"\n             scrollable=\"false\" scrollHeight=\"600px\"\n             [(selection)]=\"selectedSpice\"\n             (onRowDblclick)=\"onRowDblClickCRUD($event)\"\n             (onRowUnselect)=\"onRowUnselect($event)\"\n             (onSort)=\"onSort($event)\"\n             [(selection)]=\"selectedSpice\"\n             [paginator]=\"true\" paginatorPosition=\"bottom\" [responsive]=\"true\" [rows]=\"5\" [alwaysShowPaginator]=\"true\" (onPage)=\"onPage($event)\" [pageLinks]=\"3\" [rowsPerPageOptions]=\"[5, 10,15,20]\"\n             [globalFilter]=\"gb\"\n             #datatable\n             (onFilter)=\"onFilter($event)\">\n  <p-header>\n    <div style=\"text-align:left\">\n      <p-multiSelect [options]=\"columnOptions\" [(ngModel)]=\"cols\"></p-multiSelect>\n    </div>\n  </p-header>\n  <p-column *ngFor=\"let col of cols\" [field]=\"col.field\" [header]=\"col.header\" [sortable]=\"col.sortable\" [filter]=\"col.filter\" [editable]=\"col.editable\" [filterMatchMode]=\"col.filterMatchMode\" [filterPlaceholder]=\"col.fPlaceholder\"></p-column>\n  <p-footer>\n    <button pButton type=\"button\" label=\"Add\" icon=\"fa-plus\" (click)=\"add()\"></button>\n    <button pButton type=\"button\" label=\"Edit\" icon=\"fa-pencil\" (click)=\"edit()\"\n            [disabled]=\"!selectedSpice\"></button>\n    <button pButton type=\"button\" label=\"Remove\" icon=\"fa-trash-o\" (click)=\"remove()\"\n            [disabled]=\"!selectedSpice\"></button>\n  </p-footer>\n</p-dataTable>\n\n<h3>Content with Filters</h3>\n<p-dropdown name=\"customizedselect\" [options]=\"gewuerzArten\" [(ngModel)]=\"selectedGewuerzArt\"\n            filter=\"filter\" [autoWidth]=\"false\" [style]=\"{'width':'150px'}\">\n</p-dropdown>\n\n<p-dialog header=\"Spices Details\" [(visible)]=\"displayDialog\" [responsive]=\"true\" showEffect=\"fade\" [modal]=\"true\">\n  <form #spiceForm=\"ngForm\" novalidate>\n    <div class=\"ui-grid ui-grid-responsive ui-fluid\" *ngIf=\"spice\">\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"name\">Name</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"name\" name=\"name\" required\n                 [(ngModel)]=\"spice.name\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"art\">Art</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"art\" name=\"art\" required\n                 [(ngModel)]=\"spice.art\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"beschreibung\">Beschreibung</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"beschreibung\" name=\"beschreibung\" required\n                 [(ngModel)]=\"spice.beschreibung\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"url\">URL</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"url\" name=\"Url\" required\n                 [(ngModel)]=\"spice.url\"/>\n        </div>\n      </div>\n    </div>\n  </form>\n  <p-footer>\n    <div class=\"ui-dialog-buttonpane ui-helper-clearfix\">\n      <button type=\"button\" pButton icon=\"fa-close\" (click)=\"delete()\" label=\"Delete\"></button>\n      <button type=\"submit\" pButton icon=\"fa-check\" (click)=\"save()\" label=\"Save\" [disabled]=\"!spiceForm.form.valid\"></button>\n    </div>\n  </p-footer>\n</p-dialog>\n\n<!--p-growl [value]=\"msgs\"></p-growl-->\n"
+module.exports = "\n<!--p-messages [value]=\"msgs\" *ngIf=\"isDebug\"></p-messages-->\n\n<div class=\"ui-widget-header align-globalfilter\">\n  <i class=\"fa fa-search search-globalfilter\"></i>\n  <input #gb type=\"text\" pInputText size=\"50\" placeholder=\"Global Filter\">\n</div>\n<p-dataTable [value]=\"spices\" [immutable]=\"false\" selectionMode=\"single\"\n             sortMode=\"multiple\" (onSort)=\"onSort($event)\"\n             [editable]=\"false\"\n             resizableColumns=\"true\"\n             reorderableColumns=\"true\"\n             scrollable=\"false\" scrollHeight=\"600px\"\n             [(selection)]=\"selectedSpice\"\n             (onRowDblclick)=\"onRowDblClickCRUD($event)\"\n             (onRowUnselect)=\"onRowUnselect($event)\"\n             (onSort)=\"onSort($event)\"\n             [(selection)]=\"selectedSpice\"\n             [paginator]=\"true\" paginatorPosition=\"bottom\" [responsive]=\"true\" [rows]=\"5\" [alwaysShowPaginator]=\"true\" (onPage)=\"onPage($event)\" [pageLinks]=\"3\" [rowsPerPageOptions]=\"[5, 10,15,20]\"\n             [globalFilter]=\"gb\"\n             #datatable\n             (onFilter)=\"onFilter($event)\">\n  <p-header>\n    <div style=\"text-align:left\">\n      <p-multiSelect [options]=\"columnOptions\" [(ngModel)]=\"cols\"></p-multiSelect>\n    </div>\n  </p-header>\n  <p-column *ngFor=\"let col of cols\" [field]=\"col.field\" [header]=\"col.header\" [sortable]=\"col.sortable\" [filter]=\"col.filter\" [editable]=\"col.editable\" [filterMatchMode]=\"col.filterMatchMode\" [filterPlaceholder]=\"col.fPlaceholder\"></p-column>\n  <p-footer>\n    <button pButton type=\"button\" label=\"Add\" icon=\"fa-plus\" (click)=\"add()\"></button>\n    <button pButton type=\"button\" label=\"Edit\" icon=\"fa-pencil\" (click)=\"edit()\"\n            [disabled]=\"!selectedSpice\"></button>\n    <button pButton type=\"button\" label=\"Remove\" icon=\"fa-trash-o\" (click)=\"remove()\"\n            [disabled]=\"!selectedSpice\"></button>\n  </p-footer>\n</p-dataTable>\n\n<p-dialog header=\"Spices Details\" [(visible)]=\"displayDialog\" [responsive]=\"true\" showEffect=\"fade\" [modal]=\"true\">\n  <form #spiceForm=\"ngForm\" novalidate>\n    <div class=\"ui-grid ui-grid-responsive ui-fluid\" *ngIf=\"spice\">\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"name\">Name</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"name\" name=\"name\" required\n                 [(ngModel)]=\"spice.name\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"art\">Art</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"art\" name=\"art\" required\n                 [(ngModel)]=\"spice.art\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"beschreibung\">Beschreibung</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"beschreibung\" name=\"beschreibung\" required\n                 [(ngModel)]=\"spice.beschreibung\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"url\">URL</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"url\" name=\"Url\" required\n                 [(ngModel)]=\"spice.url\"/>\n        </div>\n      </div>\n    </div>\n  </form>\n  <p-footer>\n    <div class=\"ui-dialog-buttonpane ui-helper-clearfix\">\n      <button type=\"button\" pButton icon=\"fa-close\" (click)=\"delete()\" label=\"Delete\"></button>\n      <button type=\"submit\" pButton icon=\"fa-check\" (click)=\"save()\" label=\"Save\" [disabled]=\"!spiceForm.form.valid\"></button>\n    </div>\n  </p-footer>\n</p-dialog>\n\n<!--p-growl [value]=\"msgs\"></p-growl-->\n"
 
 /***/ }),
 

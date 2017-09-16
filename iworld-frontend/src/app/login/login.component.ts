@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (this.auth.isLoggedIn()) {
-      this.router.navigate(['/spices']);
+      this.router.navigate(['/rublist']);
     }
   }
 
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       .subscribe(data => {
         console.log("response von auth server" +data);
         this.auth.setToken(data.token);
-        this.router.navigate(['/spices']);
+        this.router.navigate(['/rublist']);
       });
 
   }

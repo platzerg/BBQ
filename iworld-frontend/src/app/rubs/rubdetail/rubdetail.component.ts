@@ -3,7 +3,9 @@ import { Component, Input, AfterContentChecked, AfterContentInit, AfterViewCheck
 
 import {RubService} from '../services/rub.service';
 import {Rub} from '../../model/rub';
+import {Spice} from '../../model/spice';
 import {SpiceMix} from '../../model/spicemix';
+import {MySpiceMix} from '../../model/mySpiceMix';
 
 import {Message, SelectItem} from 'primeng/components/common/api';
 
@@ -17,6 +19,8 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location }                 from '@angular/common';
 
 import {MY_LOGGING_TOKEN} from '../../shared/token';
+import {SpicelistService} from "../../spices/spicelist/services/spicelist.service";
+import {MySpice} from "../../model/mySpice";
 
 @Component({
   selector: 'rubdetail',
@@ -25,7 +29,13 @@ import {MY_LOGGING_TOKEN} from '../../shared/token';
 export class RubdetailComponent implements OnInit {
   rub: Rub;
 
+  spices: Spice[];
+
   gewuerzMischung: SpiceMix[];
+  spiceMix: SpiceMix = new MySpiceMix(0, 0, 0, 0, "", "", 0, "", new MySpice(0,0,0,0,"","","","","",""));
+  newspiceMix: boolean;
+
+  arten: SelectItem[];
 
   selectedSpiceMix: SpiceMix;
   cols: any[];
@@ -35,11 +45,19 @@ export class RubdetailComponent implements OnInit {
 
   isLoggingEnabled: boolean;
 
+
+  displayDialog: boolean;
+
   edit$: Subscription;
+  delete$: Subscription;
+
+  editSpiceMix$: Subscription;
+  addSpiceMix$: Subscription;
 
   constructor(
     @Inject(MY_LOGGING_TOKEN) loggingToken : boolean,
     private rubService: RubService,
+    private spicelistService: SpicelistService,
     private route: ActivatedRoute,
     private location: Location
   ) {
@@ -50,6 +68,23 @@ export class RubdetailComponent implements OnInit {
     this.logIt("GPL Detail init");
     this.id = this.route.snapshot.params['id'];
     this.logIt(this.route.snapshot.params['id']);
+
+    this.arten = [];
+    this.arten.push({label: 'gemahlen', value: 'gemahlen'});
+    this.arten.push({label: 'getrocknet', value: 'getrocknet'});
+    this.arten.push({label: 'geröstet', value: 'geröstet'});
+    this.arten.push({label: 'ganz', value: 'ganz'});
+
+    this.spicelistService.getEmployees().subscribe(
+      employees => {
+        if(this.spices !== undefined) {
+          console.log("gesamte Gewuerze: " + this.spices.length);
+        }
+
+        this.spices = employees;
+      },
+      error => this.showError(error)
+    );
 
     if(this.id !== null && this.id > 0){
       this.rubService.getRub(this.id).subscribe(
@@ -132,6 +167,14 @@ export class RubdetailComponent implements OnInit {
     this.location.back();
   }
 
+  onRowDblClickCRUD(event: any) {
+    // create a clone of the selected employee
+    this.newspiceMix = false;
+    console.log("onRowSelectCRUD: " + JSON.stringify(event.data));
+    this.spiceMix = Object.assign({}, event.data);
+    this.displayDialog = true;
+  }
+
   save() {
     console.log("GPL Rub detail save: ");
 
@@ -159,16 +202,116 @@ export class RubdetailComponent implements OnInit {
 
   }
 
+  saveSpiceMix() {
+    console.log("saveSpiceMix");
+
+    let gewuerzMischung = [...this.gewuerzMischung];
+    if (this.newspiceMix) {
+      gewuerzMischung.push(this.spiceMix);
+    } else {
+      gewuerzMischung[this.findSelectedSpiceMixIndex()] = this.spiceMix;
+    }
+
+
+    if (this.spiceMix.id && this.spiceMix.id > 0) {
+      console.log("update");
+      // update
+      this.editSpiceMix$ = this.spicelistService.updateSpiceMix(this.id, this.spiceMix)
+        .finally(() => {
+          debugger;
+          this.spiceMix = null;
+          this.displayDialog = false;
+        })
+        .subscribe(
+          () => {
+            this.gewuerzMischung.some((element: SpiceMix, index: number) => {
+              debugger;
+              if (element.id === this.spiceMix.id) {
+                this.gewuerzMischung[index] = Object.assign({}, this.spiceMix);
+                this.gewuerzMischung = [...this.gewuerzMischung];
+                this.selectedSpiceMix = this.gewuerzMischung[index];
+                return true;
+              }
+            });
+            this.logIt('Spice was successfully updated');
+          },
+          error => this.showError(error)
+        );
+    } else {
+      // create
+      console.log("create");
+      this.addSpiceMix$ = this.spicelistService.createSpiceMix(this.id, this.spiceMix)
+        .finally(() => {
+          debugger;
+          this.spiceMix = null;
+          this.selectedSpiceMix = null;
+          this.displayDialog = false;
+        })
+        .subscribe(
+          (spiceMix: SpiceMix) => {
+            debugger;
+            this.gewuerzMischung = [...this.gewuerzMischung, spiceMix];
+            this.logIt('Spice was successfully created');
+          },
+          error => this.showError(error)
+        );
+    }
+  }
+
+  deleteSpiceMix() {
+    console.log("deleteSpiceMix start");
+    this.removeSpiceMix();
+    console.log("deleteSpiceMix end");
+  }
+
   addSpiceMix() {
-    console.log('added');
+    console.log("addSpiceMix start")
+    // create an empty employee
+    this.newspiceMix = true;
+    new MySpiceMix(0, 0, 0, 0, "", "", 0, "", new MySpice(0,0,0,0,"","","","","",""));
+    this.spiceMix = new MySpiceMix(0, 0, 0, 0, "", "", 0, "", new MySpice(0,0,0,0,"","","","","",""));
+
+    this.displayDialog = true;
+    console.log("addSpiceMix end")
   }
 
   editSpiceMix() {
-    console.log('edited');
+    console.log("editSpiceMix start");
+    // create a clone of the selected employee
+    this.spiceMix = Object.assign({}, this.selectedSpiceMix);
+
+    this.displayDialog = true;
+    console.log("editSpiceMix end")
   }
 
   removeSpiceMix() {
-    console.log('edited');
+    console.log('removeSpiceMix');
+
+    if (this.selectedSpiceMix === null) {
+      return;
+    }
+
+    let index = this.findSelectedSpiceMixIndex();
+
+    this.delete$ = this.rubService.deleteSpiceMix(this.rub.id, this.selectedSpiceMix.id)
+      .finally(() => {
+        this.selectedSpiceMix = null;
+      })
+      .subscribe(
+        () => {
+          this.gewuerzMischung = this.gewuerzMischung.filter(
+            (element: SpiceMix) => element.id !== this.selectedSpiceMix.id);
+          this.logIt('Rub was successfully removed');
+        },
+        error => this.showError(error)
+      );
+
+    console.log("removed");
+
+  }
+
+  findSelectedSpiceMixIndex(): number {
+    return this.gewuerzMischung.indexOf(this.selectedSpiceMix);
   }
 
   logIt(msg: string) {

@@ -101,21 +101,6 @@ public class BBQRubsController {
         return Response.status( Response.Status.ACCEPTED ).entity( gewuerzDTO ).build();
     }
 
-    @Path("/gewuerze/{id}")
-    @DELETE
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response deleteGewuerzById(@PathParam("id") int id) {
-        this.rubsService.deleteGewuerzById(id);
-
-        JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
-        jsonObjBuilder.add( "message", "delete method ok" );
-        JsonObject jsonObj = jsonObjBuilder.build();
-
-        return Response.status( Response.Status.ACCEPTED ).entity( jsonObj.toString() ).build();
-
-    }
-
     @Path("/showbyid/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -185,13 +170,47 @@ public class BBQRubsController {
         return rubDTO;
     }
 
-    @Path("/rub/{id}/gewuerze")
+    @Path("/deletebyid/{id}")
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String deleteGewuerzmischungById(@PathParam("id") int id) {
+        this.rubsService.deleteRubById(id);
+        return "@DELETE/delete/" +id +" OK";
+    }
+
+    @Path("/rub/{id}/rubmix")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public BBQRubDTO addGewuerzMischungenToRub(@PathParam("id") int id, final List<BBQGewuerzMischungDTO> gewuerzMischungen) {
         BBQRubDTO rubDTO = this.rubsService.addGewurzMischungenToRub(id, gewuerzMischungen);
         return rubDTO;
+    }
+
+    @Path("/rub/{id}/rubmix")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addGewuerzMischungToRub(@PathParam("id") int id, final BBQGewuerzMischungDTO gewuerzMischung) {
+        BBQGewuerzMischungDTO gewuerzMischungDTO = this.rubsService.addGewurzMischung(id, gewuerzMischung);
+
+        JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+        jsonObjBuilder.add( "message", "post method ok" );
+        return Response.status( Response.Status.CREATED ).entity( gewuerzMischungDTO).build();
+    }
+
+    @Path("/rub/{rubid}/rubmix/{id}")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateGewuerzMischung(@PathParam("rubid") int rubid, @PathParam("id") int id, final BBQGewuerzMischungDTO gewuerzMischung) {
+        BBQGewuerzMischungDTO gewuerzMischungDTO = this.rubsService.updateGewurzMischung(id, gewuerzMischung);
+
+        JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+        jsonObjBuilder.add( "message", "post method ok" );
+
+        return Response.status( Response.Status.ACCEPTED ).entity( gewuerzMischungDTO ).build();
     }
 
     @Path("/rub/update")
@@ -271,4 +290,22 @@ public class BBQRubsController {
 
         return "@DELETE OK";
     }
+
+    @Path("/{rubid}/gewuerzmischungen/{id}")
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteGewuerzById(@PathParam("rubid") int rubid, @PathParam("id") int id) {
+        this.rubsService.deleteGewuerzMischung(rubid, id);
+
+        JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+        jsonObjBuilder.add( "message", "delete method ok" );
+        JsonObject jsonObj = jsonObjBuilder.build();
+
+        return Response.status( Response.Status.ACCEPTED ).entity( jsonObj.toString() ).build();
+
+    }
 }
+
+
+
