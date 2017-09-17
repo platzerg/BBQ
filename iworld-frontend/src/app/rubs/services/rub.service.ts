@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import {Http, Response, RequestOptions, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/retry';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
@@ -33,12 +34,14 @@ export class RubService {
 
   getRubs(): Observable<Rub[]> {
     return this.http.get(encodeURI('http://localhost:8080/iWorld/bbq/rubs/all'))
+      .retry(3)
       .map(response => response.json() as Rub[])
       .catch(RubService.handleError);
   }
 
   getRub(id: number): Observable<Rub> {
-    return this.http.get(encodeURI('http://localhost:8080/iWorld/bbq/rubs/showbyid/' +id))
+    return this.http.get(encodeURI('http://localhost:8080/iWorld/bbq/rubs/' +id))
+      .retry(3)
       .map(response => response.json() as Rub)
       .catch(RubService.handleError);
   }
@@ -54,7 +57,8 @@ export class RubService {
     let options = new RequestOptions({headers: headers});
     let body = JSON.stringify(rub);
     console.log("createSpice" + JSON.parse(body));
-    return this.http.put('http://localhost:8080/iWorld/bbq/rubs/rub/update', body, options)
+    return this.http.put('http://localhost:8080/iWorld/bbq/rubs/' +rub.id, body, options)
+      .retry(3)
       .map(response => response.json())
       .catch(RubService.handleError);
   }
@@ -67,6 +71,7 @@ export class RubService {
     console.log("createRub" + JSON.parse(body));
 
     return this.http.post('http://localhost:8080/iWorld/bbq/rubs/add', body, options)
+      .retry(3)
       .map(response => response.json() as Rub)
       .catch(RubService.handleError);
   }
@@ -74,6 +79,7 @@ export class RubService {
   deleteRub(id: number): Observable<any> {
     console.log("Delete Rub for id: " + id);
     return this.http.delete('http://localhost:8080/iWorld/bbq/rubs/delete/' + id)
+      .retry(3)
       .map(response => response.json())
       .catch(RubService.handleError);
   }
@@ -81,6 +87,7 @@ export class RubService {
   deleteSpiceMix(rubid: number, id: number): Observable<any> {
     console.log("Delete SpiceMix for id: " + id + ' for rub: ' + rubid);
     return this.http.delete('http://localhost:8080/iWorld/bbq/rubs/' + rubid +'/gewuerzmischungen/' + id)
+      .retry(3)
       .map(response => response.json())
       .catch(RubService.handleError);
   }

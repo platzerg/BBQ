@@ -35,12 +35,20 @@
             <property name="eclipselink.logging.session" value="false" />
             <property name="eclipselink.logging.thread" value="false" />
             <property name="eclipselink.logging.timestamp" value="true" />
-            <!-- Hibernate: For SQL logging set the log categories org.hibernate.SQL und org.hibernate.type.descriptor.sql.BasicBinder to TRACE -->
+
             <property name="openjpa.Log" value="log4j" />
             <property name="openjpa.ConnectionFactoryProperties" value="PrintParameters=true, PrettyPrint=true, PrettyPrintLineLength=72" />
 
             <!-- Hibernate: Use new id generator -->
             <property name="hibernate.id.new_generator_mappings" value="true" />
+
+            <!-- Hibernate: For SQL logging set the log categories org.hibernate.SQL und org.hibernate.type.descriptor.sql.BasicBinder to TRACE -->
+            <property name="org.hibernate.SQL" value="TRACE" />
+            <property name="org.hibernate.type.descriptor.sql.BasicBinder" value="TRACE" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+            <property name="hibernate.use_sql_comments" value="true" />
+
         </properties>
     </persistence-unit>
 </persistence>

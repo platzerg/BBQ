@@ -44,7 +44,7 @@ public class BBQDAO extends DAO {
 
     public BBQGewuerzMischung addBBQGewuerzmischung(int id, BBQGewuerzMischung bbqGewuerzMischung) {
         bbqGewuerzMischung.setRubId(id);
-        BBQGewuerz gewuerz = this.find(BBQGewuerz.class, 1);
+        BBQGewuerz gewuerz = this.find(BBQGewuerz.class, bbqGewuerzMischung.getGewuerz().getId());
         bbqGewuerzMischung.setGewuerz(gewuerz);
 
         BBQGewuerzMischung newBBQGewuerzMischung = this.create(bbqGewuerzMischung);

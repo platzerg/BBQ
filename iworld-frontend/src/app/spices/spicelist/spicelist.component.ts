@@ -341,25 +341,26 @@ export class SpicelistComponent implements OnInit, OnDestroy {
       return;
     }
 
-    let index = this.findSelectedSpiceIndex();
+    if(confirm('Wollen Sie das Gewürz wirklich löschen?')){
+      let index = this.findSelectedSpiceIndex();
 
-    this.delete$ = this.spicelistService.deleteSpice(this.selectedSpice.id)
-      .finally(() => {
-        this.spice = null;
-        this.selectedSpice = null;
-        this.spice = null;
-        this.displayDialog = false;
-      })
-      .subscribe(
-        () => {
-          this.spices = this.spices.filter(
-            (element: Spice) => element.id !== this.selectedSpice.id);
-          this.showSuccess('Spice was successfully removed');
-        },
-        error => this.showError(error)
-      );
+      this.delete$ = this.spicelistService.deleteSpice(this.selectedSpice.id)
+        .finally(() => {
+          this.spice = null;
+          this.selectedSpice = null;
+          this.displayDialog = false;
+        })
+        .subscribe(
+          () => {
+            this.spices = this.spices.filter(
+              (element: Spice) => element.id !== this.selectedSpice.id);
+            this.showSuccess('Spice was successfully removed');
+          },
+          error => this.showError(error)
+        );
 
-    console.log("remove");
+      console.log("remove");
+    }
   }
 
   delete() {

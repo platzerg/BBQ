@@ -25,3 +25,8 @@
             [disabled]="!selectedRub"></button>
   </p-footer>
 </p-dataTable>
+
+<div *ngIf="!rubs" class="ui active dimmer">
+  <div class="ui large text loader">Daten werden geladen...</div>
+</div>
+<p *ngIf="rubs && !rubs.length">Es wurden noch keine Rubs eingetragen.</p>

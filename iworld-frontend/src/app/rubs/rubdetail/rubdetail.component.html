@@ -73,6 +73,10 @@
     </p-footer>
 
   </p-dataTable>
+  <div *ngIf="!gewuerzMischung" class="ui active dimmer">
+    <div class="ui large text loader">Daten werden geladen...</div>
+  </div>
+  <p *ngIf="gewuerzMischung && !gewuerzMischung.length">Es wurden noch keine Gewürzmischung eingetragen.</p>
 
   <button type="submit" pButton  (click)="save()" label="Save" [disabled]="!rubForm.form.valid"></button>
 
@@ -105,7 +109,7 @@
                  [(ngModel)]="spiceMix.mengeneinheit"/>
         </div>
       </div>
-      <div class="ui-g ui-g-12 ui-g-nopad">
+      <!--div class="ui-g ui-g-12 ui-g-nopad">
         <div class="ui-g-12 ui-md-3 ui-label">
           <label for="art">Name</label>
         </div>
@@ -140,7 +144,31 @@
           <input pInputText id="gewuerz.url" name="gewuerz.url" required
                  [(ngModel)]="spiceMix.gewuerz.url"/>
         </div>
+      </div-->
+
+
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-12 ui-md-3 ui-label">
+          <label for="art">Combo</label>
+        </div>
+        <div class="ui-g-12 ui-md-9">
+          <p-dropdown name="singleselect" [options]="gewuerze" [(ngModel)]="selectedGewuerz"
+                      (onFocus)="onSelectFocus()" (onBlur)="onSelectBlur()"
+                      (onChange)="onSelectChange()" filter="filter" [autoWidth]="false"></p-dropdown>
+        </div>
       </div>
+
+      <!--div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-12 ui-md-3 ui-label">
+          <label for="art">Multi Select</label>
+        </div>
+        <div class="ui-g-12 ui-md-9">
+          <p-multiSelect name="multiselect" [options]="gewuerze" [(ngModel)]="selectedGewuerze"
+                      (onFocus)="onSelectFocus()" (onBlur)="onSelectBlur()"
+                      (onChange)="onSelectChange()" filter="filter"></p-multiSelect>
+        </div>
+      </div-->
+
     </div>
   </form>
   <p-footer>

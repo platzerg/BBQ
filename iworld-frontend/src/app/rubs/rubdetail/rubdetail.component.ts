@@ -9,6 +9,7 @@ import {MySpiceMix} from '../../model/mySpiceMix';
 
 import {Message, SelectItem} from 'primeng/components/common/api';
 
+import { Router } from '@angular/router';
 
 import 'rxjs/add/operator/switchMap';
 import {Observable} from 'rxjs/Observable';
@@ -38,6 +39,11 @@ export class RubdetailComponent implements OnInit {
   arten: SelectItem[];
 
   selectedSpiceMix: SpiceMix;
+
+  gewuerze: SelectItem[];
+  selectedGewuerz: any;
+  selectedGewuerze: string[] = [];
+
   cols: any[];
   columnOptions: SelectItem[];
 
@@ -58,6 +64,7 @@ export class RubdetailComponent implements OnInit {
     @Inject(MY_LOGGING_TOKEN) loggingToken : boolean,
     private rubService: RubService,
     private spicelistService: SpicelistService,
+    private router: Router,
     private route: ActivatedRoute,
     private location: Location
   ) {
@@ -76,12 +83,12 @@ export class RubdetailComponent implements OnInit {
     this.arten.push({label: 'ganz', value: 'ganz'});
 
     this.spicelistService.getEmployees().subscribe(
-      employees => {
+      allSpices => {
         if(this.spices !== undefined) {
-          console.log("gesamte Gewuerze: " + this.spices.length);
+          console.log("gesamte Gewuerze: " + allSpices.length);
         }
-
-        this.spices = employees;
+        this.spices = allSpices;
+        this.generateGewuerze(allSpices);
       },
       error => this.showError(error)
     );
@@ -124,6 +131,29 @@ export class RubdetailComponent implements OnInit {
     for (let col of this.cols) {
       this.columnOptions.push({label: col.header, value: col});
     }
+  }
+
+  generateGewuerze(spicesArray: Spice[]) {
+    let spiceList: any[] = [];
+    for (let spice of spicesArray) {
+      let spicArt = spice.art !== undefined && spice.art !== null ? spice.art : "";
+      spiceList.push({
+        label: spice.name + " " + spicArt,
+        value: {
+          id: spice.id,
+          lockVersion: spice.lockVersion,
+          creationDate: spice.creationDate,
+          modificationDate: spice.modificationDate,
+          createdUser: spice.createdUser,
+          modificationUser: spice.modificationUser,
+          name: spice.name,
+          art: spice.art,
+          beschreibung: spice.beschreibung,
+          url: spice.url
+        }
+      });
+    }
+    this.gewuerze = spiceList;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -175,6 +205,19 @@ export class RubdetailComponent implements OnInit {
     this.displayDialog = true;
   }
 
+  onSelectFocus() {
+    this.logIt(`OnDestroy`);
+  }
+
+  onSelectBlur() {
+    this.logIt(`OnDestroy`);
+  }
+
+  onSelectChange() {
+    this.logIt(`OnDestroy`);
+    this.spiceMix.gewuerz = this.selectedGewuerz;
+  }
+
   save() {
     console.log("GPL Rub detail save: ");
 
@@ -195,6 +238,7 @@ export class RubdetailComponent implements OnInit {
         .subscribe(
           (rub: Rub) => {
             this.rub = rub;
+            this.router.navigate(['/rublist']);
           },
           error => this.showError(error)
         );
@@ -204,7 +248,6 @@ export class RubdetailComponent implements OnInit {
 
   saveSpiceMix() {
     console.log("saveSpiceMix");
-
     let gewuerzMischung = [...this.gewuerzMischung];
     if (this.newspiceMix) {
       gewuerzMischung.push(this.spiceMix);
@@ -212,20 +255,17 @@ export class RubdetailComponent implements OnInit {
       gewuerzMischung[this.findSelectedSpiceMixIndex()] = this.spiceMix;
     }
 
-
     if (this.spiceMix.id && this.spiceMix.id > 0) {
       console.log("update");
       // update
-      this.editSpiceMix$ = this.spicelistService.updateSpiceMix(this.id, this.spiceMix)
+      this.editSpiceMix$ = this.spicelistService.updateSpiceMix(this.id, this.spiceMix, this.rub)
         .finally(() => {
-          debugger;
           this.spiceMix = null;
           this.displayDialog = false;
         })
         .subscribe(
           () => {
             this.gewuerzMischung.some((element: SpiceMix, index: number) => {
-              debugger;
               if (element.id === this.spiceMix.id) {
                 this.gewuerzMischung[index] = Object.assign({}, this.spiceMix);
                 this.gewuerzMischung = [...this.gewuerzMischung];
@@ -242,14 +282,12 @@ export class RubdetailComponent implements OnInit {
       console.log("create");
       this.addSpiceMix$ = this.spicelistService.createSpiceMix(this.id, this.spiceMix)
         .finally(() => {
-          debugger;
           this.spiceMix = null;
           this.selectedSpiceMix = null;
           this.displayDialog = false;
         })
         .subscribe(
           (spiceMix: SpiceMix) => {
-            debugger;
             this.gewuerzMischung = [...this.gewuerzMischung, spiceMix];
             this.logIt('Spice was successfully created');
           },
@@ -291,23 +329,27 @@ export class RubdetailComponent implements OnInit {
       return;
     }
 
-    let index = this.findSelectedSpiceMixIndex();
+    if(confirm('Wollen Sie den Rub wirklich löschen?')){
+      let index = this.findSelectedSpiceMixIndex();
 
-    this.delete$ = this.rubService.deleteSpiceMix(this.rub.id, this.selectedSpiceMix.id)
-      .finally(() => {
-        this.selectedSpiceMix = null;
-      })
-      .subscribe(
-        () => {
-          this.gewuerzMischung = this.gewuerzMischung.filter(
-            (element: SpiceMix) => element.id !== this.selectedSpiceMix.id);
-          this.logIt('Rub was successfully removed');
-        },
-        error => this.showError(error)
-      );
+      this.delete$ = this.rubService.deleteSpiceMix(this.rub.id, this.selectedSpiceMix.id)
+        .finally(() => {
+          this.selectedSpiceMix = null;
+          this.spiceMix = null;
+          this.displayDialog = false;
 
-    console.log("removed");
+        })
+        .subscribe(
+          () => {
+            this.gewuerzMischung = this.gewuerzMischung.filter(
+              (element: SpiceMix) => element.id !== this.selectedSpiceMix.id);
+            this.logIt('Rub was successfully removed');
+          },
+          error => this.showError(error)
+        );
 
+      console.log("removed");
+    }
   }
 
   findSelectedSpiceMixIndex(): number {

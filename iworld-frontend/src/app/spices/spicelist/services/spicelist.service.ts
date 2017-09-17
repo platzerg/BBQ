@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Http, Response, RequestOptions, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/retry';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import {Spice} from '../../../model/spice';
 import {SpiceMix} from '../../../model/spicemix';
+import Rub from "../../../model/rub";
 
 @Injectable()
 export class SpicelistService {
@@ -33,6 +35,7 @@ export class SpicelistService {
 
   getEmployees(): Observable<Spice[]> {
     return this.http.get(encodeURI('http://localhost:8080/iWorld/bbq/rubs/gewuerze'))
+      .retry(3)
       .map(response => response.json() as Spice[])
       .catch(SpicelistService.handleError);
   }
@@ -45,6 +48,7 @@ export class SpicelistService {
     console.log("createSpice" + JSON.parse(body));
 
     return this.http.post('http://localhost:8080/iWorld/bbq/rubs/gewuerze', body, options)
+      .retry(3)
       .map(response => response.json() as Spice)
       .catch(SpicelistService.handleError);
   }
@@ -56,6 +60,7 @@ export class SpicelistService {
     let body = JSON.stringify(spice);
     console.log("createSpice" + JSON.parse(body));
     return this.http.put('http://localhost:8080/iWorld/bbq/rubs/gewuerze', body, options)
+      .retry(3)
       .map(response => response.json())
       .catch(SpicelistService.handleError);
   }
@@ -75,17 +80,19 @@ export class SpicelistService {
     console.log("createSpice" + JSON.parse(body));
 
     return this.http.post('http://localhost:8080/iWorld/bbq/rubs/rub/' + rubId +'/rubmix', body, options)
+      .retry(3)
       .map(response => response.json() as SpiceMix)
       .catch(SpicelistService.handleError);
   }
 
-  updateSpiceMix(rubId: number, spiceMix: SpiceMix): Observable<any> {
+  updateSpiceMix(rubId: number, spiceMix: SpiceMix, rub: Rub): Observable<any> {
     console.log("updateSpice");
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
     let body = JSON.stringify(spiceMix);
     console.log("createSpiceMix" + JSON.parse(body));
     return this.http.put('http://localhost:8080/iWorld/bbq/rubs/rub/' + rubId +'/rubmix/' +spiceMix.id, body, options)
+      .retry(3)
       .map(response => response.json())
       .catch(SpicelistService.handleError);
   }

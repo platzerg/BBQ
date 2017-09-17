@@ -90,22 +90,25 @@ export class RublistComponent implements OnInit, OnDestroy {
       return;
     }
 
-    let index = this.findSelectedRubIndex();
+    if(confirm('Wollen Sie den Rub wirklich löschen?')){
+      let index = this.findSelectedRubIndex();
 
-    this.delete$ = this.rublistService.deleteRub(this.selectedRub.id)
-      .finally(() => {
-        this.selectedRub = null;
-      })
-      .subscribe(
-        () => {
-          this.rubs = this.rubs.filter(
-            (element: Rub) => element.id !== this.selectedRub.id);
-          this.showSuccess('Rub was successfully removed');
-        },
-        error => this.showSuccess(error)
-      );
+      this.delete$ = this.rublistService.deleteRub(this.selectedRub.id)
+        .finally(() => {
+          this.selectedRub = null;
+        })
+        .subscribe(
+          () => {
+            this.rubs = this.rubs.filter(
+              (element: Rub) => element.id !== this.selectedRub.id);
+            this.showSuccess('Rub was successfully removed');
+          },
+          error => this.showSuccess(error)
+        );
 
-    console.log("remove");
+      console.log("remove");
+    }
+
   }
 
   findSelectedRubIndex(): number {
