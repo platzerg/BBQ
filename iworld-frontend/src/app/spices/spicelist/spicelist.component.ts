@@ -18,6 +18,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
 
   title = 'app';
 
+  msgs: Message[] = [];
   isDebug = false;
 
   activeIndex: number = 0;
@@ -49,9 +50,6 @@ export class SpicelistComponent implements OnInit, OnDestroy {
   cols: any[];
 
   columnOptions: SelectItem[];
-
-  msgs: Message[] = [];
-
 
   get$: Subscription;
   add$: Subscription;

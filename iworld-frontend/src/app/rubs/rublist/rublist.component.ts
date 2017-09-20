@@ -18,6 +18,10 @@ import 'rxjs/add/operator/finally';
   templateUrl: './rublist.component.html'
 })
 export class RublistComponent implements OnInit, OnDestroy {
+  msgs: Message[] = [];
+  isDebug: boolean = false;
+
+
   rubs: Rub[];
 
   selectedRub: Rub;
@@ -114,13 +118,14 @@ export class RublistComponent implements OnInit, OnDestroy {
   findSelectedRubIndex(): number {
     return this.rubs.indexOf(this.selectedRub);
   }
-
   private showError(errMsg: string) {
-    console.log("Error: " + errMsg);
+    this.msgs = [];
+    this.msgs.push({severity: 'error', summary: 'Sorry, an error occurred', detail: errMsg});
   }
 
-  private showSuccess(msg: string) {
-    console.log("Sucess: " + msg);
+  private showSuccess(successMsg: string) {
+    this.msgs = [];
+    this.msgs.push({severity: 'success', detail: successMsg});
   }
 
 }

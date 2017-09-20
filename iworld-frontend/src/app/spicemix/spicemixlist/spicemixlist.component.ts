@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import {SpicemixlistService} from './services/spicemixlist.service';
+import {SpicemixService} from '../services/spicemix.service';
 
 @Component({
   selector: 'app-spicemixlist',
@@ -9,8 +9,8 @@ import {SpicemixlistService} from './services/spicemixlist.service';
 export class SpicemixlistComponent implements OnInit {
 
   constructor(
-    private spicemixlistService: SpicemixlistService) {
-    console.log("GPL SpicemixlistService");
+    private spicemixlistService: SpicemixService) {
+    console.log("GPL SpicemixService");
   }
 
   ngOnInit() {

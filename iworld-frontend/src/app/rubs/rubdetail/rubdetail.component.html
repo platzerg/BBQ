@@ -1,3 +1,4 @@
+<p-growl [value]="msgs" name="rubDetailGrowl"></p-growl>
 
 <div *ngIf="rub">
   <form #rubForm="ngForm" novalidate>
@@ -109,43 +110,6 @@
                  [(ngModel)]="spiceMix.mengeneinheit"/>
         </div>
       </div>
-      <!--div class="ui-g ui-g-12 ui-g-nopad">
-        <div class="ui-g-12 ui-md-3 ui-label">
-          <label for="art">Name</label>
-        </div>
-        <div class="ui-g-12 ui-md-9">
-          <input pInputText id="gewuerz.name" name="gewuerz.name" required
-                 [(ngModel)]="spiceMix.gewuerz.name"/>
-        </div>
-      </div>
-      <div class="ui-g ui-g-12 ui-g-nopad">
-        <div class="ui-g-12 ui-md-3 ui-label">
-          <label for="art">Art</label>
-        </div>
-        <div class="ui-g-12 ui-md-9">
-          <input pInputText id="gewuerz.art" name="gewuerz.art" required
-                 [(ngModel)]="spiceMix.gewuerz.art"/>
-        </div>
-      </div>
-      <div class="ui-g ui-g-12 ui-g-nopad">
-        <div class="ui-g-12 ui-md-3 ui-label">
-          <label for="art">Beschreibung</label>
-        </div>
-        <div class="ui-g-12 ui-md-9">
-          <input pInputText id="gewuerz.beschreibung" name="gewuerz.beschreibung" required
-                 [(ngModel)]="spiceMix.gewuerz.beschreibung"/>
-        </div>
-      </div>
-      <div class="ui-g ui-g-12 ui-g-nopad">
-        <div class="ui-g-12 ui-md-3 ui-label">
-          <label for="art">URL</label>
-        </div>
-        <div class="ui-g-12 ui-md-9">
-          <input pInputText id="gewuerz.url" name="gewuerz.url" required
-                 [(ngModel)]="spiceMix.gewuerz.url"/>
-        </div>
-      </div-->
-
 
       <div class="ui-g ui-g-12 ui-g-nopad">
         <div class="ui-g-12 ui-md-3 ui-label">
@@ -158,17 +122,6 @@
         </div>
       </div>
 
-      <!--div class="ui-g ui-g-12 ui-g-nopad">
-        <div class="ui-g-12 ui-md-3 ui-label">
-          <label for="art">Multi Select</label>
-        </div>
-        <div class="ui-g-12 ui-md-9">
-          <p-multiSelect name="multiselect" [options]="gewuerze" [(ngModel)]="selectedGewuerze"
-                      (onFocus)="onSelectFocus()" (onBlur)="onSelectBlur()"
-                      (onChange)="onSelectChange()" filter="filter"></p-multiSelect>
-        </div>
-      </div-->
-
     </div>
   </form>
   <p-footer>
@@ -179,10 +132,3 @@
   </p-footer>
 </p-dialog>
 
-
-
-<!--p-dataTable [value]="spices" [editable]="true">
-  <p-column field="name" header="Name" [editable]="true"></p-column>
-  <p-column field="art" header="Art" [editable]="true"></p-column>
-  <p-column field="beschreibung" header="Beschreibung" [editable]="true"></p-column>
-</p-dataTable-->

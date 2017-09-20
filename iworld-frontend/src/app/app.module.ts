@@ -22,6 +22,11 @@ import {MultiSelectModule} from 'primeng/components/multiselect/multiselect';
 import {ContextMenuModule} from 'primeng/components/contextmenu/contextmenu';
 import {SliderModule} from 'primeng/components/slider/slider';
 
+import {ConfirmDialogModule} from 'primeng/components/confirmdialog/confirmdialog';
+import {ConfirmationService} from 'primeng/components/common/api';
+import {CommonModule} from '@angular/common';
+
+
 import {fakeBackendProvider} from './backend/fake-backend';
 import {MockBackend} from '@angular/http/testing';
 import {BaseRequestOptions} from '@angular/http';
@@ -33,7 +38,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import {SpicelistService} from './spices/spicelist/services/spicelist.service';
-import {SpicemixlistService} from './spicemix/spicemixlist/services/spicemixlist.service';
+import {SpicemixService} from './spicemix/services/spicemix.service';
 import {CoretemperaturelistService} from './coretemperature/coretemperaturelist/services/coretemperaturelist.service';
 import {RubService} from './rubs/services/rub.service';
 import {ApiService} from './shared/api.service';
@@ -47,6 +52,7 @@ import { LoginComponent } from './login/login.component';
 import { MenuComponent } from './menu/menu.component';
 import { RublistComponent } from './rubs/rublist/rublist.component';
 import { RubdetailComponent } from './rubs/rubdetail/rubdetail.component';
+import { SpicemixdetailComponent } from './spicemix/spicemixdetail/spicemixdetail.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +63,8 @@ import { RubdetailComponent } from './rubs/rubdetail/rubdetail.component';
     LoginComponent,
     MenuComponent,
     RublistComponent,
-    RubdetailComponent
+    RubdetailComponent,
+    SpicemixdetailComponent
   ],
   imports: [
     BrowserModule,
@@ -78,19 +85,22 @@ import { RubdetailComponent } from './rubs/rubdetail/rubdetail.component';
     MultiSelectModule,
     ContextMenuModule,
     SliderModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ConfirmDialogModule,
+    CommonModule
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: '/iWorld/'},
     {provide: MY_CONFIG_TOKEN, useValue: 'GPL Configuration'},
-    {provide: MY_LOGGING_TOKEN, useValue: false},
+    {provide: MY_LOGGING_TOKEN, useValue: true},
     SpicelistService,
-    SpicemixlistService,
+    SpicemixService,
     CoretemperaturelistService,
     RubService,
     ApiService,
     AuthService,
     fakeBackendProvider,
+    ConfirmationService,
     AuthGuard,
     MockBackend,
     BaseRequestOptions

@@ -28,6 +28,9 @@ import {MySpice} from "../../model/mySpice";
   templateUrl: './rubdetail.component.html'
 })
 export class RubdetailComponent implements OnInit {
+  msgs: Message[] = [];
+  isDebug: boolean = false;
+
   rub: Rub;
 
   spices: Spice[];
@@ -49,9 +52,6 @@ export class RubdetailComponent implements OnInit {
 
   id: number;
 
-  isLoggingEnabled: boolean;
-
-
   displayDialog: boolean;
 
   edit$: Subscription;
@@ -68,13 +68,13 @@ export class RubdetailComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location
   ) {
-    this.isLoggingEnabled = loggingToken;
+    this.isDebug = loggingToken;
   }
 
   ngOnInit() {
-    this.logIt("GPL Detail init");
+    this.showSuccess("GPL Detail init");
     this.id = this.route.snapshot.params['id'];
-    this.logIt(this.route.snapshot.params['id']);
+    this.showSuccess(this.route.snapshot.params['id']);
 
     this.arten = [];
     this.arten.push({label: 'gemahlen', value: 'gemahlen'});
@@ -104,7 +104,7 @@ export class RubdetailComponent implements OnInit {
           }
 
         },
-        error => this.logIt(error)
+        error => this.showSuccess(error)
       );
     } else {
       this.rubService.getRubTemplate()
@@ -159,38 +159,38 @@ export class RubdetailComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     let changesMsgs: string[] = [];
     for (let propName in changes) {
-      this.logIt(propName);
+      this.showSuccess(propName);
     }
   }
 
   // Beware! Called frequently!
   // Called in every change detection cycle anywhere on the page
   ngDoCheck() {
-    this.logIt(`DoCheck`);
+    this.showSuccess(`DoCheck`);
   }
 
   ngAfterContentInit() {
-    this.logIt(`AfterContentInit`);
+    this.showSuccess(`AfterContentInit`);
   }
 
   // Beware! Called frequently!
   // Called in every change detection cycle anywhere on the page
   ngAfterContentChecked() {
-    this.logIt(`AfterContentChecked`);
+    this.showSuccess(`AfterContentChecked`);
   }
 
   ngAfterViewInit() {
-    this.logIt(`AfterViewInit`);
+    this.showSuccess(`AfterViewInit`);
   }
 
   // Beware! Called frequently!
   // Called in every change detection cycle anywhere on the page
   ngAfterViewChecked() {
-    this.logIt(`AfterViewChecked`);
+    this.showSuccess(`AfterViewChecked`);
   }
 
   ngOnDestroy() {
-    this.logIt(`OnDestroy`);
+    this.showSuccess(`OnDestroy`);
   }
 
   goBack(): void {
@@ -206,15 +206,15 @@ export class RubdetailComponent implements OnInit {
   }
 
   onSelectFocus() {
-    this.logIt(`OnDestroy`);
+    this.showSuccess(`OnDestroy`);
   }
 
   onSelectBlur() {
-    this.logIt(`OnDestroy`);
+    this.showSuccess(`OnDestroy`);
   }
 
   onSelectChange() {
-    this.logIt(`OnDestroy`);
+    this.showSuccess(`OnDestroy`);
     this.spiceMix.gewuerz = this.selectedGewuerz;
   }
 
@@ -273,7 +273,7 @@ export class RubdetailComponent implements OnInit {
                 return true;
               }
             });
-            this.logIt('Spice was successfully updated');
+            this.showSuccess('Spice was successfully updated');
           },
           error => this.showError(error)
         );
@@ -289,7 +289,7 @@ export class RubdetailComponent implements OnInit {
         .subscribe(
           (spiceMix: SpiceMix) => {
             this.gewuerzMischung = [...this.gewuerzMischung, spiceMix];
-            this.logIt('Spice was successfully created');
+            this.showSuccess('Spice was successfully created');
           },
           error => this.showError(error)
         );
@@ -343,7 +343,7 @@ export class RubdetailComponent implements OnInit {
           () => {
             this.gewuerzMischung = this.gewuerzMischung.filter(
               (element: SpiceMix) => element.id !== this.selectedSpiceMix.id);
-            this.logIt('Rub was successfully removed');
+            this.showSuccess('Rub was successfully removed');
           },
           error => this.showError(error)
         );
@@ -356,14 +356,14 @@ export class RubdetailComponent implements OnInit {
     return this.gewuerzMischung.indexOf(this.selectedSpiceMix);
   }
 
-  logIt(msg: string) {
-    if(this.isLoggingEnabled) {
-      console.log("--- GPL --- " + msg);
-    }
+  private showError(errMsg: string) {
+    this.msgs = [];
+    this.msgs.push({severity: 'error', summary: 'Sorry, an error occurred', detail: errMsg});
   }
 
-  private showError(errMsg: string) {
-    console.log("--- Error --- " + errMsg);
+  private showSuccess(successMsg: string) {
+    this.msgs = [];
+    this.msgs.push({severity: 'success', detail: successMsg});
   }
 
 }
