@@ -308,8 +308,8 @@ export class RubdetailComponent implements OnInit {
     this.newspiceMix = true;
     new MySpiceMix(0, 0, 0, 0, "", "", 0, "", new MySpice(0,0,0,0,"","","","","",""));
     this.spiceMix = new MySpiceMix(0, 0, 0, 0, "", "", 0, "", new MySpice(0,0,0,0,"","","","","",""));
-
-    this.displayDialog = true;
+    this.router.navigate(['/rubdetail/' + this.rub.id +'/spicemixdetail/' + this.spiceMix.id]);
+    //this.displayDialog = true;
     console.log("addSpiceMix end")
   }
 
@@ -317,8 +317,10 @@ export class RubdetailComponent implements OnInit {
     console.log("editSpiceMix start");
     // create a clone of the selected employee
     this.spiceMix = Object.assign({}, this.selectedSpiceMix);
+    this.router.navigate(['/rubdetail/' + this.rub.id +'/spicemixdetail/' + this.spiceMix.id]);
 
-    this.displayDialog = true;
+
+    //this.displayDialog = true;
     console.log("editSpiceMix end")
   }
 

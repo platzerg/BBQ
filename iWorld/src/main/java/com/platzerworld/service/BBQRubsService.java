@@ -46,6 +46,14 @@ public class BBQRubsService {
         return allGewuerzDTO;
     }
 
+    public BBQGewuerzMischungDTO getSpiceMixById(int spiceMixId) {
+        BBQGewuerzMischung gewuerzMischung = bbqDAO.find(BBQGewuerzMischung.class, spiceMixId);
+
+        BBQGewuerzMischungDTO gewuerzMischungDTO = this.convertToBBQGewuerzMischungDTO(gewuerzMischung);
+
+        return gewuerzMischungDTO;
+    }
+
     public BBQGewuerzDTO updateGewuerz(BBQGewuerzDTO gewuerzDTO) {
         BBQGewuerz updatedGewuerz = this.convertToBBQGewuerz(gewuerzDTO, false);
 

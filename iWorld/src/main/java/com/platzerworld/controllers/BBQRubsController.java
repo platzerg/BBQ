@@ -94,6 +94,19 @@ public class BBQRubsController {
         return Response.status( Response.Status.OK ).entity( allGewuerze).build();
     }
 
+    @Path("/rubdetail/{rubid}/spicemixdetail/{spicemixid}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllGewuerze(@PathParam("rubid") int rubid, @PathParam("spicemixid") int spicemixid) {
+        BBQGewuerzMischungDTO gewuerzMischungDTO = rubsService.getSpiceMixById(spicemixid);
+
+        JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+
+        JsonObject jsonObj = jsonObjBuilder.build();
+
+        return Response.status( Response.Status.OK ).entity( gewuerzMischungDTO).build();
+    }
+
     @Path("/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

@@ -1,3 +1,58 @@
-<p>
-  spicemixdetail works!
-</p>
+<p-growl [value]="msgs" name="rubDetailGrowl"></p-growl>
+
+<div *ngIf="spiceMix">
+  <form #spiceMixDetailForm="ngForm" novalidate>
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="spiceMix">
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-2 ui-md-1 ui-label">
+          <label for="name">ID</label>
+        </div>
+        <div class="ui-g-5 ui-md-8">
+          <input pInputText id="id" name="id" readonly
+                 [(ngModel)]="spiceMix.id"/>
+        </div>
+      </div>
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-2 ui-md-1 ui-label">
+          <label for="name">Menge</label>
+        </div>
+        <div class="ui-g-5 ui-md-8">
+          <input pInputText id="name" name="name" required
+                 [(ngModel)]="spiceMix.menge"/>
+        </div>
+      </div>
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-2 ui-md-1 ui-label">
+          <label for="art">Mengeneinheit</label>
+        </div>
+        <div class="ui-g-5 ui-md-8">
+          <input pInputText id="art" name="art" required
+                 [(ngModel)]="spiceMix.mengeneinheit"/>
+        </div>
+      </div>
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-2 ui-md-1 ui-label">
+          <label for="art">Combo</label>
+        </div>
+        <div class="ui-g-5 ui-md-8">
+          <p-dropdown name="singleselect" [options]="gewuerze" [(ngModel)]="selectedGewuerz"
+                      (onFocus)="onSelectFocus()"
+                      (onBlur)="onSelectBlur()"
+                      (onChange)="onSelectChange()"
+                      filter="filter" [autoWidth]="false"></p-dropdown>
+        </div>
+      </div>
+
+    </div>
+  </form>
+
+  <div class="ui-dialog-buttonpane ui-helper-clearfix">
+    <button pButton type="button" (click)="goBack()" label="Back" icon="fa-arrow-left"></button>
+    <button type="button" pButton icon="fa-close" (click)="deleteSpiceMix()" label="Delete"></button>
+    <button type="submit" pButton icon="fa-check" (click)="saveSpiceMix()" label="Save" [disabled]="!spiceMixDetailForm.form.valid"></button>
+  </div>
+
+</div>
+
+
+

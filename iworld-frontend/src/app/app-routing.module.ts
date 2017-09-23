@@ -7,6 +7,7 @@ import { SpicemixlistComponent } from './spicemix/spicemixlist/spicemixlist.comp
 import { CoretemperaturelistComponent } from './coretemperature/coretemperaturelist/coretemperaturelist.component';
 import {LoginComponent} from './login/login.component';
 import {AuthGuard} from './auth.guard';
+import {SpicemixdetailComponent} from "./spicemix/spicemixdetail/spicemixdetail.component";
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: 'rubdetail/:id',
     component: RubdetailComponent
+  },
+  {
+    path: 'rubdetail/:rubid/spicemixdetail/:spicemixid',
+    component: SpicemixdetailComponent
   },
   {
     path: 'rubdetail',

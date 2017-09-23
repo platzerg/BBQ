@@ -35507,7 +35507,7 @@ Observable_1.Observable.throw = throw_1._throw;
 /***/ "aAam":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  spicemixdetail works!\n</p>\n"
+module.exports = "<p-growl [value]=\"msgs\" name=\"rubDetailGrowl\"></p-growl>\n\n<div *ngIf=\"spiceMix\">\n  <form #spiceMixDetailForm=\"ngForm\" novalidate>\n    <div class=\"ui-grid ui-grid-responsive ui-fluid\" *ngIf=\"spiceMix\">\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-2 ui-md-1 ui-label\">\n          <label for=\"name\">ID</label>\n        </div>\n        <div class=\"ui-g-5 ui-md-8\">\n          <input pInputText id=\"id\" name=\"id\" readonly\n                 [(ngModel)]=\"spiceMix.id\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-2 ui-md-1 ui-label\">\n          <label for=\"name\">Menge</label>\n        </div>\n        <div class=\"ui-g-5 ui-md-8\">\n          <input pInputText id=\"name\" name=\"name\" required\n                 [(ngModel)]=\"spiceMix.menge\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-2 ui-md-1 ui-label\">\n          <label for=\"art\">Mengeneinheit</label>\n        </div>\n        <div class=\"ui-g-5 ui-md-8\">\n          <input pInputText id=\"art\" name=\"art\" required\n                 [(ngModel)]=\"spiceMix.mengeneinheit\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-2 ui-md-1 ui-label\">\n          <label for=\"art\">Combo</label>\n        </div>\n        <div class=\"ui-g-5 ui-md-8\">\n          <p-dropdown name=\"singleselect\" [options]=\"gewuerze\" [(ngModel)]=\"selectedGewuerz\"\n                      (onFocus)=\"onSelectFocus()\"\n                      (onBlur)=\"onSelectBlur()\"\n                      (onChange)=\"onSelectChange()\"\n                      filter=\"filter\" [autoWidth]=\"false\"></p-dropdown>\n        </div>\n      </div>\n\n    </div>\n  </form>\n\n  <div class=\"ui-dialog-buttonpane ui-helper-clearfix\">\n    <button pButton type=\"button\" (click)=\"goBack()\" label=\"Back\" icon=\"fa-arrow-left\"></button>\n    <button type=\"button\" pButton icon=\"fa-close\" (click)=\"deleteSpiceMix()\" label=\"Delete\"></button>\n    <button type=\"submit\" pButton icon=\"fa-check\" (click)=\"saveSpiceMix()\" label=\"Save\" [disabled]=\"!spiceMixDetailForm.form.valid\"></button>\n  </div>\n\n</div>\n\n\n\n"
 
 /***/ }),
 
@@ -74143,7 +74143,8 @@ var rubdetail_component_RubdetailComponent = (function () {
         console.log("editSpiceMix start");
         // create a clone of the selected employee
         this.spiceMix = Object.assign({}, this.selectedSpiceMix);
-        this.displayDialog = true;
+        this.router.navigate(['/rubdetail/' + this.rub.id + '/spicemixdetail/' + this.spiceMix.id]);
+        //this.displayDialog = true;
         console.log("editSpiceMix end");
     };
     RubdetailComponent.prototype.removeSpiceMix = function () {
@@ -74557,6 +74558,18 @@ var spicemix_service_SpicemixService = SpicemixService_1 = (function () {
             .map(function (response) { return response.json(); })
             .catch(SpicemixService_1.handleError);
     };
+    SpicemixService.prototype.getSpicemix = function (rubid, spicemixid) {
+        return this.http.get(encodeURI('http://localhost:8080/iWorld/bbq/rubs/rubdetail/' + rubid + '/spicemixdetail/' + spicemixid))
+            .map(function (response) { return response.json(); })
+            .catch(SpicemixService_1.handleError);
+    };
+    SpicemixService.prototype.deleteSpiceMix = function (rubid, id) {
+        console.log("Delete SpiceMix for id: " + id + ' for rub: ' + rubid);
+        return this.http.delete('http://localhost:8080/iWorld/bbq/rubs/' + rubid + '/gewuerzmischungen/' + id)
+            .retry(3)
+            .map(function (response) { return response.json(); })
+            .catch(SpicemixService_1.handleError);
+    };
     return SpicemixService;
 }());
 spicemix_service_SpicemixService = SpicemixService_1 = tslib_es6["a" /* __decorate */]([
@@ -74817,7 +74830,149 @@ AuthGuard = tslib_es6["a" /* __decorate */]([
 ], AuthGuard);
 
 
+// CONCATENATED MODULE: ./app/spicemix/spicemixdetail/spicemixdetail.component.ts
+
+
+
+
+
+
+
+var SpicemixdetailComponent = (function () {
+    function SpicemixdetailComponent(loggingToken, location, spicelistService, spicemixService, route) {
+        this.location = location;
+        this.spicelistService = spicelistService;
+        this.spicemixService = spicemixService;
+        this.route = route;
+        this.msgs = [];
+        this.isDebug = false;
+        this.isDebug = loggingToken;
+    }
+    SpicemixdetailComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.rubid = this.route.snapshot.params['rubid'];
+        this.spicemixid = this.route.snapshot.params['spicemixid'];
+        this.spicelistService.getEmployees().subscribe(function (allSpices) {
+            if (_this.spices !== undefined) {
+                console.log("gesamte Gewuerze: " + allSpices.length);
+            }
+            _this.spices = allSpices;
+            _this.generateGewuerze(allSpices);
+        }, function (error) { return _this.showError(error); });
+        this.spicemixService.getSpicemix(this.rubid, this.spicemixid).subscribe(function (spicemix) {
+            _this.spiceMix = spicemix;
+        }, function (error) { return _this.showSuccess(error); });
+    };
+    SpicemixdetailComponent.prototype.generateGewuerze = function (spicesArray) {
+        var spiceList = [];
+        for (var _i = 0, spicesArray_1 = spicesArray; _i < spicesArray_1.length; _i++) {
+            var spice = spicesArray_1[_i];
+            var spicArt = spice.art !== undefined && spice.art !== null ? spice.art : "";
+            spiceList.push({
+                label: spice.name + " " + spicArt,
+                value: {
+                    id: spice.id,
+                    lockVersion: spice.lockVersion,
+                    creationDate: spice.creationDate,
+                    modificationDate: spice.modificationDate,
+                    createdUser: spice.createdUser,
+                    modificationUser: spice.modificationUser,
+                    name: spice.name,
+                    art: spice.art,
+                    beschreibung: spice.beschreibung,
+                    url: spice.url
+                }
+            });
+        }
+        this.gewuerze = spiceList;
+    };
+    SpicemixdetailComponent.prototype.onSelectFocus = function () {
+        this.showSuccess("onSelectFocus");
+    };
+    SpicemixdetailComponent.prototype.onSelectBlur = function () {
+        this.showSuccess("onSelectBlur");
+    };
+    SpicemixdetailComponent.prototype.onSelectChange = function () {
+        this.showSuccess("onSelectChange");
+    };
+    SpicemixdetailComponent.prototype.deleteSpiceMix = function () {
+        console.log("deleteSpiceMix start");
+        this.removeSpiceMix();
+        console.log("deleteSpiceMix end");
+    };
+    SpicemixdetailComponent.prototype.removeSpiceMix = function () {
+        var _this = this;
+        console.log('removeSpiceMix');
+        if (this.spiceMix === null) {
+            return;
+        }
+        if (confirm('Wollen Sie die Gewürzmischung wirklich löschen?')) {
+            this.delete$ = this.spicemixService.deleteSpiceMix(this.rubid, this.spicemixid)
+                .finally(function () {
+                _this.spiceMix = null;
+            })
+                .subscribe(function () {
+                _this.location.back();
+                _this.showSuccess('Rub was successfully removed');
+            }, function (error) { return _this.showError(error); });
+            console.log("removed");
+        }
+    };
+    SpicemixdetailComponent.prototype.saveSpiceMix = function () {
+        var _this = this;
+        console.log("saveSpiceMix");
+        if (this.spiceMix.id && this.spiceMix.id > 0) {
+            console.log("update");
+            // update
+            this.editSpiceMix$ = this.spicelistService.updateSpiceMix(this.spicemixid, this.spiceMix, null)
+                .finally(function () {
+                _this.spiceMix = null;
+            })
+                .subscribe(function () {
+                _this.showSuccess('Spice was successfully updated');
+            }, function (error) { return _this.showError(error); });
+        }
+        else {
+            // create
+            console.log("create");
+            this.addSpiceMix$ = this.spicelistService.createSpiceMix(this.rubid, this.spiceMix)
+                .finally(function () {
+                _this.spiceMix = null;
+            })
+                .subscribe(function (spiceMix) {
+                _this.spiceMix = spiceMix;
+                _this.showSuccess('Spice was successfully created');
+            }, function (error) { return _this.showError(error); });
+        }
+    };
+    SpicemixdetailComponent.prototype.goBack = function () {
+        this.location.back();
+    };
+    SpicemixdetailComponent.prototype.showError = function (errMsg) {
+        this.msgs = [];
+        this.msgs.push({ severity: 'error', summary: 'Sorry, an error occurred', detail: errMsg });
+    };
+    SpicemixdetailComponent.prototype.showSuccess = function (successMsg) {
+        this.msgs = [];
+        this.msgs.push({ severity: 'success', detail: successMsg });
+    };
+    return SpicemixdetailComponent;
+}());
+SpicemixdetailComponent = tslib_es6["a" /* __decorate */]([
+    Object(core_es5["Component"])({
+        selector: 'app-spicemixdetail',
+        template: __webpack_require__("aAam")
+    }),
+    tslib_es6["d" /* __param */](0, Object(core_es5["Inject"])(MY_LOGGING_TOKEN)),
+    tslib_es6["c" /* __metadata */]("design:paramtypes", [Boolean, common_es5["Location"],
+        spicelist_service_SpicelistService,
+        spicemix_service_SpicemixService,
+        router_es5["ActivatedRoute"]])
+], SpicemixdetailComponent);
+
+
 // CONCATENATED MODULE: ./app/app-routing.module.ts
+
 
 
 
@@ -74837,6 +74992,10 @@ var routes = [
     {
         path: 'rubdetail/:id',
         component: rubdetail_component_RubdetailComponent
+    },
+    {
+        path: 'rubdetail/:rubid/spicemixdetail/:spicemixid',
+        component: SpicemixdetailComponent
     },
     {
         path: 'rubdetail',
@@ -74921,25 +75080,6 @@ MenuComponent = tslib_es6["a" /* __decorate */]([
     }),
     tslib_es6["c" /* __metadata */]("design:paramtypes", [AuthService])
 ], MenuComponent);
-
-
-// CONCATENATED MODULE: ./app/spicemix/spicemixdetail/spicemixdetail.component.ts
-
-
-var SpicemixdetailComponent = (function () {
-    function SpicemixdetailComponent() {
-    }
-    SpicemixdetailComponent.prototype.ngOnInit = function () {
-    };
-    return SpicemixdetailComponent;
-}());
-SpicemixdetailComponent = tslib_es6["a" /* __decorate */]([
-    Object(core_es5["Component"])({
-        selector: 'app-spicemixdetail',
-        template: __webpack_require__("aAam")
-    }),
-    tslib_es6["c" /* __metadata */]("design:paramtypes", [])
-], SpicemixdetailComponent);
 
 
 // CONCATENATED MODULE: ./app/app.module.ts
