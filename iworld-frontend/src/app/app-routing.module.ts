@@ -8,6 +8,7 @@ import { CoretemperaturelistComponent } from './coretemperature/coretemperaturel
 import {LoginComponent} from './login/login.component';
 import {AuthGuard} from './auth.guard';
 import {SpicemixdetailComponent} from "./spicemix/spicemixdetail/spicemixdetail.component";
+import {DeactivateGuard} from "./deactivate.guard";
 
 const routes: Routes = [
   {
@@ -17,7 +18,8 @@ const routes: Routes = [
   },
   {
     path: 'rubdetail/:id',
-    component: RubdetailComponent
+    component: RubdetailComponent,
+    canDeactivate: [DeactivateGuard]
   },
   {
     path: 'rubdetail/:rubid/spicemixdetail/:spicemixid',

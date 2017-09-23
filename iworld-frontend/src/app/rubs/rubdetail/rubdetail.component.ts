@@ -31,6 +31,9 @@ export class RubdetailComponent implements OnInit {
   msgs: Message[] = [];
   isDebug: boolean = false;
 
+  private paramsIdSubscription$: Subscription;
+  private pageSubscription$: Subscription;
+
   rub: Rub;
 
   spices: Spice[];
@@ -75,6 +78,18 @@ export class RubdetailComponent implements OnInit {
     this.showSuccess("GPL Detail init");
     this.id = this.route.snapshot.params['id'];
     this.showSuccess(this.route.snapshot.params['id']);
+
+    this.paramsIdSubscription$ = this.route.params.subscribe(params => {
+      console.log("GPL Param from subscription: " +params['id']); // (+) converts string 'id' to a number
+    });
+
+    this.pageSubscription$ = this.route
+      .queryParams
+      .subscribe(params => {
+        // Defaults to 0 if no query param provided.
+        var myRub = params['rub'];
+        console.log("GPL Param from subscription Rub Name: " + myRub);
+      });
 
     this.arten = [];
     this.arten.push({label: 'gemahlen', value: 'gemahlen'});
@@ -191,6 +206,8 @@ export class RubdetailComponent implements OnInit {
 
   ngOnDestroy() {
     this.showSuccess(`OnDestroy`);
+    this.paramsIdSubscription$.unsubscribe();
+    this.pageSubscription$.unsubscribe();
   }
 
   goBack(): void {
@@ -356,6 +373,11 @@ export class RubdetailComponent implements OnInit {
 
   findSelectedSpiceMixIndex(): number {
     return this.gewuerzMischung.indexOf(this.selectedSpiceMix);
+  }
+
+  areFormsSaved(): boolean {
+    console.log("areFormsSaved")
+    return true;
   }
 
   private showError(errMsg: string) {

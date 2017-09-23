@@ -69,8 +69,7 @@ export class RublistComponent implements OnInit, OnDestroy {
   onRowDblClickCRUD(event: any) {
     var rub = event.data;
     console.log(rub);
-
-    this.router.navigate(['/rubdetail', rub.id]);
+    this.router.navigate(['/rubdetail', rub.id], { queryParams: { rub: "GPL" } });
   }
 
   onSort(event: any) {

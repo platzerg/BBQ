@@ -53,6 +53,7 @@ import { MenuComponent } from './menu/menu.component';
 import { RublistComponent } from './rubs/rublist/rublist.component';
 import { RubdetailComponent } from './rubs/rubdetail/rubdetail.component';
 import { SpicemixdetailComponent } from './spicemix/spicemixdetail/spicemixdetail.component';
+import {DeactivateGuard} from "./deactivate.guard";
 
 @NgModule({
   declarations: [
@@ -102,6 +103,7 @@ import { SpicemixdetailComponent } from './spicemix/spicemixdetail/spicemixdetai
     fakeBackendProvider,
     ConfirmationService,
     AuthGuard,
+    DeactivateGuard,
     MockBackend,
     BaseRequestOptions
   ],

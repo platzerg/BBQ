@@ -73720,7 +73720,7 @@ var RublistComponent = (function () {
     RublistComponent.prototype.onRowDblClickCRUD = function (event) {
         var rub = event.data;
         console.log(rub);
-        this.router.navigate(['/rubdetail', rub.id]);
+        this.router.navigate(['/rubdetail', rub.id], { queryParams: { rub: "GPL" } });
     };
     RublistComponent.prototype.onSort = function (event) {
         console.log("sort");
@@ -73941,6 +73941,16 @@ var rubdetail_component_RubdetailComponent = (function () {
         this.showSuccess("GPL Detail init");
         this.id = this.route.snapshot.params['id'];
         this.showSuccess(this.route.snapshot.params['id']);
+        this.paramsIdSubscription$ = this.route.params.subscribe(function (params) {
+            console.log("GPL Param from subscription: " + params['id']); // (+) converts string 'id' to a number
+        });
+        this.pageSubscription$ = this.route
+            .queryParams
+            .subscribe(function (params) {
+            // Defaults to 0 if no query param provided.
+            var myRub = params['rub'];
+            console.log("GPL Param from subscription Rub Name: " + myRub);
+        });
         this.arten = [];
         this.arten.push({ label: 'gemahlen', value: 'gemahlen' });
         this.arten.push({ label: 'getrocknet', value: 'getrocknet' });
@@ -74038,6 +74048,8 @@ var rubdetail_component_RubdetailComponent = (function () {
     };
     RubdetailComponent.prototype.ngOnDestroy = function () {
         this.showSuccess("OnDestroy");
+        this.paramsIdSubscription$.unsubscribe();
+        this.pageSubscription$.unsubscribe();
     };
     RubdetailComponent.prototype.goBack = function () {
         this.location.back();
@@ -74136,7 +74148,8 @@ var rubdetail_component_RubdetailComponent = (function () {
         this.newspiceMix = true;
         new MySpiceMix(0, 0, 0, 0, "", "", 0, "", new MySpice(0, 0, 0, 0, "", "", "", "", "", ""));
         this.spiceMix = new MySpiceMix(0, 0, 0, 0, "", "", 0, "", new MySpice(0, 0, 0, 0, "", "", "", "", "", ""));
-        this.displayDialog = true;
+        this.router.navigate(['/rubdetail/' + this.rub.id + '/spicemixdetail/' + this.spiceMix.id]);
+        //this.displayDialog = true;
         console.log("addSpiceMix end");
     };
     RubdetailComponent.prototype.editSpiceMix = function () {
@@ -74170,6 +74183,10 @@ var rubdetail_component_RubdetailComponent = (function () {
     };
     RubdetailComponent.prototype.findSelectedSpiceMixIndex = function () {
         return this.gewuerzMischung.indexOf(this.selectedSpiceMix);
+    };
+    RubdetailComponent.prototype.areFormsSaved = function () {
+        console.log("areFormsSaved");
+        return true;
     };
     RubdetailComponent.prototype.showError = function (errMsg) {
         this.msgs = [];
@@ -74822,6 +74839,9 @@ var AuthGuard = (function () {
             return false;
         }
     };
+    AuthGuard.prototype.canDeactivate = function (component) {
+        return component.areFormsSaved();
+    };
     return AuthGuard;
 }());
 AuthGuard = tslib_es6["a" /* __decorate */]([
@@ -74971,7 +74991,24 @@ SpicemixdetailComponent = tslib_es6["a" /* __decorate */]([
 ], SpicemixdetailComponent);
 
 
+// CONCATENATED MODULE: ./app/deactivate.guard.ts
+
+
+var DeactivateGuard = (function () {
+    function DeactivateGuard() {
+    }
+    DeactivateGuard.prototype.canDeactivate = function (component, currentRoute, currentState, nextState) {
+        return component.areFormsSaved();
+    };
+    return DeactivateGuard;
+}());
+DeactivateGuard = tslib_es6["a" /* __decorate */]([
+    Object(core_es5["Injectable"])()
+], DeactivateGuard);
+
+
 // CONCATENATED MODULE: ./app/app-routing.module.ts
+
 
 
 
@@ -74991,7 +75028,8 @@ var routes = [
     },
     {
         path: 'rubdetail/:id',
-        component: rubdetail_component_RubdetailComponent
+        component: rubdetail_component_RubdetailComponent,
+        canDeactivate: [DeactivateGuard]
     },
     {
         path: 'rubdetail/:rubid/spicemixdetail/:spicemixid',
@@ -75129,6 +75167,7 @@ MenuComponent = tslib_es6["a" /* __decorate */]([
 
 
 
+
 var AppModule = (function () {
     function AppModule() {
     }
@@ -75183,6 +75222,7 @@ AppModule = tslib_es6["a" /* __decorate */]([
             fakeBackendProvider,
             api["ConfirmationService"],
             AuthGuard,
+            DeactivateGuard,
             testing_es5_MockBackend,
             http_es5_BaseRequestOptions
         ],
