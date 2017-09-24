@@ -260,7 +260,7 @@ public class BBQRubsController {
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response deleteGewuerzById(@PathParam("rubid") int rubid, @PathParam("id") int id) {
+    public Response deleteGewuerzmischungById(@PathParam("rubid") int rubid, @PathParam("id") int id) {
         this.rubsService.deleteGewuerzMischung(rubid, id);
 
         JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
@@ -270,7 +270,19 @@ public class BBQRubsController {
         return Response.status( Response.Status.ACCEPTED ).entity( jsonObj.toString() ).build();
 
     }
+
+    @Path("/gewuerze/{id}")
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteGewuerzById(@PathParam("id") int id) {
+        this.rubsService.deleteGewuerzById(id);
+
+        JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+        jsonObjBuilder.add( "message", "delete method ok" );
+        JsonObject jsonObj = jsonObjBuilder.build();
+
+        return Response.status( Response.Status.ACCEPTED ).entity( jsonObj.toString() ).build();
+
+    }
 }
-
-
-

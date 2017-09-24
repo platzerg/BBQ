@@ -64,4 +64,19 @@ export class BBQFactory {
       rawSpice.url
     )
   }
+
+  static spiceUpdateFromObject(rawSpice: any): Spice {
+    return new MySpice(
+      rawSpice.id,
+      0,
+      0,
+      0,
+      null,
+      null,
+      rawSpice.name,
+      rawSpice.art,
+      rawSpice.beschreibung,
+      rawSpice.url
+    )
+  }
 };

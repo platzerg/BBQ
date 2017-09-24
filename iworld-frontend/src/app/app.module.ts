@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {APP_BASE_HREF} from '@angular/common';
 
@@ -32,6 +32,8 @@ import {MockBackend} from '@angular/http/testing';
 import {BaseRequestOptions} from '@angular/http';
 
 import {MY_CONFIG_TOKEN, MY_LOGGING_TOKEN} from './shared/token';
+
+import {LOCALE_ID} from '@angular/core';
 
 import { AppComponent } from './app.component';
 
@@ -71,6 +73,7 @@ import {DeactivateGuard} from "./deactivate.guard";
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     ButtonModule,
     InputTextModule,
@@ -94,6 +97,7 @@ import {DeactivateGuard} from "./deactivate.guard";
     {provide: APP_BASE_HREF, useValue: '/iWorld/'},
     {provide: MY_CONFIG_TOKEN, useValue: 'GPL Configuration'},
     {provide: MY_LOGGING_TOKEN, useValue: true},
+    {provide: LOCALE_ID, useValue: 'de'},
     SpicelistService,
     SpicemixService,
     CoretemperaturelistService,

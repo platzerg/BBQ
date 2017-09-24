@@ -72153,7 +72153,7 @@ testing_es5_MockBackend.ctorParameters = function () { return []; };
 //# sourceMappingURL=testing.es5.js.map
 
 // CONCATENATED MODULE: ./app/backend/spices.ts
-var spices = [
+var spices_spices = [
     {
         'id': '1',
         'lockVersion': 0,
@@ -73437,7 +73437,7 @@ var spices = [
 
 function fakeBackendFactory(backend, options, realBackend) {
     // first, get employess from the local storage or initial data array
-    var data = JSON.parse(localStorage.getItem('spices')) || spices;
+    var data = JSON.parse(localStorage.getItem('spices')) || spices_spices;
     // configure fake backend
     backend.connections.subscribe(function (connection) {
         // wrap in timeout to simulate server api call
@@ -73849,7 +73849,7 @@ var spicelist_service_SpicelistService = SpicelistService_1 = (function () {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         var options = new RequestOptions({ headers: headers });
         var body = JSON.stringify(spice);
-        console.log("createSpice" + JSON.parse(body));
+        console.log("updateSpice" + JSON.parse(body));
         return this.http.put('http://localhost:8080/iWorld/bbq/rubs/gewuerze', body, options)
             .retry(3)
             .map(function (response) { return response.json(); })
@@ -73862,11 +73862,12 @@ var spicelist_service_SpicelistService = SpicelistService_1 = (function () {
             .catch(SpicelistService_1.handleError);
     };
     SpicelistService.prototype.createSpiceMix = function (rubId, spiceMix) {
+        debugger;
         console.log("createSpiceMix");
         var headers = new Headers({ 'Content-Type': 'application/json' });
         var options = new RequestOptions({ headers: headers });
         var body = JSON.stringify(spiceMix);
-        console.log("createSpice" + JSON.parse(body));
+        console.log("createSpiceMix" + JSON.parse(body));
         return this.http.post('http://localhost:8080/iWorld/bbq/rubs/rub/' + rubId + '/rubmix', body, options)
             .retry(3)
             .map(function (response) { return response.json(); })
@@ -74058,8 +74059,9 @@ var rubdetail_component_RubdetailComponent = (function () {
         // create a clone of the selected employee
         this.newspiceMix = false;
         console.log("onRowSelectCRUD: " + JSON.stringify(event.data));
-        this.spiceMix = Object.assign({}, event.data);
-        this.displayDialog = true;
+        //this.spiceMix = Object.assign({}, event.data);
+        this.editSpiceMix();
+        //this.displayDialog = true;
     };
     RubdetailComponent.prototype.onSelectFocus = function () {
         this.showSuccess("OnDestroy");
@@ -74145,6 +74147,7 @@ var rubdetail_component_RubdetailComponent = (function () {
     RubdetailComponent.prototype.addSpiceMix = function () {
         console.log("addSpiceMix start");
         // create an empty employee
+        debugger;
         this.newspiceMix = true;
         new MySpiceMix(0, 0, 0, 0, "", "", 0, "", new MySpice(0, 0, 0, 0, "", "", "", "", "", ""));
         this.spiceMix = new MySpiceMix(0, 0, 0, 0, "", "", 0, "", new MySpice(0, 0, 0, 0, "", "", "", "", "", ""));
@@ -74153,6 +74156,7 @@ var rubdetail_component_RubdetailComponent = (function () {
         console.log("addSpiceMix end");
     };
     RubdetailComponent.prototype.editSpiceMix = function () {
+        debugger;
         console.log("editSpiceMix start");
         // create a clone of the selected employee
         this.spiceMix = Object.assign({}, this.selectedSpiceMix);
@@ -74212,6 +74216,77 @@ rubdetail_component_RubdetailComponent = tslib_es6["a" /* __decorate */]([
 ], rubdetail_component_RubdetailComponent);
 
 
+// CONCATENATED MODULE: ./app/spices/spicelist/errormessages.ts
+var ErrorMessage = (function () {
+    function ErrorMessage(forControl, forValidator, text) {
+        this.forControl = forControl;
+        this.forValidator = forValidator;
+        this.text = text;
+    }
+    return ErrorMessage;
+}());
+
+var SpiceFormErrorMessages = [
+    new ErrorMessage('name', 'required', 'Ein Name muss angegeben werden'),
+    new ErrorMessage('art', 'required', 'Es muss eine Art angegeben werden'),
+    new ErrorMessage('beschreibung', 'required', 'Es muss eine Beschreibung angegeben werden'),
+    new ErrorMessage('url', 'minlength', 'Url muss mindestens 2 Zeichen enthalten'),
+    new ErrorMessage('url', 'maxlength', 'Eine url darf höchstens 100 Zeichen haben'),
+];
+
+// CONCATENATED MODULE: ./app/model/myRub.ts
+var MyRub = (function () {
+    function MyRub(id, lockVersion, creationDate, modificationDate, createdUser, modificationUser, name, beschreibung, herkunft, url, gewuerzMischung) {
+        this.id = id;
+        this.lockVersion = lockVersion;
+        this.creationDate = creationDate;
+        this.modificationDate = modificationDate;
+        this.createdUser = createdUser;
+        this.modificationUser = modificationUser;
+        this.name = name;
+        this.beschreibung = beschreibung;
+        this.herkunft = herkunft;
+        this.url = url;
+        this.gewuerzMischung = gewuerzMischung;
+    }
+    return MyRub;
+}());
+
+
+// CONCATENATED MODULE: ./app/model/BBQFactory.ts
+
+
+
+var BBQFactory_BBQFactory = (function () {
+    function BBQFactory() {
+    }
+    BBQFactory.emptyRub = function () {
+        var myRub = new MyRub(0, 0, 0, 0, "", "", "", "", "", "", [BBQFactory.emptySpiceMix()]);
+        return myRub;
+    };
+    BBQFactory.emptySpiceMix = function () {
+        return new MySpiceMix(0, 0, 0, 0, "", "", 0, "", BBQFactory.emptySpice());
+    };
+    BBQFactory.emptySpice = function () {
+        return new MySpice(0, 0, 0, 0, "", "", "", "", "", "");
+    };
+    BBQFactory.rubFromObject = function (rawRub) {
+        return new MyRub(rawRub.id, rawRub.lockVersion, rawRub.creationDate, rawRub.modificationDate, rawRub.createdUser, rawRub.modificationUser, rawRub.name, rawRub.beschreibung, rawRub.herkunft, rawRub.url, rawRub.gewuerzMischung);
+    };
+    BBQFactory.spiceMixFromObject = function (rawSpiceMix) {
+        return new MySpiceMix(rawSpiceMix.id, rawSpiceMix.lockVersion, rawSpiceMix.creationDate, rawSpiceMix.modificationDate, rawSpiceMix.createdUser, rawSpiceMix.modificationUser, rawSpiceMix.menge, rawSpiceMix.mengeneinheit, BBQFactory.spiceFromObject(rawSpiceMix.gewuerz));
+    };
+    BBQFactory.spiceFromObject = function (rawSpice) {
+        return new MySpice(rawSpice.id, rawSpice.lockVersion, rawSpice.creationDate, rawSpice.modificationDate, rawSpice.createdUser, rawSpice.modificationUser, rawSpice.name, rawSpice.art, rawSpice.beschreibung, rawSpice.url);
+    };
+    BBQFactory.spiceUpdateFromObject = function (rawSpice) {
+        return new MySpice(rawSpice.id, 0, 0, 0, null, null, rawSpice.name, rawSpice.art, rawSpice.beschreibung, rawSpice.url);
+    };
+    return BBQFactory;
+}());
+
+;
+
 // CONCATENATED MODULE: ./app/spices/spicelist/spicelist.component.ts
 
 
@@ -74220,12 +74295,17 @@ rubdetail_component_RubdetailComponent = tslib_es6["a" /* __decorate */]([
 
 
 
+
+
+
 var spicelist_component_SpicelistComponent = (function () {
-    function SpicelistComponent(token, loggingtoken, spicelistService, route, router) {
+    function SpicelistComponent(token, loggingtoken, spicelistService, fb, route, router) {
         this.spicelistService = spicelistService;
+        this.fb = fb;
         this.route = route;
         this.router = router;
         this.title = 'app';
+        this.errors = {};
         this.msgs = [];
         this.isDebug = false;
         this.activeIndex = 0;
@@ -74282,6 +74362,22 @@ var spicelist_component_SpicelistComponent = (function () {
         this.grades.push({ label: 'A', value: 'A' });
         this.grades.push({ label: 'B', value: 'B' });
         this.grades.push({ label: 'C', value: 'C' });
+        this.initSpiceList();
+    };
+    SpicelistComponent.prototype.initSpiceList = function () {
+        var _this = this;
+        this.spiceForm = this.fb.group({
+            id: [this.spice.id],
+            name: [this.spice.name, forms_es5["Validators"].required],
+            art: [this.spice.art, forms_es5["Validators"].required],
+            beschreibung: [this.spice.beschreibung, forms_es5["Validators"].required],
+            url: [this.spice.url, [
+                    forms_es5["Validators"].required,
+                    forms_es5["Validators"].minLength(2),
+                    forms_es5["Validators"].maxLength(100)
+                ]]
+        });
+        this.spiceForm.statusChanges.subscribe(function () { return _this.updateErrorMessages(); });
     };
     SpicelistComponent.prototype.ngOnDestroy = function () {
         //this.get$.unsubscribe();
@@ -74406,6 +74502,7 @@ var spicelist_component_SpicelistComponent = (function () {
         this.newSpice = false;
         console.log("onRowSelectCRUD: " + JSON.stringify(event.data));
         this.spice = Object.assign({}, event.data);
+        this.initSpiceList();
         this.displayDialog = true;
     };
     SpicelistComponent.prototype.onRowDblClickCRUD = function (event) {
@@ -74413,6 +74510,7 @@ var spicelist_component_SpicelistComponent = (function () {
         this.newSpice = false;
         console.log("onRowSelectCRUD: " + JSON.stringify(event.data));
         this.spice = Object.assign({}, event.data);
+        this.initSpiceList();
         this.displayDialog = true;
     };
     SpicelistComponent.prototype.findSelectedSpiceIndex = function () {
@@ -74432,6 +74530,7 @@ var spicelist_component_SpicelistComponent = (function () {
     SpicelistComponent.prototype.addSpice = function () {
         this.newSpice = true;
         this.spice = new MySpice(0, 0, 0, 0, "", "", "", "", "", "");
+        this.initSpiceList();
         this.displayDialog = true;
     };
     SpicelistComponent.prototype.add = function () {
@@ -74448,12 +74547,14 @@ var spicelist_component_SpicelistComponent = (function () {
             beschreibung: "",
             url: "",
         };
+        this.initSpiceList();
         this.displayDialog = true;
         this.showSuccess('added');
     };
     SpicelistComponent.prototype.edit = function () {
         // create a clone of the selected employee
         this.spice = Object.assign({}, this.selectedSpice);
+        this.initSpiceList();
         this.displayDialog = true;
         this.showSuccess('edited');
     };
@@ -74477,6 +74578,9 @@ var spicelist_component_SpicelistComponent = (function () {
             console.log("remove");
         }
     };
+    SpicelistComponent.prototype.reset = function () {
+        this.spiceForm.reset(new MySpice(0, 0, 0, 0, "", "", "", "", "", ""));
+    };
     SpicelistComponent.prototype.delete = function () {
         this.remove();
     };
@@ -74490,6 +74594,8 @@ var spicelist_component_SpicelistComponent = (function () {
         else {
             spices[this.findSelectedSpiceIndex()] = this.spice;
         }
+        this.spice = BBQFactory_BBQFactory.spiceUpdateFromObject(this.spiceForm.value);
+        debugger;
         if (this.spice.id && this.spice.id > 0) {
             console.log("update");
             // update
@@ -74525,6 +74631,20 @@ var spicelist_component_SpicelistComponent = (function () {
             }, function (error) { return _this.showError(error); });
         }
     };
+    SpicelistComponent.prototype.updateErrorMessages = function () {
+        this.errors = {};
+        for (var _i = 0, SpiceFormErrorMessages_1 = SpiceFormErrorMessages; _i < SpiceFormErrorMessages_1.length; _i++) {
+            var message = SpiceFormErrorMessages_1[_i];
+            var control = this.spiceForm.get(message.forControl);
+            if (control &&
+                control.dirty &&
+                control.invalid &&
+                control.errors[message.forValidator] &&
+                !this.errors[message.forControl]) {
+                this.errors[message.forControl] = message.text;
+            }
+        }
+    };
     return SpicelistComponent;
 }());
 spicelist_component_SpicelistComponent = tslib_es6["a" /* __decorate */]([
@@ -74535,6 +74655,7 @@ spicelist_component_SpicelistComponent = tslib_es6["a" /* __decorate */]([
     tslib_es6["d" /* __param */](0, Object(core_es5["Inject"])(MY_CONFIG_TOKEN)),
     tslib_es6["d" /* __param */](1, Object(core_es5["Inject"])(MY_LOGGING_TOKEN)),
     tslib_es6["c" /* __metadata */]("design:paramtypes", [String, Boolean, spicelist_service_SpicelistService,
+        forms_es5["FormBuilder"],
         router_es5["ActivatedRoute"],
         router_es5["Router"]])
 ], spicelist_component_SpicelistComponent);
@@ -74858,9 +74979,12 @@ AuthGuard = tslib_es6["a" /* __decorate */]([
 
 
 
-var SpicemixdetailComponent = (function () {
-    function SpicemixdetailComponent(loggingToken, location, spicelistService, spicemixService, route) {
+
+
+var spicemixdetail_component_SpicemixdetailComponent = (function () {
+    function SpicemixdetailComponent(loggingToken, location, router, spicelistService, spicemixService, route) {
         this.location = location;
+        this.router = router;
         this.spicelistService = spicelistService;
         this.spicemixService = spicemixService;
         this.route = route;
@@ -74879,9 +75003,15 @@ var SpicemixdetailComponent = (function () {
             _this.spices = allSpices;
             _this.generateGewuerze(allSpices);
         }, function (error) { return _this.showError(error); });
-        this.spicemixService.getSpicemix(this.rubid, this.spicemixid).subscribe(function (spicemix) {
-            _this.spiceMix = spicemix;
-        }, function (error) { return _this.showSuccess(error); });
+        debugger;
+        if (this.spicemixid > 0) {
+            this.spicemixService.getSpicemix(this.rubid, this.spicemixid).subscribe(function (spicemix) {
+                _this.spiceMix = spicemix;
+            }, function (error) { return _this.showSuccess(error); });
+        }
+        else {
+            this.spiceMix = new MySpiceMix(0, 0, 0, 0, "", "", 0, "", new MySpice(0, 0, 0, 0, "", "", "", "", "", ""));
+        }
     };
     SpicemixdetailComponent.prototype.generateGewuerze = function (spicesArray) {
         var spiceList = [];
@@ -74946,18 +75076,20 @@ var SpicemixdetailComponent = (function () {
             // update
             this.editSpiceMix$ = this.spicelistService.updateSpiceMix(this.spicemixid, this.spiceMix, null)
                 .finally(function () {
-                _this.spiceMix = null;
+                //this.spiceMix = null;
             })
-                .subscribe(function () {
+                .subscribe(function (spiceMix) {
                 _this.showSuccess('Spice was successfully updated');
             }, function (error) { return _this.showError(error); });
         }
         else {
             // create
             console.log("create");
+            this.spiceMix.gewuerz = this.selectedGewuerz;
             this.addSpiceMix$ = this.spicelistService.createSpiceMix(this.rubid, this.spiceMix)
                 .finally(function () {
-                _this.spiceMix = null;
+                //this.spiceMix = null;
+                _this.router.navigate(['/rubdetail/' + _this.rubid]);
             })
                 .subscribe(function (spiceMix) {
                 _this.spiceMix = spiceMix;
@@ -74978,17 +75110,18 @@ var SpicemixdetailComponent = (function () {
     };
     return SpicemixdetailComponent;
 }());
-SpicemixdetailComponent = tslib_es6["a" /* __decorate */]([
+spicemixdetail_component_SpicemixdetailComponent = tslib_es6["a" /* __decorate */]([
     Object(core_es5["Component"])({
         selector: 'app-spicemixdetail',
         template: __webpack_require__("aAam")
     }),
     tslib_es6["d" /* __param */](0, Object(core_es5["Inject"])(MY_LOGGING_TOKEN)),
     tslib_es6["c" /* __metadata */]("design:paramtypes", [Boolean, common_es5["Location"],
+        router_es5["Router"],
         spicelist_service_SpicelistService,
         spicemix_service_SpicemixService,
         router_es5["ActivatedRoute"]])
-], SpicemixdetailComponent);
+], spicemixdetail_component_SpicemixdetailComponent);
 
 
 // CONCATENATED MODULE: ./app/deactivate.guard.ts
@@ -75033,7 +75166,7 @@ var routes = [
     },
     {
         path: 'rubdetail/:rubid/spicemixdetail/:spicemixid',
-        component: SpicemixdetailComponent
+        component: spicemixdetail_component_SpicemixdetailComponent
     },
     {
         path: 'rubdetail',
@@ -75168,6 +75301,7 @@ MenuComponent = tslib_es6["a" /* __decorate */]([
 
 
 
+
 var AppModule = (function () {
     function AppModule() {
     }
@@ -75184,12 +75318,13 @@ AppModule = tslib_es6["a" /* __decorate */]([
             MenuComponent,
             RublistComponent,
             rubdetail_component_RubdetailComponent,
-            SpicemixdetailComponent
+            spicemixdetail_component_SpicemixdetailComponent
         ],
         imports: [
             platform_browser_es5["a" /* BrowserModule */],
             BrowserAnimationsModule,
             forms_es5["FormsModule"],
+            forms_es5["ReactiveFormsModule"],
             HttpModule,
             button_button["ButtonModule"],
             inputtext["InputTextModule"],
@@ -75213,6 +75348,7 @@ AppModule = tslib_es6["a" /* __decorate */]([
             { provide: common_es5["APP_BASE_HREF"], useValue: '/iWorld/' },
             { provide: MY_CONFIG_TOKEN, useValue: 'GPL Configuration' },
             { provide: MY_LOGGING_TOKEN, useValue: true },
+            { provide: core_es5["LOCALE_ID"], useValue: 'de' },
             spicelist_service_SpicelistService,
             spicemix_service_SpicemixService,
             CoretemperaturelistService,
@@ -89707,7 +89843,7 @@ module.exports = "<p-growl [value]=\"msgs\" name=\"rubListGrowl\"></p-growl>\n\n
 /***/ "nxRJ":
 /***/ (function(module, exports) {
 
-module.exports = "<p-growl [value]=\"msgs\" name=\"spiceListGrowl\"></p-growl>\n\n<div class=\"ui-widget-header align-globalfilter\">\n  <i class=\"fa fa-search search-globalfilter\"></i>\n  <input #gb type=\"text\" pInputText size=\"50\" placeholder=\"Global Filter\">\n</div>\n<p-dataTable [value]=\"spices\" [immutable]=\"false\" selectionMode=\"single\"\n             sortMode=\"multiple\" (onSort)=\"onSort($event)\"\n             [editable]=\"false\"\n             resizableColumns=\"true\"\n             reorderableColumns=\"true\"\n             scrollable=\"false\" scrollHeight=\"600px\"\n             [(selection)]=\"selectedSpice\"\n             (onRowDblclick)=\"onRowDblClickCRUD($event)\"\n             (onRowUnselect)=\"onRowUnselect($event)\"\n             (onSort)=\"onSort($event)\"\n             [(selection)]=\"selectedSpice\"\n             [paginator]=\"true\" paginatorPosition=\"bottom\" [responsive]=\"true\" [rows]=\"5\" [alwaysShowPaginator]=\"true\" (onPage)=\"onPage($event)\" [pageLinks]=\"3\" [rowsPerPageOptions]=\"[5, 10,15,20]\"\n             [globalFilter]=\"gb\"\n             #datatable\n             (onFilter)=\"onFilter($event)\">\n  <p-header>\n    <div style=\"text-align:left\">\n      <p-multiSelect [options]=\"columnOptions\" [(ngModel)]=\"cols\"></p-multiSelect>\n    </div>\n  </p-header>\n  <p-column *ngFor=\"let col of cols\" [field]=\"col.field\" [header]=\"col.header\" [sortable]=\"col.sortable\" [filter]=\"col.filter\" [editable]=\"col.editable\" [filterMatchMode]=\"col.filterMatchMode\" [filterPlaceholder]=\"col.fPlaceholder\"></p-column>\n  <p-footer>\n    <button pButton type=\"button\" label=\"Add\" icon=\"fa-plus\" (click)=\"add()\"></button>\n    <button pButton type=\"button\" label=\"Edit\" icon=\"fa-pencil\" (click)=\"edit()\"\n            [disabled]=\"!selectedSpice\"></button>\n    <button pButton type=\"button\" label=\"Remove\" icon=\"fa-trash-o\" (click)=\"remove()\"\n            [disabled]=\"!selectedSpice\"></button>\n  </p-footer>\n</p-dataTable>\n\n\n<p-dialog header=\"Spices Details\" [(visible)]=\"displayDialog\" [responsive]=\"true\" showEffect=\"fade\" [modal]=\"true\">\n  <form #spiceForm=\"ngForm\" novalidate>\n    <div class=\"ui-grid ui-grid-responsive ui-fluid\" *ngIf=\"spice\">\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"name\">Name</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"name\" name=\"name\" required\n                 [(ngModel)]=\"spice.name\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"art\">Art</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"art\" name=\"art\" required\n                 [(ngModel)]=\"spice.art\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"beschreibung\">Beschreibung</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"beschreibung\" name=\"beschreibung\" required\n                 [(ngModel)]=\"spice.beschreibung\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"url\">URL</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"url\" name=\"Url\" required\n                 [(ngModel)]=\"spice.url\"/>\n        </div>\n      </div>\n    </div>\n  </form>\n  <p-footer>\n    <div class=\"ui-dialog-buttonpane ui-helper-clearfix\">\n      <button type=\"button\" pButton icon=\"fa-close\" (click)=\"delete()\" label=\"Delete\"></button>\n      <button type=\"submit\" pButton icon=\"fa-check\" (click)=\"save()\" label=\"Save\" [disabled]=\"!spiceForm.form.valid\"></button>\n    </div>\n  </p-footer>\n</p-dialog>\n"
+module.exports = "<p-growl [value]=\"msgs\" name=\"spiceListGrowl\"></p-growl>\n\n<div class=\"ui-widget-header align-globalfilter\">\n  <i class=\"fa fa-search search-globalfilter\"></i>\n  <input #gb type=\"text\" pInputText size=\"50\" placeholder=\"Global Filter\">\n</div>\n<p-dataTable [value]=\"spices\" [immutable]=\"false\" selectionMode=\"single\"\n             sortMode=\"multiple\" (onSort)=\"onSort($event)\"\n             [editable]=\"false\"\n             resizableColumns=\"true\"\n             reorderableColumns=\"true\"\n             scrollable=\"false\" scrollHeight=\"600px\"\n             [(selection)]=\"selectedSpice\"\n             (onRowDblclick)=\"onRowDblClickCRUD($event)\"\n             (onRowUnselect)=\"onRowUnselect($event)\"\n             (onSort)=\"onSort($event)\"\n             [(selection)]=\"selectedSpice\"\n             [paginator]=\"true\" paginatorPosition=\"bottom\" [responsive]=\"true\" [rows]=\"5\" [alwaysShowPaginator]=\"true\" (onPage)=\"onPage($event)\" [pageLinks]=\"3\" [rowsPerPageOptions]=\"[5, 10,15,20]\"\n             [globalFilter]=\"gb\"\n             #datatable\n             (onFilter)=\"onFilter($event)\">\n  <p-header>\n\n  </p-header>\n  <p-column *ngFor=\"let col of cols\" [field]=\"col.field\" [header]=\"col.header\" [sortable]=\"col.sortable\" [filter]=\"col.filter\" [editable]=\"col.editable\" [filterMatchMode]=\"col.filterMatchMode\" [filterPlaceholder]=\"col.fPlaceholder\"></p-column>\n  <p-footer>\n    <button pButton type=\"button\" label=\"Add\" icon=\"fa-plus\" (click)=\"add()\"></button>\n    <button pButton type=\"button\" label=\"Edit\" icon=\"fa-pencil\" (click)=\"edit()\"\n            [disabled]=\"!selectedSpice\"></button>\n    <button pButton type=\"button\" label=\"Remove\" icon=\"fa-trash-o\" (click)=\"remove()\"\n            [disabled]=\"!selectedSpice\"></button>\n  </p-footer>\n</p-dataTable>\n\n\n<p-dialog header=\"Spices Details\" [(visible)]=\"displayDialog\" [responsive]=\"true\" showEffect=\"fade\" [modal]=\"true\">\n  <form [formGroup] =\"spiceForm\" (ngSubmit)=\"save()\"  novalidate>\n    <div class=\"ui-grid ui-grid-responsive ui-fluid\" *ngIf=\"spice\">\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"id\">ID</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"id\" name=\"id\" required  readonly=\"true\"\n                 formControlName=\"id\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"name\">Name</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"name\" name=\"name\" required\n                 formControlName=\"name\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"art\">Art</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"art\" name=\"art\" required\n                 formControlName=\"art\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"beschreibung\">Beschreibung</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"beschreibung\" name=\"beschreibung\" required\n                 formControlName=\"beschreibung\"/>\n        </div>\n      </div>\n      <div class=\"ui-g ui-g-12 ui-g-nopad\">\n        <div class=\"ui-g-12 ui-md-3 ui-label\">\n          <label for=\"url\">URL</label>\n        </div>\n        <div class=\"ui-g-12 ui-md-9\">\n          <input pInputText id=\"url\" name=\"Url\" required\n                 formControlName=\"url\"/>\n        </div>\n      </div>\n    </div>\n  </form>\n  <p-footer>\n    <div class=\"ui-dialog-buttonpane ui-helper-clearfix\">\n      <button type=\"button\" pButton icon=\"fa-close\" (click)=\"reset()\" label=\"Reset\"></button>\n      <button type=\"button\" pButton icon=\"fa-close\" (click)=\"delete()\" label=\"Delete\"></button>\n      <button type=\"submit\" pButton icon=\"fa-check\" (click)=\"save()\" label=\"Save\"></button>\n    </div>\n  </p-footer>\n</p-dialog>\n"
 
 /***/ }),
 

@@ -20,9 +20,7 @@
              #datatable
              (onFilter)="onFilter($event)">
   <p-header>
-    <div style="text-align:left">
-      <p-multiSelect [options]="columnOptions" [(ngModel)]="cols"></p-multiSelect>
-    </div>
+
   </p-header>
   <p-column *ngFor="let col of cols" [field]="col.field" [header]="col.header" [sortable]="col.sortable" [filter]="col.filter" [editable]="col.editable" [filterMatchMode]="col.filterMatchMode" [filterPlaceholder]="col.fPlaceholder"></p-column>
   <p-footer>
@@ -36,15 +34,24 @@
 
 
 <p-dialog header="Spices Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
-  <form #spiceForm="ngForm" novalidate>
+  <form [formGroup] ="spiceForm" (ngSubmit)="save()"  novalidate>
     <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="spice">
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-12 ui-md-3 ui-label">
+          <label for="id">ID</label>
+        </div>
+        <div class="ui-g-12 ui-md-9">
+          <input pInputText id="id" name="id" required  readonly="true"
+                 formControlName="id"/>
+        </div>
+      </div>
       <div class="ui-g ui-g-12 ui-g-nopad">
         <div class="ui-g-12 ui-md-3 ui-label">
           <label for="name">Name</label>
         </div>
         <div class="ui-g-12 ui-md-9">
           <input pInputText id="name" name="name" required
-                 [(ngModel)]="spice.name"/>
+                 formControlName="name"/>
         </div>
       </div>
       <div class="ui-g ui-g-12 ui-g-nopad">
@@ -53,7 +60,7 @@
         </div>
         <div class="ui-g-12 ui-md-9">
           <input pInputText id="art" name="art" required
-                 [(ngModel)]="spice.art"/>
+                 formControlName="art"/>
         </div>
       </div>
       <div class="ui-g ui-g-12 ui-g-nopad">
@@ -62,7 +69,7 @@
         </div>
         <div class="ui-g-12 ui-md-9">
           <input pInputText id="beschreibung" name="beschreibung" required
-                 [(ngModel)]="spice.beschreibung"/>
+                 formControlName="beschreibung"/>
         </div>
       </div>
       <div class="ui-g ui-g-12 ui-g-nopad">
@@ -71,15 +78,16 @@
         </div>
         <div class="ui-g-12 ui-md-9">
           <input pInputText id="url" name="Url" required
-                 [(ngModel)]="spice.url"/>
+                 formControlName="url"/>
         </div>
       </div>
     </div>
   </form>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" pButton icon="fa-close" (click)="reset()" label="Reset"></button>
       <button type="button" pButton icon="fa-close" (click)="delete()" label="Delete"></button>
-      <button type="submit" pButton icon="fa-check" (click)="save()" label="Save" [disabled]="!spiceForm.form.valid"></button>
+      <button type="submit" pButton icon="fa-check" (click)="save()" label="Save"></button>
     </div>
   </p-footer>
 </p-dialog>

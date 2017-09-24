@@ -218,8 +218,9 @@ export class RubdetailComponent implements OnInit {
     // create a clone of the selected employee
     this.newspiceMix = false;
     console.log("onRowSelectCRUD: " + JSON.stringify(event.data));
-    this.spiceMix = Object.assign({}, event.data);
-    this.displayDialog = true;
+    //this.spiceMix = Object.assign({}, event.data);
+    this.editSpiceMix();
+    //this.displayDialog = true;
   }
 
   onSelectFocus() {
@@ -322,6 +323,7 @@ export class RubdetailComponent implements OnInit {
   addSpiceMix() {
     console.log("addSpiceMix start")
     // create an empty employee
+    debugger;
     this.newspiceMix = true;
     new MySpiceMix(0, 0, 0, 0, "", "", 0, "", new MySpice(0,0,0,0,"","","","","",""));
     this.spiceMix = new MySpiceMix(0, 0, 0, 0, "", "", 0, "", new MySpice(0,0,0,0,"","","","","",""));
@@ -331,6 +333,7 @@ export class RubdetailComponent implements OnInit {
   }
 
   editSpiceMix() {
+    debugger;
     console.log("editSpiceMix start");
     // create a clone of the selected employee
     this.spiceMix = Object.assign({}, this.selectedSpiceMix);

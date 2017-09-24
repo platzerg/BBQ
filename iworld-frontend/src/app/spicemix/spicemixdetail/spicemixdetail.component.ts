@@ -5,12 +5,14 @@ import SpiceMix from "../../model/spicemix";
 import {MY_LOGGING_TOKEN} from '../../shared/token';
 
 import { Location } from '@angular/common';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import Spice from "../../model/spice";
 
 import {SpicelistService} from "../../spices/spicelist/services/spicelist.service";
 import {SpicemixService} from "../services/spicemix.service";
 import {Subscription} from "rxjs/Subscription";
+import {MySpiceMix} from "../../model/mySpiceMix";
+import {MySpice} from "../../model/mySpice";
 
 
 @Component({
@@ -38,6 +40,7 @@ export class SpicemixdetailComponent implements OnInit {
   constructor(
     @Inject(MY_LOGGING_TOKEN) loggingToken : boolean,
     private location: Location,
+    private router: Router,
     private spicelistService: SpicelistService,
     private spicemixService: SpicemixService,
     private route: ActivatedRoute) {
@@ -58,14 +61,20 @@ export class SpicemixdetailComponent implements OnInit {
       },
       error => this.showError(error)
     );
+    debugger;
 
-    this.spicemixService.getSpicemix(this.rubid, this.spicemixid).subscribe(
-      spicemix => {
-        this.spiceMix = spicemix;
+    if(this.spicemixid > 0){
+      this.spicemixService.getSpicemix(this.rubid, this.spicemixid).subscribe(
+        spicemix => {
+          this.spiceMix = spicemix;
 
-      },
-      error => this.showSuccess(error)
-    );
+        },
+        error => this.showSuccess(error)
+      );
+    } else {
+      this.spiceMix = new MySpiceMix(0, 0, 0, 0, "", "", 0, "", new MySpice(0,0,0,0,"","","","","",""));
+    }
+
   }
 
   generateGewuerze(spicesArray: Spice[]) {
@@ -137,16 +146,16 @@ export class SpicemixdetailComponent implements OnInit {
 
   saveSpiceMix() {
     console.log("saveSpiceMix");
+
     if (this.spiceMix.id && this.spiceMix.id > 0) {
       console.log("update");
       // update
       this.editSpiceMix$ = this.spicelistService.updateSpiceMix(this.spicemixid, this.spiceMix, null)
         .finally(() => {
-          this.spiceMix = null;
+          //this.spiceMix = null;
         })
         .subscribe(
-          () => {
-
+          (spiceMix: SpiceMix) => {
             this.showSuccess('Spice was successfully updated');
           },
           error => this.showError(error)
@@ -154,14 +163,17 @@ export class SpicemixdetailComponent implements OnInit {
     } else {
       // create
       console.log("create");
+      this.spiceMix.gewuerz = this.selectedGewuerz;
       this.addSpiceMix$ = this.spicelistService.createSpiceMix(this.rubid, this.spiceMix)
         .finally(() => {
-          this.spiceMix = null;
+          //this.spiceMix = null;
+          this.router.navigate(['/rubdetail/' + this.rubid]);
         })
         .subscribe(
           (spiceMix: SpiceMix) => {
             this.spiceMix = spiceMix;
             this.showSuccess('Spice was successfully created');
+
           },
           error => this.showError(error)
         );

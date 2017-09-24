@@ -1,4 +1,5 @@
 import {Component, OnInit, OnDestroy, Inject} from '@angular/core';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import {SpicelistService} from './services/spicelist.service';
 import {Spice} from '../../model/spice';
 import {MySpice} from '../../model/mySpice';
@@ -9,6 +10,8 @@ import 'rxjs/add/operator/finally';
 import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
 
 import {MY_CONFIG_TOKEN, MY_LOGGING_TOKEN} from '../../shared/token';
+import {SpiceFormErrorMessages} from "./errormessages";
+import {BBQFactory} from "../../model/BBQFactory";
 
 @Component({
   selector: 'app-spicelist',
@@ -17,6 +20,8 @@ import {MY_CONFIG_TOKEN, MY_LOGGING_TOKEN} from '../../shared/token';
 export class SpicelistComponent implements OnInit, OnDestroy {
 
   title = 'app';
+  spiceForm: FormGroup;
+  errors: { [key: string]: string } = {};
 
   msgs: Message[] = [];
   isDebug = false;
@@ -59,6 +64,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
   constructor(@Inject(MY_CONFIG_TOKEN) token : string,
               @Inject(MY_LOGGING_TOKEN) loggingtoken : boolean,
     private spicelistService: SpicelistService,
+    private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router) {
     console.log("GPL SpicelistService: " + token);
@@ -125,6 +131,25 @@ export class SpicelistComponent implements OnInit, OnDestroy {
     this.grades.push({label: 'B', value: 'B'});
     this.grades.push({label: 'C', value: 'C'});
 
+    this.initSpiceList();
+
+
+  }
+
+  initSpiceList() {
+    this.spiceForm = this.fb.group({
+      id: [this.spice.id],
+      name: [this.spice.name, Validators.required],
+      art: [this.spice.art, Validators.required],
+      beschreibung: [this.spice.beschreibung, Validators.required],
+      url: [this.spice.url, [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(100)
+      ]]
+
+    });
+    this.spiceForm.statusChanges.subscribe(() => this.updateErrorMessages());
   }
 
   ngOnDestroy() {
@@ -271,6 +296,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
     this.newSpice = false;
     console.log("onRowSelectCRUD: " + JSON.stringify(event.data));
     this.spice = Object.assign({}, event.data);
+    this.initSpiceList();
     this.displayDialog = true;
   }
 
@@ -279,6 +305,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
     this.newSpice = false;
     console.log("onRowSelectCRUD: " + JSON.stringify(event.data));
     this.spice = Object.assign({}, event.data);
+    this.initSpiceList();
     this.displayDialog = true;
   }
 
@@ -303,6 +330,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
   addSpice() {
     this.newSpice = true;
     this.spice = new MySpice(0, 0, 0, 0, "", "", "", "", "", "");
+    this.initSpiceList();
     this.displayDialog = true;
   }
 
@@ -321,6 +349,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
       url: "",
     };
 
+    this.initSpiceList();
     this.displayDialog = true;
     this.showSuccess('added');
   }
@@ -329,6 +358,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
 
     // create a clone of the selected employee
     this.spice = Object.assign({}, this.selectedSpice);
+    this.initSpiceList();
 
     this.displayDialog = true;
     this.showSuccess('edited');
@@ -361,6 +391,10 @@ export class SpicelistComponent implements OnInit, OnDestroy {
     }
   }
 
+  reset() {
+    this.spiceForm.reset(new MySpice(0, 0, 0, 0, "", "", "", "", "", ""));
+  }
+
   delete() {
     this.remove();
   }
@@ -374,6 +408,9 @@ export class SpicelistComponent implements OnInit, OnDestroy {
     } else {
       spices[this.findSelectedSpiceIndex()] = this.spice;
     }
+
+    this.spice = BBQFactory.spiceUpdateFromObject(this.spiceForm.value);
+    debugger;
 
     if (this.spice.id && this.spice.id > 0) {
       console.log("update");
@@ -413,6 +450,20 @@ export class SpicelistComponent implements OnInit, OnDestroy {
           },
           error => this.showError(error)
         );
+    }
+  }
+
+  updateErrorMessages() {
+    this.errors = {};
+    for (const message of SpiceFormErrorMessages) {
+      const control = this.spiceForm.get(message.forControl);
+      if (control &&
+        control.dirty &&
+        control.invalid &&
+        control.errors[message.forValidator] &&
+        !this.errors[message.forControl]) {
+        this.errors[message.forControl] = message.text;
+      }
     }
   }
 
