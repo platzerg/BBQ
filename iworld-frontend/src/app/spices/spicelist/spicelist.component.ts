@@ -400,8 +400,8 @@ export class SpicelistComponent implements OnInit, OnDestroy {
   }
 
   save() {
+    debugger;
     console.log("save: id: " +this.spice.id);
-
     let spices = [...this.spices];
     if (this.newSpice) {
       spices.push(this.spice);

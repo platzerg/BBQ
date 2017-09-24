@@ -53,6 +53,9 @@
           <input pInputText id="name" name="name" required
                  formControlName="name"/>
         </div>
+        <div *ngIf="errors.name" class="ui negative message">
+          {{ errors.name }}
+        </div>
       </div>
       <div class="ui-g ui-g-12 ui-g-nopad">
         <div class="ui-g-12 ui-md-3 ui-label">
@@ -61,6 +64,9 @@
         <div class="ui-g-12 ui-md-9">
           <input pInputText id="art" name="art" required
                  formControlName="art"/>
+        </div>
+        <div *ngIf="errors.art" class="ui negative message">
+          {{ errors.art }}
         </div>
       </div>
       <div class="ui-g ui-g-12 ui-g-nopad">
@@ -71,6 +77,9 @@
           <input pInputText id="beschreibung" name="beschreibung" required
                  formControlName="beschreibung"/>
         </div>
+        <div *ngIf="errors.beschreibung" class="ui negative message">
+          {{ errors.beschreibung }}
+        </div>
       </div>
       <div class="ui-g ui-g-12 ui-g-nopad">
         <div class="ui-g-12 ui-md-3 ui-label">
@@ -79,6 +88,9 @@
         <div class="ui-g-12 ui-md-9">
           <input pInputText id="url" name="Url" required
                  formControlName="url"/>
+        </div>
+        <div *ngIf="errors.url" class="ui negative message">
+          {{ errors.url }}
         </div>
       </div>
     </div>
