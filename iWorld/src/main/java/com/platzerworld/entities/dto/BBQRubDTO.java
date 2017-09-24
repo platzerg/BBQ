@@ -23,6 +23,7 @@ public class BBQRubDTO {
     private String modificationUser;
     private String name;
     private String beschreibung;
+    private String rezept;
     private String herkunft;
     private String url;
 
@@ -91,6 +92,14 @@ public class BBQRubDTO {
 
     public void setBeschreibung(String beschreibung) {
         this.beschreibung = beschreibung;
+    }
+
+    public String getRezept() {
+        return rezept;
+    }
+
+    public void setRezept(String rezept) {
+        this.rezept = rezept;
     }
 
     public String getHerkunft() {

@@ -8,6 +8,7 @@ import {APP_BASE_HREF} from '@angular/common';
 // import needed PrimeNG modules here
 import {ButtonModule} from 'primeng/components/button/button';
 import {InputTextModule} from 'primeng/components/inputtext/inputtext';
+import {InputTextareaModule} from 'primeng/primeng';
 import {DataTableModule} from 'primeng/components/datatable/datatable';
 import {DialogModule} from 'primeng/components/dialog/dialog';
 import {MessagesModule} from 'primeng/components/messages/messages';
@@ -77,6 +78,7 @@ import {DeactivateGuard} from "./deactivate.guard";
     HttpModule,
     ButtonModule,
     InputTextModule,
+    InputTextareaModule,
     DataTableModule,
     DialogModule,
     MessagesModule,

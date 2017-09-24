@@ -9,6 +9,7 @@ export interface Rub {
   modificationUser: string
   name: string;
   beschreibung: string;
+  rezept: string;
   herkunft: string;
   url: string;
 

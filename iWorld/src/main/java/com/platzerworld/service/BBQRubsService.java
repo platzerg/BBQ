@@ -308,6 +308,7 @@ public class BBQRubsService {
 
         rub.setName(bbqRubDTO.getName());
         rub.setBeschreibung(bbqRubDTO.getBeschreibung());
+        rub.setRezept(bbqRubDTO.getRezept());
         rub.setHerkunft(bbqRubDTO.getHerkunft());
         rub.setUrl(bbqRubDTO.getUrl());
 
@@ -367,6 +368,7 @@ public class BBQRubsService {
 
         rubDTO.setName(rub.getName());
         rubDTO.setBeschreibung(rub.getBeschreibung());
+        rubDTO.setRezept(rub.getRezept());
         rubDTO.setHerkunft(rub.getHerkunft());
         rubDTO.setUrl(rub.getUrl());
 

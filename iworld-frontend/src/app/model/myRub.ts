@@ -10,6 +10,7 @@ export class MyRub implements Rub {
               public creationDate: number, public modificationDate: number,
               public createdUser: string, public modificationUser: string,
               public name: string, public beschreibung: string,
+              public rezept: string,
               public herkunft: string, public url: string,
               public gewuerzMischung: [MySpiceMix]) {
   }

@@ -53,6 +53,9 @@ public class BBQRub implements Creatable, Updatable{
     @Column(name = "beschreibung", nullable = true)
     private String beschreibung;
 
+    @Column(name = "rezept", nullable = true)
+    private String rezept;
+
     @Column(name = "herkunft", nullable = true)
     private String herkunft;
 
@@ -60,7 +63,7 @@ public class BBQRub implements Creatable, Updatable{
     private String url;
 
     @OneToMany(fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinColumn(name="RUB_ID", referencedColumnName="RUB_ID")
+    @JoinColumn(name="RUB_ID")
     private List<BBQGewuerzMischung> gewuerzMischung = new ArrayList<>();
 
     public BBQRub() {
@@ -129,6 +132,14 @@ public class BBQRub implements Creatable, Updatable{
 
     public void setBeschreibung(String beschreibung) {
         this.beschreibung = beschreibung;
+    }
+
+    public String getRezept() {
+        return rezept;
+    }
+
+    public void setRezept(String rezept) {
+        this.rezept = rezept;
     }
 
     public String getHerkunft() {

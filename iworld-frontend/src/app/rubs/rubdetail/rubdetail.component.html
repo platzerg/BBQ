@@ -32,10 +32,18 @@
       </div>
       <div class="ui-g ui-g-12 ui-g-nopad">
         <div class="ui-g-2 ui-md-1 ui-label">
-          <label for="beschreibung">Herkunft</label>
+          <label for="rezept">Rezept</label>
         </div>
         <div class="ui-g-5 ui-md-8">
-          <input pInputText id="beschreibung" name="beschreibung" required
+          <textarea id="rezept" name="rezept" [rows]="10" [cols]="30" pInputTextarea autoResize="autoResize" [(ngModel)]="rub.rezept"></textarea>
+        </div>
+      </div>
+      <div class="ui-g ui-g-12 ui-g-nopad">
+        <div class="ui-g-2 ui-md-1 ui-label">
+          <label for="herkunft">Herkunft</label>
+        </div>
+        <div class="ui-g-5 ui-md-8">
+          <input pInputText id="herkunft" name="herkunft" required
                  [(ngModel)]="rub.herkunft"/>
         </div>
       </div>

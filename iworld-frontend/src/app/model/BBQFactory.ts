@@ -8,7 +8,7 @@ import Spice from "./spice";
 export class BBQFactory {
 
   static emptyRub(): Rub {
-    let myRub: Rub = new MyRub(0, 0, 0, 0, "", "", "", "", "", "", [BBQFactory.emptySpiceMix()]);
+    let myRub: Rub = new MyRub(0, 0, 0, 0, "", "", "",  "", "", "", "", [BBQFactory.emptySpiceMix()]);
     return myRub ;
   }
 
@@ -30,6 +30,7 @@ export class BBQFactory {
       rawRub.modificationUser,
       rawRub.name,
       rawRub.beschreibung,
+      rawRub.rezept,
       rawRub.herkunft,
       rawRub.url,
       rawRub.gewuerzMischung

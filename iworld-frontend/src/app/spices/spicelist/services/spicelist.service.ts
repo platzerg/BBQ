@@ -73,13 +73,11 @@ export class SpicelistService {
   }
 
   createSpiceMix(rubId: number, spiceMix: SpiceMix): Observable<SpiceMix> {
-    debugger;
     console.log("createSpiceMix");
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
     let body = JSON.stringify(spiceMix);
     console.log("createSpiceMix" + JSON.parse(body));
-
     return this.http.post('http://localhost:8080/iWorld/bbq/rubs/rub/' + rubId +'/rubmix', body, options)
       .retry(3)
       .map(response => response.json() as SpiceMix)

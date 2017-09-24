@@ -31,7 +31,6 @@ export class SpicemixdetailComponent implements OnInit {
   spices: Spice[];
 
   gewuerze: SelectItem[];
-  selectedGewuerz: any;
 
   editSpiceMix$: Subscription;
   addSpiceMix$: Subscription;
@@ -61,7 +60,6 @@ export class SpicemixdetailComponent implements OnInit {
       },
       error => this.showError(error)
     );
-    debugger;
 
     if(this.spicemixid > 0){
       this.spicemixService.getSpicemix(this.rubid, this.spicemixid).subscribe(
@@ -146,13 +144,13 @@ export class SpicemixdetailComponent implements OnInit {
 
   saveSpiceMix() {
     console.log("saveSpiceMix");
-
     if (this.spiceMix.id && this.spiceMix.id > 0) {
       console.log("update");
       // update
       this.editSpiceMix$ = this.spicelistService.updateSpiceMix(this.spicemixid, this.spiceMix, null)
         .finally(() => {
           //this.spiceMix = null;
+          this.router.navigate(['/rubdetail/' + this.rubid]);
         })
         .subscribe(
           (spiceMix: SpiceMix) => {
@@ -163,7 +161,6 @@ export class SpicemixdetailComponent implements OnInit {
     } else {
       // create
       console.log("create");
-      this.spiceMix.gewuerz = this.selectedGewuerz;
       this.addSpiceMix$ = this.spicelistService.createSpiceMix(this.rubid, this.spiceMix)
         .finally(() => {
           //this.spiceMix = null;

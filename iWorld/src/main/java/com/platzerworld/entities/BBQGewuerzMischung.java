@@ -47,7 +47,7 @@ public class BBQGewuerzMischung implements Creatable, Updatable{
     private String modificationUser;
 
     @Column(name = "menge", nullable = true)
-    private Integer menge;
+    private Double menge;
 
     @Column(name = "mengeneinheit", nullable = true)
     private String mengeneinheit;
@@ -110,11 +110,11 @@ public class BBQGewuerzMischung implements Creatable, Updatable{
         this.modificationUser = modificationUser;
     }
 
-    public Integer getMenge() {
+    public Double getMenge() {
         return menge;
     }
 
-    public void setMenge(Integer menge) {
+    public void setMenge(Double menge) {
         this.menge = menge;
     }
 

@@ -23,7 +23,7 @@ public class BBQGewuerzMischungDTO {
     private String createdUser;
     private String modificationUser;
 
-    private Integer menge;
+    private Double menge;
     private String mengeneinheit;
 
     @JsonBackReference
@@ -79,11 +79,11 @@ public class BBQGewuerzMischungDTO {
         this.modificationUser = modificationUser;
     }
 
-    public Integer getMenge() {
+    public Double getMenge() {
         return menge;
     }
 
-    public void setMenge(Integer menge) {
+    public void setMenge(Double menge) {
         this.menge = menge;
     }
 
