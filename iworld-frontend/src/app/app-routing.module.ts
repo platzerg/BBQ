@@ -9,6 +9,7 @@ import {LoginComponent} from './login/login.component';
 import {AuthGuard} from './auth.guard';
 import {SpicemixdetailComponent} from "./spicemix/spicemixdetail/spicemixdetail.component";
 import {DeactivateGuard} from "./deactivate.guard";
+import {RubResolver} from "./rubs/services/rub-resolver.service";
 
 const routes: Routes = [
   {
@@ -18,6 +19,9 @@ const routes: Routes = [
   },
   {
     path: 'rubdetail/:id',
+    resolve: {
+      rub: RubResolver
+    },
     component: RubdetailComponent,
     canDeactivate: [DeactivateGuard]
   },

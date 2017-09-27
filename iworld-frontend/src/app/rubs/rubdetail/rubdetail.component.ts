@@ -79,9 +79,17 @@ export class RubdetailComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.showSuccess(this.route.snapshot.params['id']);
 
+    this.route.params.subscribe(params => {
+      debugger;
+      const paramId = params["id"];
+    });
+
+    var gpl = this.route.snapshot.data['rub'];
+
     this.paramsIdSubscription$ = this.route.params.subscribe(params => {
       console.log("GPL Param from subscription: " +params['id']); // (+) converts string 'id' to a number
     });
+    debugger;
 
     this.pageSubscription$ = this.route
       .queryParams
