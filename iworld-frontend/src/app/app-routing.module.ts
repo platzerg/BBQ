@@ -7,9 +7,9 @@ import { SpicemixlistComponent } from './spicemix/spicemixlist/spicemixlist.comp
 import { CoretemperaturelistComponent } from './coretemperature/coretemperaturelist/coretemperaturelist.component';
 import {LoginComponent} from './login/login.component';
 import {AuthGuard} from './auth.guard';
-import {SpicemixdetailComponent} from "./spicemix/spicemixdetail/spicemixdetail.component";
-import {DeactivateGuard} from "./deactivate.guard";
-import {RubResolver} from "./rubs/services/rub-resolver.service";
+import {SpicemixdetailComponent} from './spicemix/spicemixdetail/spicemixdetail.component';
+import {DeactivateGuard} from './deactivate.guard';
+import {RubResolver} from './rubs/services/rub-resolver.service';
 
 const routes: Routes = [
   {

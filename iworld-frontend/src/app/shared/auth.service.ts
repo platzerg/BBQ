@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   logout() {
-    console.log("logout, navigate to login mask")
+    console.log('logout, navigate to login mask')
     localStorage.removeItem(this.storageKey);
     this.router.navigate(['/login']);
   }

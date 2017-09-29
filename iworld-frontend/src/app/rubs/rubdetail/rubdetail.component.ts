@@ -20,8 +20,8 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location }                 from '@angular/common';
 
 import {MY_LOGGING_TOKEN} from '../../shared/token';
-import {SpicelistService} from "../../spices/spicelist/services/spicelist.service";
-import {MySpice} from "../../model/mySpice";
+import {SpicelistService} from '../../spices/spicelist/services/spicelist.service';
+import {MySpice} from '../../model/mySpice';
 
 @Component({
   selector: 'rubdetail',
@@ -39,7 +39,7 @@ export class RubdetailComponent implements OnInit {
   spices: Spice[];
 
   gewuerzMischung: SpiceMix[];
-  spiceMix: SpiceMix = new MySpiceMix(0, 0, 0, 0, "", "", 0, "", new MySpice(0,0,0,0,"","","","","",""));
+  spiceMix: SpiceMix = new MySpiceMix(0, 0, 0, 0, '', '', 0, '', new MySpice(0,0,0,0,'','','','','',''));
   newspiceMix: boolean;
 
   arten: SelectItem[];
@@ -75,19 +75,19 @@ export class RubdetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.showSuccess("GPL Detail init");
+    this.showSuccess('GPL Detail init');
     this.id = this.route.snapshot.params['id'];
     this.showSuccess(this.route.snapshot.params['id']);
 
     this.route.params.subscribe(params => {
       debugger;
-      const paramId = params["id"];
+      const paramId = params['id'];
     });
 
     var gpl = this.route.snapshot.data['rub'];
 
     this.paramsIdSubscription$ = this.route.params.subscribe(params => {
-      console.log("GPL Param from subscription: " +params['id']); // (+) converts string 'id' to a number
+      console.log('GPL Param from subscription: ' +params['id']); // (+) converts string 'id' to a number
     });
     debugger;
 
@@ -96,7 +96,7 @@ export class RubdetailComponent implements OnInit {
       .subscribe(params => {
         // Defaults to 0 if no query param provided.
         var myRub = params['rub'];
-        console.log("GPL Param from subscription Rub Name: " + myRub);
+        console.log('GPL Param from subscription Rub Name: ' + myRub);
       });
 
     this.arten = [];
@@ -108,7 +108,7 @@ export class RubdetailComponent implements OnInit {
     this.spicelistService.getEmployees().subscribe(
       allSpices => {
         if(this.spices !== undefined) {
-          console.log("gesamte Gewuerze: " + allSpices.length);
+          console.log('gesamte Gewuerze: ' + allSpices.length);
         }
         this.spices = allSpices;
         this.generateGewuerze(allSpices);
@@ -142,12 +142,12 @@ export class RubdetailComponent implements OnInit {
     }
 
     this.cols = [
-      {field: 'mengeneinheit', header: 'Mengeneinheit (contains)', sortable: "true", filter: "true", editable: "true", filterMatchMode: "contains", fPlaceholder: "Search"},
-      {field: 'menge', header: 'Menge (startsWith)', sortable: "true", filter: "true", editable: "true", filterMatchMode: "equals", fPlaceholder: "Search"},
-      {field: 'gewuerz.name', header: 'Gewürz (startsWith)', sortable: "true", filter: "true", editable: "true", filterMatchMode: "equals", fPlaceholder: "Search"},
-      {field: 'gewuerz.art', header: 'Art (startsWith)', sortable: "true", filter: "true", editable: "true", filterMatchMode: "equals", fPlaceholder: "Search"},
-      {field: 'gewuerz.beschreibung', header: 'Beschreibung (startsWith)', sortable: "true", filter: "true", editable: "true", filterMatchMode: "equals", fPlaceholder: "Search"},
-      {field: 'gewuerz.url', header: 'URL (startsWith)', sortable: "true", filter: "true", editable: "true", filterMatchMode: "equals", fPlaceholder: "Search"}
+      {field: 'mengeneinheit', header: 'Mengeneinheit (contains)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'contains', fPlaceholder: 'Search'},
+      {field: 'menge', header: 'Menge (startsWith)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'equals', fPlaceholder: 'Search'},
+      {field: 'gewuerz.name', header: 'Gewürz (startsWith)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'equals', fPlaceholder: 'Search'},
+      {field: 'gewuerz.art', header: 'Art (startsWith)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'equals', fPlaceholder: 'Search'},
+      {field: 'gewuerz.beschreibung', header: 'Beschreibung (startsWith)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'equals', fPlaceholder: 'Search'},
+      {field: 'gewuerz.url', header: 'URL (startsWith)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'equals', fPlaceholder: 'Search'}
 
     ];
     this.columnOptions = [];
@@ -159,9 +159,9 @@ export class RubdetailComponent implements OnInit {
   generateGewuerze(spicesArray: Spice[]) {
     let spiceList: any[] = [];
     for (let spice of spicesArray) {
-      let spicArt = spice.art !== undefined && spice.art !== null ? spice.art : "";
+      let spicArt = spice.art !== undefined && spice.art !== null ? spice.art : '';
       spiceList.push({
-        label: spice.name + " " + spicArt,
+        label: spice.name + ' ' + spicArt,
         value: {
           id: spice.id,
           lockVersion: spice.lockVersion,
@@ -225,7 +225,7 @@ export class RubdetailComponent implements OnInit {
   onRowDblClickCRUD(event: any) {
     // create a clone of the selected employee
     this.newspiceMix = false;
-    console.log("onRowSelectCRUD: " + JSON.stringify(event.data));
+    console.log('onRowSelectCRUD: ' + JSON.stringify(event.data));
     //this.spiceMix = Object.assign({}, event.data);
     this.editSpiceMix();
     //this.displayDialog = true;
@@ -245,7 +245,7 @@ export class RubdetailComponent implements OnInit {
   }
 
   save() {
-    console.log("GPL Rub detail save: ");
+    console.log('GPL Rub detail save: ');
 
     if(this.rub.id && this.rub.id > 0) {
       this.edit$ = this.rubService.updateRub(this.rub)
@@ -273,7 +273,7 @@ export class RubdetailComponent implements OnInit {
   }
 
   saveSpiceMix() {
-    console.log("saveSpiceMix");
+    console.log('saveSpiceMix');
     let gewuerzMischung = [...this.gewuerzMischung];
     if (this.newspiceMix) {
       gewuerzMischung.push(this.spiceMix);
@@ -282,7 +282,7 @@ export class RubdetailComponent implements OnInit {
     }
 
     if (this.spiceMix.id && this.spiceMix.id > 0) {
-      console.log("update");
+      console.log('update');
       // update
       this.editSpiceMix$ = this.spicelistService.updateSpiceMix(this.id, this.spiceMix, this.rub)
         .finally(() => {
@@ -305,7 +305,7 @@ export class RubdetailComponent implements OnInit {
         );
     } else {
       // create
-      console.log("create");
+      console.log('create');
       this.addSpiceMix$ = this.spicelistService.createSpiceMix(this.id, this.spiceMix)
         .finally(() => {
           this.spiceMix = null;
@@ -323,33 +323,33 @@ export class RubdetailComponent implements OnInit {
   }
 
   deleteSpiceMix() {
-    console.log("deleteSpiceMix start");
+    console.log('deleteSpiceMix start');
     this.removeSpiceMix();
-    console.log("deleteSpiceMix end");
+    console.log('deleteSpiceMix end');
   }
 
   addSpiceMix() {
-    console.log("addSpiceMix start")
+    console.log('addSpiceMix start')
     // create an empty employee
     debugger;
     this.newspiceMix = true;
-    new MySpiceMix(0, 0, 0, 0, "", "", 0, "", new MySpice(0,0,0,0,"","","","","",""));
-    this.spiceMix = new MySpiceMix(0, 0, 0, 0, "", "", 0, "", new MySpice(0,0,0,0,"","","","","",""));
+    new MySpiceMix(0, 0, 0, 0, '', '', 0, '', new MySpice(0,0,0,0,'','','','','',''));
+    this.spiceMix = new MySpiceMix(0, 0, 0, 0, '', '', 0, '', new MySpice(0,0,0,0,'','','','','',''));
     this.router.navigate(['/rubdetail/' + this.rub.id +'/spicemixdetail/' + this.spiceMix.id]);
     //this.displayDialog = true;
-    console.log("addSpiceMix end")
+    console.log('addSpiceMix end')
   }
 
   editSpiceMix() {
     debugger;
-    console.log("editSpiceMix start");
+    console.log('editSpiceMix start');
     // create a clone of the selected employee
     this.spiceMix = Object.assign({}, this.selectedSpiceMix);
     this.router.navigate(['/rubdetail/' + this.rub.id +'/spicemixdetail/' + this.spiceMix.id]);
 
 
     //this.displayDialog = true;
-    console.log("editSpiceMix end")
+    console.log('editSpiceMix end')
   }
 
   removeSpiceMix() {
@@ -378,7 +378,7 @@ export class RubdetailComponent implements OnInit {
           error => this.showError(error)
         );
 
-      console.log("removed");
+      console.log('removed');
     }
   }
 
@@ -387,7 +387,7 @@ export class RubdetailComponent implements OnInit {
   }
 
   areFormsSaved(): boolean {
-    console.log("areFormsSaved")
+    console.log('areFormsSaved')
     return true;
   }
 

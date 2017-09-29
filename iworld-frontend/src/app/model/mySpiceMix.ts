@@ -1,6 +1,6 @@
 import SpiceMix from './spicemix';
-import Spice from "./spice";
-import {MySpice} from "./mySpice";
+import Spice from './spice';
+import {MySpice} from './mySpice';
 
 export class MySpiceMix implements SpiceMix {
 

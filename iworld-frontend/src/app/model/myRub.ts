@@ -1,7 +1,7 @@
 import SpiceMix from './spicemix';
-import Spice from "./spice";
-import Rub from "./rub";
-import {MySpiceMix} from "./mySpiceMix";
+import Spice from './spice';
+import Rub from './rub';
+import {MySpiceMix} from './mySpiceMix';
 
 export class MyRub implements Rub {
 

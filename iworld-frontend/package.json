@@ -25,6 +25,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-redux/store": "^6.5.7",
     "@angular/animations": "^4.3.6",
     "@angular/common": "^4.3.6",
     "@angular/compiler": "^4.3.6",
@@ -52,7 +53,7 @@
     "mongodb": "^2.2.31",
     "npm-run-all": "^4.1.1",
     "primeng": "^4.2.0-rc.1",
-    "primeng-extensions-wizard": "^2.1.0",
+    "redux": "^3.7.2",
     "rxjs": "^5.4.3",
     "semantic-ui-css": "^2.2.12",
     "web-animations-js": "^2.3.1",

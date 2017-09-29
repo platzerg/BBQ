@@ -1,23 +1,23 @@
 import { Rub } from './rub';
-import {MySpiceMix} from "./mySpiceMix";
-import {MySpice} from "./mySpice";
-import SpiceMix from "./spicemix";
-import {MyRub} from "./myRub";
-import Spice from "./spice";
+import {MySpiceMix} from './mySpiceMix';
+import {MySpice} from './mySpice';
+import SpiceMix from './spicemix';
+import {MyRub} from './myRub';
+import Spice from './spice';
 
 export class BBQFactory {
 
   static emptyRub(): Rub {
-    let myRub: Rub = new MyRub(0, 0, 0, 0, "", "", "",  "", "", "", "", [BBQFactory.emptySpiceMix()]);
+    const myRub: Rub = new MyRub(0, 0, 0, 0, '', '', '',  '', '', '', '', [BBQFactory.emptySpiceMix()]);
     return myRub ;
   }
 
   static emptySpiceMix(): SpiceMix {
-    return new MySpiceMix(0, 0, 0, 0, "", "", 0, "", BBQFactory.emptySpice());
+    return new MySpiceMix(0, 0, 0, 0, '', '', 0, '', BBQFactory.emptySpice());
   }
 
   static emptySpice(): Spice {
-    return new MySpice(0,0,0,0,"","","","","","");
+    return new MySpice(0,0,0,0,'','','','','','');
   }
 
   static rubFromObject(rawRub: any): Rub {

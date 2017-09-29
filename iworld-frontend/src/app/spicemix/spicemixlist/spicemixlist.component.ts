@@ -10,7 +10,7 @@ export class SpicemixlistComponent implements OnInit {
 
   constructor(
     private spicemixlistService: SpicemixService) {
-    console.log("GPL SpicemixService");
+    console.log('GPL SpicemixService');
   }
 
   ngOnInit() {

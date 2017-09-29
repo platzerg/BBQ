@@ -16,7 +16,6 @@ import {InputMaskModule} from 'primeng/components/inputmask/inputmask';
 import {AutoCompleteModule} from 'primeng/components/autocomplete/autocomplete';
 import {GrowlModule} from 'primeng/components/growl/growl';
 import {SelectButtonModule} from 'primeng/components/selectbutton/selectbutton';
-import {WizardModule} from 'primeng-extensions-wizard/components/wizard.module';
 import {DropdownModule} from 'primeng/components/dropdown/dropdown';
 import {MultiSelectModule} from 'primeng/components/multiselect/multiselect';
 
@@ -28,7 +27,6 @@ import {ConfirmationService} from 'primeng/components/common/api';
 import {CommonModule} from '@angular/common';
 
 
-import {fakeBackendProvider} from './backend/fake-backend';
 import {MockBackend} from '@angular/http/testing';
 import {BaseRequestOptions} from '@angular/http';
 
@@ -86,7 +84,6 @@ import {RubResolver} from "./rubs/services/rub-resolver.service";
     InputMaskModule,
     AutoCompleteModule,
     SelectButtonModule,
-    WizardModule,
     GrowlModule,
     DropdownModule,
     MultiSelectModule,
@@ -107,7 +104,6 @@ import {RubResolver} from "./rubs/services/rub-resolver.service";
     RubService,
     ApiService,
     AuthService,
-    fakeBackendProvider,
     ConfirmationService,
     RubResolver,
     AuthGuard,

@@ -15,27 +15,27 @@ export class ApiService {
   constructor(private http: Http, private auth: AuthService) { }
 
   get(url: string) {
-    console.log("ApiService get: " +url);
+    console.log('ApiService get: ' +url);
     return this.request(url, RequestMethod.Get);
   }
 
   post(url: string, body: Object) {
-    console.log("ApiService post: " +url + " body: " +body);
+    console.log('ApiService post: ' +url + ' body: ' +body);
     return this.request(url, RequestMethod.Post, body);
   }
 
   put(url: string, body: Object) {
-    console.log("ApiService put: " +url + " body: " +body);
+    console.log('ApiService put: ' +url + ' body: ' +body);
     return this.request(url, RequestMethod.Put, body);
   }
 
   delete(url: string) {
-    console.log("ApiService delete: " +url);
+    console.log('ApiService delete: ' +url);
     return this.request(url, RequestMethod.Delete);
   }
 
   request(url: string, method: RequestMethod, body?: Object) {
-    console.log("ApiService request: " +url + " method: " +method + " body: " +body);
+    console.log('ApiService request: ' +url + ' method: ' +method + ' body: ' +body);
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', `Bearer ${this.auth.getToken()}`);
@@ -58,7 +58,7 @@ export class ApiService {
   }
 
   onRequestError(res: Response) {
-    console.log("ApiService onRequestError: " +res);
+    console.log('ApiService onRequestError: ' +res);
     const statusCode = res.status;
     const body = res.json();
 

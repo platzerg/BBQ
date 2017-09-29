@@ -10,8 +10,8 @@ import 'rxjs/add/operator/finally';
 import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
 
 import {MY_CONFIG_TOKEN, MY_LOGGING_TOKEN} from '../../shared/token';
-import {SpiceFormErrorMessages} from "./errormessages";
-import {BBQFactory} from "../../model/BBQFactory";
+import {SpiceFormErrorMessages} from './errormessages';
+import {BBQFactory} from '../../model/BBQFactory';
 
 @Component({
   selector: 'app-spicelist',
@@ -28,7 +28,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
 
   activeIndex: number = 0;
 
-  spice: Spice = new MySpice(0, 0, 0, 0, "", "", "", "", "", "");
+  spice: Spice = new MySpice(0, 0, 0, 0, '', '', '', '', '', '');
 
   basicSpice: Spice[];
 
@@ -67,37 +67,37 @@ export class SpicelistComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router) {
-    console.log("GPL SpicelistService: " + token);
-    console.log("-- IS LOGGING -- : " + loggingtoken);
+    console.log('GPL SpicelistService: ' + token);
+    console.log('-- IS LOGGING -- : ' + loggingtoken);
 
     route.fragment.forEach((f:string) => {
-      console.log("GPL Fragment: " +f);
+      console.log('GPL Fragment: ' +f);
     });
 
     router.events.subscribe(e => {
-      console.log("router event", e);
+      console.log('router event', e);
     });
   }
 
   ngOnInit(): void {
-    console.log("GPL");
+    console.log('GPL');
 
      var sub = this.route
       .queryParams
       .subscribe(params => {
         // Defaults to 0 if no query param provided.
-        console.log("Auswertung Parameter " + params['page'] || 0);
+        console.log('Auswertung Parameter ' + params['page'] || 0);
       });
 
     this.route.url.subscribe(() => {
       var snap = this.route.snapshot; // any time url changes, this callback is fired
-      console.log("route.snapshot: " + snap);
+      console.log('route.snapshot: ' + snap);
     });
 
     this.get$ = this.spicelistService.getEmployees().subscribe(
       employees => {
         if(this.spices !== undefined) {
-          console.log("gesamte Gewuerze: " + this.spices.length);
+          console.log('gesamte Gewuerze: ' + this.spices.length);
         }
 
         this.spices = employees;
@@ -109,10 +109,10 @@ export class SpicelistComponent implements OnInit, OnDestroy {
     this.spicelistService.getEmployees().subscribe((spices: any) => this.spices = spices);
     this.spicelistService.getEmployees().subscribe((spices: any) => this.basicSpice = spices.slice(0, 10));
     this.cols = [
-      {field: 'name', header: 'Name (contains)', sortable: "true", filter: "true", editable: "true", filterMatchMode: "contains", fPlaceholder: "Search"},
-      {field: 'art', header: 'Art (startsWith)', sortable: "true", filter: "true", editable: "true", filterMatchMode: "equals", fPlaceholder: "Search"},
-      {field: 'beschreibung', header: 'Beschreibung (Custom)', sortable: "true", filter: "true", editable: "true", filterMatchMode: "contains", fPlaceholder: "Search"},
-      {field: 'url', header: 'URL (contains)', sortable: "true", filter: "true", editable: "true", filterMatchMode: "contains", fPlaceholder: "Search"}
+      {field: 'name', header: 'Name (contains)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'contains', fPlaceholder: 'Search'},
+      {field: 'art', header: 'Art (startsWith)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'equals', fPlaceholder: 'Search'},
+      {field: 'beschreibung', header: 'Beschreibung (Custom)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'contains', fPlaceholder: 'Search'},
+      {field: 'url', header: 'URL (contains)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'contains', fPlaceholder: 'Search'}
 
     ];
     this.columnOptions = [];
@@ -294,7 +294,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
   onRowSelectCRUD(event: any) {
     // create a clone of the selected employee
     this.newSpice = false;
-    console.log("onRowSelectCRUD: " + JSON.stringify(event.data));
+    console.log('onRowSelectCRUD: ' + JSON.stringify(event.data));
     this.spice = Object.assign({}, event.data);
     this.initSpiceList();
     this.displayDialog = true;
@@ -303,7 +303,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
   onRowDblClickCRUD(event: any) {
     // create a clone of the selected employee
     this.newSpice = false;
-    console.log("onRowSelectCRUD: " + JSON.stringify(event.data));
+    console.log('onRowSelectCRUD: ' + JSON.stringify(event.data));
     this.spice = Object.assign({}, event.data);
     this.initSpiceList();
     this.displayDialog = true;
@@ -329,7 +329,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
 
   addSpice() {
     this.newSpice = true;
-    this.spice = new MySpice(0, 0, 0, 0, "", "", "", "", "", "");
+    this.spice = new MySpice(0, 0, 0, 0, '', '', '', '', '', '');
     this.initSpiceList();
     this.displayDialog = true;
   }
@@ -341,12 +341,12 @@ export class SpicelistComponent implements OnInit, OnDestroy {
       lockVersion: 0,
       creationDate: 0,
       modificationDate: 0,
-      createdUser: "",
-      modificationUser: "",
-      name: "",
-      art: "",
-      beschreibung: "",
-      url: "",
+      createdUser: '',
+      modificationUser: '',
+      name: '',
+      art: '',
+      beschreibung: '',
+      url: '',
     };
 
     this.initSpiceList();
@@ -387,12 +387,12 @@ export class SpicelistComponent implements OnInit, OnDestroy {
           error => this.showError(error)
         );
 
-      console.log("remove");
+      console.log('remove');
     }
   }
 
   reset() {
-    this.spiceForm.reset(new MySpice(0, 0, 0, 0, "", "", "", "", "", ""));
+    this.spiceForm.reset(new MySpice(0, 0, 0, 0, '', '', '', '', '', ''));
   }
 
   delete() {
@@ -401,7 +401,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
 
   save() {
     debugger;
-    console.log("save: id: " +this.spice.id);
+    console.log('save: id: ' +this.spice.id);
     let spices = [...this.spices];
     if (this.newSpice) {
       spices.push(this.spice);
@@ -413,7 +413,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
     debugger;
 
     if (this.spice.id && this.spice.id > 0) {
-      console.log("update");
+      console.log('update');
       // update
       this.edit$ = this.spicelistService.updateSpice(this.spice)
         .finally(() => {
@@ -436,7 +436,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
         );
     } else {
       // create
-      console.log("create");
+      console.log('create');
       this.add$ = this.spicelistService.createSpice(this.spice)
         .finally(() => {
           this.spice = null;

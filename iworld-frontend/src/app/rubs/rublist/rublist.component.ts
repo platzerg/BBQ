@@ -40,7 +40,7 @@ export class RublistComponent implements OnInit, OnDestroy {
     this.get$ = this.rublistService.getRubs().subscribe(
       employees => {
         if(this.rubs !== undefined) {
-          console.log("gesamte Rubs: " + this.rubs.length);
+          console.log('gesamte Rubs: ' + this.rubs.length);
         }
 
         this.rubs = employees;
@@ -49,10 +49,10 @@ export class RublistComponent implements OnInit, OnDestroy {
     );
 
     this.cols = [
-      {field: 'name', header: 'Name (contains)', sortable: "true", filter: "true", editable: "true", filterMatchMode: "contains", fPlaceholder: "Search"},
-      {field: 'herkunft', header: 'Herkunft (startsWith)', sortable: "true", filter: "true", editable: "true", filterMatchMode: "equals", fPlaceholder: "Search"},
-      {field: 'beschreibung', header: 'Beschreibung (Custom)', sortable: "true", filter: "true", editable: "true", filterMatchMode: "contains", fPlaceholder: "Search"},
-      {field: 'url', header: 'URL (contains)', sortable: "true", filter: "true", editable: "true", filterMatchMode: "contains", fPlaceholder: "Search"}
+      {field: 'name', header: 'Name (contains)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'contains', fPlaceholder: 'Search'},
+      {field: 'herkunft', header: 'Herkunft (startsWith)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'equals', fPlaceholder: 'Search'},
+      {field: 'beschreibung', header: 'Beschreibung (Custom)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'contains', fPlaceholder: 'Search'},
+      {field: 'url', header: 'URL (contains)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'contains', fPlaceholder: 'Search'}
 
     ];
     this.columnOptions = [];
@@ -69,20 +69,20 @@ export class RublistComponent implements OnInit, OnDestroy {
   onRowDblClickCRUD(event: any) {
     var rub = event.data;
     console.log(rub);
-    this.router.navigate(['/rubdetail', rub.id], { queryParams: { rub: "GPL" } });
+    this.router.navigate(['/rubdetail', rub.id], { queryParams: { rub: 'GPL' } });
   }
 
   onSort(event: any) {
-    console.log("sort");
+    console.log('sort');
   }
 
   add() {
-    console.log("add");
+    console.log('add');
     this.router.navigate(['/rubdetail', 0]);
   }
 
   edit(){
-    console.log("edit");
+    console.log('edit');
     console.log(this.selectedRub);
 
     this.router.navigate(['/rubdetail', this.selectedRub.id]);
@@ -109,7 +109,7 @@ export class RublistComponent implements OnInit, OnDestroy {
           error => this.showSuccess(error)
         );
 
-      console.log("remove");
+      console.log('remove');
     }
 
   }
