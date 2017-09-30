@@ -54,8 +54,8 @@ import { MenuComponent } from './menu/menu.component';
 import { RublistComponent } from './rubs/rublist/rublist.component';
 import { RubdetailComponent } from './rubs/rubdetail/rubdetail.component';
 import { SpicemixdetailComponent } from './spicemix/spicemixdetail/spicemixdetail.component';
-import {DeactivateGuard} from "./deactivate.guard";
-import {RubResolver} from "./rubs/services/rub-resolver.service";
+import {DeactivateGuard} from './deactivate.guard';
+import {RubResolver} from './rubs/services/rub-resolver.service';
 
 @NgModule({
   declarations: [

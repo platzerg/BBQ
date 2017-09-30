@@ -38,14 +38,14 @@ export class SpicemixService {
   }
 
   getSpicemix(rubid: number, spicemixid: number): Observable<SpiceMix> {
-    return this.http.get(encodeURI('http://localhost:8080/iWorld/bbq/rubs/rubdetail/' +rubid +'/spicemixdetail/' +spicemixid))
+    return this.http.get(encodeURI('http://localhost:8080/iWorld/bbq/rubs/rubdetail/' + rubid + '/spicemixdetail/' + spicemixid))
       .map(response => response.json() as SpiceMix[])
       .catch(SpicemixService.handleError);
   }
 
   deleteSpiceMix(rubid: number, id: number): Observable<any> {
-    console.log("Delete SpiceMix for id: " + id + ' for rub: ' + rubid);
-    return this.http.delete('http://localhost:8080/iWorld/bbq/rubs/' + rubid +'/gewuerzmischungen/' + id)
+    console.log('Delete SpiceMix for id: ' + id + ' for rub: ' + rubid);
+    return this.http.delete('http://localhost:8080/iWorld/bbq/rubs/' + rubid + '/gewuerzmischungen/' + id)
       .retry(3)
       .map(response => response.json())
       .catch(SpicemixService.handleError);

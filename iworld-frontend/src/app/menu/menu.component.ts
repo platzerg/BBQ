@@ -13,7 +13,7 @@ export class MenuComponent implements OnInit {
   }
 
   logout() {
-    console.log("GPL logout");
+    console.log('GPL logout');
     this.auth.logout();
   }
 

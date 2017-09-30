@@ -10,7 +10,7 @@ import {Message, SelectItem} from 'primeng/components/common/api';
 
 import { Router } from '@angular/router';
 
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/operator/finally';
 
 @Component({
@@ -19,7 +19,7 @@ import 'rxjs/add/operator/finally';
 })
 export class RublistComponent implements OnInit, OnDestroy {
   msgs: Message[] = [];
-  isDebug: boolean = false;
+  isDebug = false;
 
 
   rubs: Rub[];
@@ -39,7 +39,7 @@ export class RublistComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.get$ = this.rublistService.getRubs().subscribe(
       employees => {
-        if(this.rubs !== undefined) {
+        if (this.rubs !== undefined) {
           console.log('gesamte Rubs: ' + this.rubs.length);
         }
 
@@ -49,14 +49,18 @@ export class RublistComponent implements OnInit, OnDestroy {
     );
 
     this.cols = [
-      {field: 'name', header: 'Name (contains)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'contains', fPlaceholder: 'Search'},
-      {field: 'herkunft', header: 'Herkunft (startsWith)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'equals', fPlaceholder: 'Search'},
-      {field: 'beschreibung', header: 'Beschreibung (Custom)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'contains', fPlaceholder: 'Search'},
-      {field: 'url', header: 'URL (contains)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'contains', fPlaceholder: 'Search'}
+      {field: 'name', header: 'Name (contains)', sortable: 'true',
+        filter: 'true', editable: 'true', filterMatchMode: 'contains', fPlaceholder: 'Search'},
+      {field: 'herkunft', header: 'Herkunft (startsWith)', sortable: 'true',
+        filter: 'true', editable: 'true', filterMatchMode: 'equals', fPlaceholder: 'Search'},
+      {field: 'beschreibung', header: 'Beschreibung (Custom)', sortable: 'true',
+        filter: 'true', editable: 'true', filterMatchMode: 'contains', fPlaceholder: 'Search'},
+      {field: 'url', header: 'URL (contains)', sortable: 'true',
+        filter: 'true', editable: 'true', filterMatchMode: 'contains', fPlaceholder: 'Search'}
 
     ];
     this.columnOptions = [];
-    for (let col of this.cols) {
+    for (const col of this.cols) {
       this.columnOptions.push({label: col.header, value: col});
     }
 
@@ -67,7 +71,7 @@ export class RublistComponent implements OnInit, OnDestroy {
   }
 
   onRowDblClickCRUD(event: any) {
-    var rub = event.data;
+    const rub = event.data;
     console.log(rub);
     this.router.navigate(['/rubdetail', rub.id], { queryParams: { rub: 'GPL' } });
   }
@@ -81,7 +85,7 @@ export class RublistComponent implements OnInit, OnDestroy {
     this.router.navigate(['/rubdetail', 0]);
   }
 
-  edit(){
+  edit() {
     console.log('edit');
     console.log(this.selectedRub);
 
@@ -93,8 +97,8 @@ export class RublistComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if(confirm('Wollen Sie den Rub wirklich löschen?')){
-      let index = this.findSelectedRubIndex();
+    if (confirm('Wollen Sie den Rub wirklich löschen?')) {
+      const index = this.findSelectedRubIndex();
 
       this.delete$ = this.rublistService.deleteRub(this.selectedRub.id)
         .finally(() => {

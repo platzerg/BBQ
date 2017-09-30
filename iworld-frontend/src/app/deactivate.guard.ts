@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, RouterStateSnapshot, CanDeactivate} from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import {RubdetailComponent} from "./rubs/rubdetail/rubdetail.component";
+import {RubdetailComponent} from './rubs/rubdetail/rubdetail.component';
 
 @Injectable()
 export class DeactivateGuard implements CanDeactivate<RubdetailComponent> {

@@ -40,7 +40,7 @@ export class RubService {
   }
 
   getRub(id: number): Observable<Rub> {
-    return this.http.get(encodeURI('http://localhost:8080/iWorld/bbq/rubs/' +id))
+    return this.http.get(encodeURI('http://localhost:8080/iWorld/bbq/rubs/' + id))
       .retry(3)
       .map(response => response.json() as Rub)
       .catch(RubService.handleError);
@@ -53,11 +53,11 @@ export class RubService {
 
   updateRub(rub: Rub): Observable<Rub> {
     console.log('update Rub');
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    let body = JSON.stringify(rub);
+    const headers = new Headers({'Content-Type': 'application/json'});
+    const options = new RequestOptions({headers: headers});
+    const body = JSON.stringify(rub);
     console.log('createSpice' + JSON.parse(body));
-    return this.http.put('http://localhost:8080/iWorld/bbq/rubs/' +rub.id, body, options)
+    return this.http.put('http://localhost:8080/iWorld/bbq/rubs/' + rub.id, body, options)
       .retry(3)
       .map(response => response.json())
       .catch(RubService.handleError);
@@ -65,9 +65,9 @@ export class RubService {
 
   createRub(rub: Rub): Observable<Rub> {
     console.log('createRub');
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    let body = JSON.stringify(rub);
+    const headers = new Headers({'Content-Type': 'application/json'});
+    const options = new RequestOptions({headers: headers});
+    const body = JSON.stringify(rub);
     console.log('createRub' + JSON.parse(body));
 
     return this.http.post('http://localhost:8080/iWorld/bbq/rubs/add', body, options)
@@ -86,7 +86,7 @@ export class RubService {
 
   deleteSpiceMix(rubid: number, id: number): Observable<any> {
     console.log('Delete SpiceMix for id: ' + id + ' for rub: ' + rubid);
-    return this.http.delete('http://localhost:8080/iWorld/bbq/rubs/' + rubid +'/gewuerzmischungen/' + id)
+    return this.http.delete('http://localhost:8080/iWorld/bbq/rubs/' + rubid + '/gewuerzmischungen/' + id)
       .retry(3)
       .map(response => response.json())
       .catch(RubService.handleError);

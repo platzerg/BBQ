@@ -20,7 +20,8 @@ const METADATA = {
 module.exports = {
     output: {
         //path: path.join(ROOT, 'dist'),
-        path: '/Users/platzerworld/Development/Projects/Angular2/BBQ/iWorld/src/main/webapp',
+        // path: '/Users/platzerworld/Development/Projects/Angular2/BBQ/iWorld/src/main/webapp',
+      path: '/Users/platzerworld/Development/Projects/Angular2/BBQ/iWorld/target/iWorld',
         publicPath: '/iWorld/'
 
     },

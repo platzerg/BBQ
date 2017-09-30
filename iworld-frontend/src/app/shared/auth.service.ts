@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class AuthService {
 
-  storageKey: string = 'contact-manager-jwt';
+  storageKey = 'contact-manager-jwt';
 
   constructor(private router: Router) { }
 
@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   logout() {
-    console.log('logout, navigate to login mask')
+    console.log('logout, navigate to login mask');
     localStorage.removeItem(this.storageKey);
     this.router.navigate(['/login']);
   }

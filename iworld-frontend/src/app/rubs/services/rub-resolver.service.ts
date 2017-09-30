@@ -10,9 +10,8 @@ export class RubResolver implements Resolve<Rub> {
   constructor(private rubService: RubService) { }
 
   resolve(route: ActivatedRouteSnapshot): Observable<Rub> {
-    debugger;
-    var id = route.params['id'];
-    if(id > 0){
+    const id = route.params['id'];
+    if (id > 0) {
       return this.rubService.getRub(route.params['id']);
     }
 

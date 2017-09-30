@@ -21,7 +21,7 @@ import {MySpice} from '../../model/mySpice';
 })
 export class SpicemixdetailComponent implements OnInit {
   msgs: Message[] = [];
-  isDebug: boolean = false;
+  isDebug = false;
 
   rubid: number;
   spicemixid: number;
@@ -37,7 +37,7 @@ export class SpicemixdetailComponent implements OnInit {
   delete$: Subscription;
 
   constructor(
-    @Inject(MY_LOGGING_TOKEN) loggingToken : boolean,
+    @Inject(MY_LOGGING_TOKEN) loggingToken: boolean,
     private location: Location,
     private router: Router,
     private spicelistService: SpicelistService,
@@ -52,7 +52,7 @@ export class SpicemixdetailComponent implements OnInit {
 
     this.spicelistService.getEmployees().subscribe(
       allSpices => {
-        if(this.spices !== undefined) {
+        if (this.spices !== undefined) {
           console.log('gesamte Gewuerze: ' + allSpices.length);
         }
         this.spices = allSpices;
@@ -61,7 +61,7 @@ export class SpicemixdetailComponent implements OnInit {
       error => this.showError(error)
     );
 
-    if(this.spicemixid > 0){
+    if (this.spicemixid > 0) {
       this.spicemixService.getSpicemix(this.rubid, this.spicemixid).subscribe(
         spicemix => {
           this.spiceMix = spicemix;
@@ -70,15 +70,15 @@ export class SpicemixdetailComponent implements OnInit {
         error => this.showSuccess(error)
       );
     } else {
-      this.spiceMix = new MySpiceMix(0, 0, 0, 0, '', '', 0, '', new MySpice(0,0,0,0,'','','','','',''));
+      this.spiceMix = new MySpiceMix(0, 0, 0, 0, '', '', 0, '', new MySpice(0, 0, 0, 0, '', '', '', '', '', ''));
     }
 
   }
 
   generateGewuerze(spicesArray: Spice[]) {
-    let spiceList: any[] = [];
-    for (let spice of spicesArray) {
-      let spicArt = spice.art !== undefined && spice.art !== null ? spice.art : '';
+    const spiceList: any[] = [];
+    for (const spice of spicesArray) {
+      const spicArt = spice.art !== undefined && spice.art !== null ? spice.art : '';
       spiceList.push({
         label: spice.name + ' ' + spicArt,
         value: {
@@ -124,7 +124,7 @@ export class SpicemixdetailComponent implements OnInit {
       return;
     }
 
-    if(confirm('Wollen Sie die Gewürzmischung wirklich löschen?')){
+    if (confirm('Wollen Sie die Gewürzmischung wirklich löschen?')) {
 
       this.delete$ = this.spicemixService.deleteSpiceMix(this.rubid, this.spicemixid)
         .finally(() => {
@@ -149,7 +149,7 @@ export class SpicemixdetailComponent implements OnInit {
       // update
       this.editSpiceMix$ = this.spicelistService.updateSpiceMix(this.spicemixid, this.spiceMix, null)
         .finally(() => {
-          //this.spiceMix = null;
+          // this.spiceMix = null;
           this.router.navigate(['/rubdetail/' + this.rubid]);
         })
         .subscribe(
@@ -163,7 +163,7 @@ export class SpicemixdetailComponent implements OnInit {
       console.log('create');
       this.addSpiceMix$ = this.spicelistService.createSpiceMix(this.rubid, this.spiceMix)
         .finally(() => {
-          //this.spiceMix = null;
+          // this.spiceMix = null;
           this.router.navigate(['/rubdetail/' + this.rubid]);
         })
         .subscribe(

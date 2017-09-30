@@ -5,7 +5,7 @@ import {Spice} from '../../model/spice';
 import {MySpice} from '../../model/mySpice';
 import {Message, SelectItem} from 'primeng/components/common/api';
 import {LazyLoadEvent} from 'primeng/components/common/api';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/operator/finally';
 import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
 
@@ -26,7 +26,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
   msgs: Message[] = [];
   isDebug = false;
 
-  activeIndex: number = 0;
+  activeIndex = 0;
 
   spice: Spice = new MySpice(0, 0, 0, 0, '', '', '', '', '', '');
 
@@ -44,7 +44,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
 
   newSpice: boolean;
 
-  totalRecords: number = 100;
+  totalRecords = 100;
 
   engines: SelectItem[];
 
@@ -61,8 +61,8 @@ export class SpicelistComponent implements OnInit, OnDestroy {
   edit$: Subscription;
   delete$: Subscription;
 
-  constructor(@Inject(MY_CONFIG_TOKEN) token : string,
-              @Inject(MY_LOGGING_TOKEN) loggingtoken : boolean,
+  constructor(@Inject(MY_CONFIG_TOKEN) token: string,
+              @Inject(MY_LOGGING_TOKEN) loggingtoken: boolean,
     private spicelistService: SpicelistService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -70,8 +70,8 @@ export class SpicelistComponent implements OnInit, OnDestroy {
     console.log('GPL SpicelistService: ' + token);
     console.log('-- IS LOGGING -- : ' + loggingtoken);
 
-    route.fragment.forEach((f:string) => {
-      console.log('GPL Fragment: ' +f);
+    route.fragment.forEach((f: string) => {
+      console.log('GPL Fragment: ' + f);
     });
 
     router.events.subscribe(e => {
@@ -82,7 +82,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log('GPL');
 
-     var sub = this.route
+     const sub = this.route
       .queryParams
       .subscribe(params => {
         // Defaults to 0 if no query param provided.
@@ -90,13 +90,13 @@ export class SpicelistComponent implements OnInit, OnDestroy {
       });
 
     this.route.url.subscribe(() => {
-      var snap = this.route.snapshot; // any time url changes, this callback is fired
+      const snap = this.route.snapshot; // any time url changes, this callback is fired
       console.log('route.snapshot: ' + snap);
     });
 
     this.get$ = this.spicelistService.getEmployees().subscribe(
       employees => {
-        if(this.spices !== undefined) {
+        if (this.spices !== undefined) {
           console.log('gesamte Gewuerze: ' + this.spices.length);
         }
 
@@ -109,14 +109,18 @@ export class SpicelistComponent implements OnInit, OnDestroy {
     this.spicelistService.getEmployees().subscribe((spices: any) => this.spices = spices);
     this.spicelistService.getEmployees().subscribe((spices: any) => this.basicSpice = spices.slice(0, 10));
     this.cols = [
-      {field: 'name', header: 'Name (contains)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'contains', fPlaceholder: 'Search'},
-      {field: 'art', header: 'Art (startsWith)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'equals', fPlaceholder: 'Search'},
-      {field: 'beschreibung', header: 'Beschreibung (Custom)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'contains', fPlaceholder: 'Search'},
-      {field: 'url', header: 'URL (contains)', sortable: 'true', filter: 'true', editable: 'true', filterMatchMode: 'contains', fPlaceholder: 'Search'}
+      {field: 'name', header: 'Name (contains)', sortable: 'true',
+        filter: 'true', editable: 'true', filterMatchMode: 'contains', fPlaceholder: 'Search'},
+      {field: 'art', header: 'Art (startsWith)', sortable: 'true',
+        filter: 'true', editable: 'true', filterMatchMode: 'equals', fPlaceholder: 'Search'},
+      {field: 'beschreibung', header: 'Beschreibung (Custom)', sortable: 'true',
+        filter: 'true', editable: 'true', filterMatchMode: 'contains', fPlaceholder: 'Search'},
+      {field: 'url', header: 'URL (contains)', sortable: 'true',
+        filter: 'true', editable: 'true', filterMatchMode: 'contains', fPlaceholder: 'Search'}
 
     ];
     this.columnOptions = [];
-    for (let col of this.cols) {
+    for (const col of this.cols) {
       this.columnOptions.push({label: col.header, value: col});
     }
 
@@ -153,10 +157,10 @@ export class SpicelistComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    //this.get$.unsubscribe();
-    //this.add$.unsubscribe();
-    //this.edit$.unsubscribe();
-    //this.delete$.unsubscribe();
+    // this.get$.unsubscribe();
+    // this.add$.unsubscribe();
+    // this.edit$.unsubscribe();
+    // this.delete$.unsubscribe();
   }
 
   private showError(errMsg: string) {
@@ -280,11 +284,11 @@ export class SpicelistComponent implements OnInit, OnDestroy {
   }
 
   loadBrowsersLazy(event: LazyLoadEvent) {
-    //event.first = First row offset
-    //event.rows = Number of rows per page
-    //event.sortField = Field name to sort with
-    //event.sortOrder = Sort order as number, 1 for asc and -1 for dec
-    //filters: FilterMetadata object having field as key and filter value, filter matchMode as value
+    // event.first = First row offset
+    // event.rows = Number of rows per page
+    // event.sortField = Field name to sort with
+    // event.sortOrder = Sort order as number, 1 for asc and -1 for dec
+    // filters: FilterMetadata object having field as key and filter value, filter matchMode as value
 
     this.spicelistService.getEmployees().subscribe((spices: any) =>
       this.spices = spices.slice(event.first, (event.first + event.rows)));
@@ -369,8 +373,8 @@ export class SpicelistComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if(confirm('Wollen Sie das Gewürz wirklich löschen?')){
-      let index = this.findSelectedSpiceIndex();
+    if (confirm('Wollen Sie das Gewürz wirklich löschen?')) {
+      const index = this.findSelectedSpiceIndex();
 
       this.delete$ = this.spicelistService.deleteSpice(this.selectedSpice.id)
         .finally(() => {
@@ -400,9 +404,8 @@ export class SpicelistComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    debugger;
-    console.log('save: id: ' +this.spice.id);
-    let spices = [...this.spices];
+    console.log('save: id: ' + this.spice.id);
+    const spices = [...this.spices];
     if (this.newSpice) {
       spices.push(this.spice);
     } else {
@@ -410,7 +413,6 @@ export class SpicelistComponent implements OnInit, OnDestroy {
     }
 
     this.spice = BBQFactory.spiceUpdateFromObject(this.spiceForm.value);
-    debugger;
 
     if (this.spice.id && this.spice.id > 0) {
       console.log('update');

@@ -17,7 +17,7 @@ export class BBQFactory {
   }
 
   static emptySpice(): Spice {
-    return new MySpice(0,0,0,0,'','','','','','');
+    return new MySpice(0, 0, 0, 0, '', '', '', '', '', '');
   }
 
   static rubFromObject(rawRub: any): Rub {
@@ -63,7 +63,7 @@ export class BBQFactory {
       rawSpice.art,
       rawSpice.beschreibung,
       rawSpice.url
-    )
+    );
   }
 
   static spiceUpdateFromObject(rawSpice: any): Spice {
@@ -78,6 +78,7 @@ export class BBQFactory {
       rawSpice.art,
       rawSpice.beschreibung,
       rawSpice.url
-    )
+    );
   }
-};
+
+}
