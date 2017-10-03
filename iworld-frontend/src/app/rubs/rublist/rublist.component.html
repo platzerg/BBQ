@@ -4,7 +4,7 @@
   <i class="fa fa-search search-globalfilter"></i>
   <input #gb type="text" pInputText size="50" placeholder="Global Filter">
 </div>
-<p-dataTable [value]="rubs" [immutable]="false" selectionMode="single"
+<p-dataTable [value]="myRubs$ | async" [immutable]="false" selectionMode="single"
              sortMode="multiple" (onSort)="onSort($event)"
              [editable]="false"
              [(selection)]="selectedRub"
@@ -27,7 +27,7 @@
   </p-footer>
 </p-dataTable>
 
-<div *ngIf="!rubs" class="ui active dimmer">
+<div *ngIf="!myRubs$" class="ui active dimmer">
   <div class="ui large text loader">Daten werden geladen...</div>
 </div>
 <p *ngIf="rubs && !rubs.length">Es wurden noch keine Rubs eingetragen.</p>

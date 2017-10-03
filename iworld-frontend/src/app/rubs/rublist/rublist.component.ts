@@ -13,11 +13,26 @@ import { Router } from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/operator/finally';
 
+import { IAppState } from '../../app.state';
+import { ChangeDetectionStrategy } from '@angular/core';
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs/Observable';
+import { RubActions } from '../../actions/rubs';
+
+export function allRubs(state: IAppState) {
+  debugger;
+  return state.rubs.all;
+}
+
 @Component({
   selector: 'app-rublist',
-  templateUrl: './rublist.component.html'
+  templateUrl: './rublist.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RublistComponent implements OnInit, OnDestroy {
+
+  @select(allRubs) myRubs$: Observable<Rub[]>;
+
   msgs: Message[] = [];
   isDebug = false;
 
@@ -26,7 +41,6 @@ export class RublistComponent implements OnInit, OnDestroy {
 
   selectedRub: Rub;
 
-  get$: Subscription;
   delete$: Subscription;
 
   cols: any[];
@@ -34,18 +48,18 @@ export class RublistComponent implements OnInit, OnDestroy {
   columnOptions: SelectItem[];
 
   constructor(private rublistService: RubService,
-              private router: Router) {  }
+              private router: Router,
+              private rubsAction: RubActions
+  ) {  }
+
 
   ngOnInit() {
-    this.get$ = this.rublistService.getRubs().subscribe(
-      employees => {
-        if (this.rubs !== undefined) {
-          console.log('gesamte Rubs: ' + this.rubs.length);
-        }
-
-        this.rubs = employees;
+    this.rubsAction.getAllRubs();
+    this.myRubs$.subscribe(
+      rubs => {
+        this.rubs = rubs;
       },
-      error => this.showError(error)
+        error => this.showError(error)
     );
 
     this.cols = [
@@ -67,7 +81,9 @@ export class RublistComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.get$.unsubscribe();
+    if (this.delete$) {
+      this.delete$.unsubscribe();
+    }
   }
 
   onRowDblClickCRUD(event: any) {
@@ -98,21 +114,7 @@ export class RublistComponent implements OnInit, OnDestroy {
     }
 
     if (confirm('Wollen Sie den Rub wirklich löschen?')) {
-      const index = this.findSelectedRubIndex();
-
-      this.delete$ = this.rublistService.deleteRub(this.selectedRub.id)
-        .finally(() => {
-          this.selectedRub = null;
-        })
-        .subscribe(
-          () => {
-            this.rubs = this.rubs.filter(
-              (element: Rub) => element.id !== this.selectedRub.id);
-            this.showSuccess('Rub was successfully removed');
-          },
-          error => this.showSuccess(error)
-        );
-
+      this.rubsAction.removeRub(this.selectedRub);
       console.log('remove');
     }
 

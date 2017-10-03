@@ -57,6 +57,12 @@ import { SpicemixdetailComponent } from './spicemix/spicemixdetail/spicemixdetai
 import {DeactivateGuard} from './deactivate.guard';
 import {RubResolver} from './rubs/services/rub-resolver.service';
 
+
+import {RubActions} from './actions/rubs';
+import {DevToolsExtension, NgRedux, NgReduxModule} from '@angular-redux/store';
+import { reducer } from './reducers/index';
+import { IAppState } from './app.state';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,6 +79,7 @@ import {RubResolver} from './rubs/services/rub-resolver.service';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    NgReduxModule,
     ReactiveFormsModule,
     HttpModule,
     ButtonModule,
@@ -109,9 +116,30 @@ import {RubResolver} from './rubs/services/rub-resolver.service';
     AuthGuard,
     DeactivateGuard,
     MockBackend,
-    BaseRequestOptions
+    BaseRequestOptions,
+    RubActions,
+    DevToolsExtension
   ],
   bootstrap: [AppComponent]
 
 })
-export class AppModule { }
+export class AppModule {
+  constructor(
+    private ngRedux: NgRedux<IAppState>,
+    private devTools: DevToolsExtension
+  ) {
+
+      let enhancers: any[];
+      if (devTools.isEnabled()) {
+          enhancers = [devTools.enhancer()];
+      }
+
+      this.ngRedux.configureStore(
+          reducer,
+          {} as IAppState,
+          [],
+          enhancers
+      );
+
+  }
+}

@@ -92,9 +92,7 @@ export class RubdetailComponent implements OnInit, OnChanges, DoCheck, AfterCont
     this.pageSubscription$ = this.route
       .queryParams
       .subscribe(params => {
-        // Defaults to 0 if no query param provided.
-        const myRub = params['rub'];
-        console.log('GPL Param from subscription Rub Name: ' + myRub);
+        console.log('GPL Param from subscription Rub Name: ' + JSON.stringify(params));
       });
 
     this.arten = [];
