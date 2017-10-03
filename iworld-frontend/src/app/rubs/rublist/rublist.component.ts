@@ -59,7 +59,7 @@ export class RublistComponent implements OnInit, OnDestroy {
       rubs => {
         this.rubs = rubs;
       },
-        error => this.showError(error)
+      error => this.showError(error)
     );
 
     this.cols = [
