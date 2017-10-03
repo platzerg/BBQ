@@ -24,19 +24,12 @@ export class SpicelistComponent implements OnInit, OnDestroy {
   errors: { [key: string]: string } = {};
 
   msgs: Message[] = [];
-  isDebug = false;
-
-  activeIndex = 0;
 
   spice: Spice = new MySpice(0, 0, 0, 0, '', '', '', '', '', '');
-
-  basicSpice: Spice[];
 
   spices: Spice[];
 
   selectedSpice: Spice;
-
-  selectedSpices: Spice[];
 
   displayDialog: boolean;
 
@@ -45,12 +38,6 @@ export class SpicelistComponent implements OnInit, OnDestroy {
   newSpice: boolean;
 
   totalRecords = 100;
-
-  engines: SelectItem[];
-
-  grades: SelectItem[];
-
-  expandedRows: any[];
 
   cols: any[];
 
@@ -94,7 +81,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
       console.log('route.snapshot: ' + snap);
     });
 
-    this.get$ = this.spicelistService.getEmployees().subscribe(
+    this.get$ = this.spicelistService.getSpices().subscribe(
       employees => {
         if (this.spices !== undefined) {
           console.log('gesamte Gewuerze: ' + this.spices.length);
@@ -106,8 +93,8 @@ export class SpicelistComponent implements OnInit, OnDestroy {
       error => this.showError(error)
     );
 
-    this.spicelistService.getEmployees().subscribe((spices: any) => this.spices = spices);
-    this.spicelistService.getEmployees().subscribe((spices: any) => this.basicSpice = spices.slice(0, 10));
+    this.spicelistService.getSpices().subscribe((spices: any) => this.spices = spices);
+
     this.cols = [
       {field: 'name', header: 'Name (contains)', sortable: 'true',
         filter: 'true', editable: 'true', filterMatchMode: 'contains', fPlaceholder: 'Search'},
@@ -123,17 +110,6 @@ export class SpicelistComponent implements OnInit, OnDestroy {
     for (const col of this.cols) {
       this.columnOptions.push({label: col.header, value: col});
     }
-
-    this.engines = [];
-    this.engines.push({label: 'All engines', value: null});
-    this.engines.push({label: 'Trident', value: 'Trident'});
-    this.engines.push({label: 'Gecko', value: 'Gecko'});
-    this.engines.push({label: 'Webkit', value: 'Webkit'});
-
-    this.grades = [];
-    this.grades.push({label: 'A', value: 'A'});
-    this.grades.push({label: 'B', value: 'B'});
-    this.grades.push({label: 'C', value: 'C'});
 
     this.initSpiceList();
 
@@ -157,10 +133,18 @@ export class SpicelistComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.get$.unsubscribe();
-    // this.add$.unsubscribe();
-    // this.edit$.unsubscribe();
-    // this.delete$.unsubscribe();
+    if(this.get$) {
+      this.get$.unsubscribe();
+    }
+    if(this.add$) {
+      this.add$.unsubscribe();
+    }
+    if(this.edit$) {
+      this.edit$.unsubscribe();
+    }
+    if(this.delete$) {
+      this.delete$.unsubscribe();
+    }
   }
 
   private showError(errMsg: string) {
@@ -230,6 +214,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
     this.msgs.push({severity: 'info', summary: 'Column is ', detail: event.column});
     this.msgs.push({severity: 'info', summary: 'Row data', detail: event.data});
   }
+
   onEditComplete(event: any) {
     this.msgs = [];
     this.msgs.push({severity: 'info', summary: 'Row index', detail: event.index});
@@ -268,6 +253,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
     this.msgs = [];
     this.msgs.push({severity: 'info', summary: 'Expanded row:', detail: event.data});
   }
+
   onRowCollapse(event: any) {
     this.msgs = [];
     this.msgs.push({severity: 'info', summary: 'Collapsed row:', detail: event.data});
@@ -290,7 +276,7 @@ export class SpicelistComponent implements OnInit, OnDestroy {
     // event.sortOrder = Sort order as number, 1 for asc and -1 for dec
     // filters: FilterMetadata object having field as key and filter value, filter matchMode as value
 
-    this.spicelistService.getEmployees().subscribe((spices: any) =>
+    this.spicelistService.getSpices().subscribe((spices: any) =>
       this.spices = spices.slice(event.first, (event.first + event.rows)));
   }
 

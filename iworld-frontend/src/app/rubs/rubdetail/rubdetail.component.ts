@@ -1,5 +1,7 @@
-import { Component, Input, AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit,
-  DoCheck, OnChanges, OnDestroy, OnInit, SimpleChanges, Inject } from '@angular/core';
+import {
+  Component, Input, AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit,
+    DoCheck, OnChanges, OnDestroy, OnInit, SimpleChanges, Inject, ChangeDetectionStrategy
+} from '@angular/core';
 
 import {RubService} from '../services/rub.service';
 import {Rub} from '../../model/rub';
@@ -22,12 +24,25 @@ import {MY_LOGGING_TOKEN} from '../../shared/token';
 import {SpicelistService} from '../../spices/spicelist/services/spicelist.service';
 import {MySpice} from '../../model/mySpice';
 
+import { Observable } from 'rxjs/Observable';
+
+import { IAppState } from '../../app.state';
+import { select } from '@angular-redux/store';
+import { RubActions } from '../../actions/rubs';
+
+export function allRubs(state: IAppState) {
+  return state.rubs.all;
+}
+
 @Component({
   selector: 'app-rub-detail',
   templateUrl: './rubdetail.component.html'
 })
 export class RubdetailComponent implements OnInit, OnChanges, DoCheck, AfterContentInit,
   AfterContentChecked, AfterViewInit, AfterViewChecked, OnDestroy {
+
+  @select(allRubs) myRubs$: Observable<Rub[]>;
+
   msgs: Message[] = [];
   isDebug = false;
 
@@ -42,13 +57,10 @@ export class RubdetailComponent implements OnInit, OnChanges, DoCheck, AfterCont
   spiceMix: SpiceMix = new MySpiceMix(0, 0, 0, 0, '', '', 0, '', new MySpice(0, 0, 0, 0, '', '', '', '', '', ''));
   newspiceMix: boolean;
 
-  arten: SelectItem[];
-
   selectedSpiceMix: SpiceMix;
 
   gewuerze: SelectItem[];
   selectedGewuerz: any;
-  selectedGewuerze: string[] = [];
 
   cols: any[];
   columnOptions: SelectItem[];
@@ -69,7 +81,8 @@ export class RubdetailComponent implements OnInit, OnChanges, DoCheck, AfterCont
     private spicelistService: SpicelistService,
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private rubsAction: RubActions
   ) {
     this.isDebug = loggingToken;
   }
@@ -84,6 +97,7 @@ export class RubdetailComponent implements OnInit, OnChanges, DoCheck, AfterCont
     });
 
     const gpl = this.route.snapshot.data['rub'];
+    debugger;
 
     this.paramsIdSubscription$ = this.route.params.subscribe(params => {
       console.log('GPL Param from subscription: ' + params['id']); // (+) converts string 'id' to a number
@@ -95,13 +109,7 @@ export class RubdetailComponent implements OnInit, OnChanges, DoCheck, AfterCont
         console.log('GPL Param from subscription Rub Name: ' + JSON.stringify(params));
       });
 
-    this.arten = [];
-    this.arten.push({label: 'gemahlen', value: 'gemahlen'});
-    this.arten.push({label: 'getrocknet', value: 'getrocknet'});
-    this.arten.push({label: 'geröstet', value: 'geröstet'});
-    this.arten.push({label: 'ganz', value: 'ganz'});
-
-    this.spicelistService.getEmployees().subscribe(
+    this.spicelistService.getSpices().subscribe(
       allSpices => {
         if (this.spices !== undefined) {
           console.log('gesamte Gewuerze: ' + allSpices.length);
@@ -113,19 +121,14 @@ export class RubdetailComponent implements OnInit, OnChanges, DoCheck, AfterCont
     );
 
     if (this.id !== null && this.id > 0) {
-      this.rubService.getRub(this.id).subscribe(
-        rub => {
-          this.rub = rub;
-          if (rub.gewuerzMischung === null || rub.gewuerzMischung === undefined ) {
-            this.gewuerzMischung = [];
-          } else {
-            this.gewuerzMischung = rub.gewuerzMischung;
-          }
-
-        },
-        error => this.showSuccess(error)
-      );
+      this.rub = this.route.snapshot.data['rub'];
+      if (this.rub.gewuerzMischung === null || this.rub.gewuerzMischung === undefined ) {
+        this.gewuerzMischung = [];
+      } else {
+        this.gewuerzMischung = this.rub.gewuerzMischung;
+      }
     } else {
+      debugger;
       this.rubService.getRubTemplate()
         .subscribe(
           (rubTemplate: Rub) => {

@@ -50,7 +50,7 @@ export class SpicemixdetailComponent implements OnInit {
     this.rubid = this.route.snapshot.params['rubid'];
     this.spicemixid = this.route.snapshot.params['spicemixid'];
 
-    this.spicelistService.getEmployees().subscribe(
+    this.spicelistService.getSpices().subscribe(
       allSpices => {
         if (this.spices !== undefined) {
           console.log('gesamte Gewuerze: ' + allSpices.length);

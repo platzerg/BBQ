@@ -13,6 +13,31 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../iworld-frontend/package.json">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../iworld-frontend/src/app/rubs/rubdetail/rubdetail.component.ts">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../iworld-frontend/src/app/rubs/rublist/rublist.component.ts">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../iworld-frontend/src/app/spices/spicelist/services/spicelist.service.ts">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../iworld-frontend/src/app/spices/spicelist/spicelist.component.ts">
+          <value>
+            <set />
+          </value>
+        </entry>
       </map>
     </option>
   </component>

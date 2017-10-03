@@ -33,7 +33,7 @@ export class SpicelistService {
   constructor(private http: Http) {
   }
 
-  getEmployees(): Observable<Spice[]> {
+  getSpices(): Observable<Spice[]> {
     return this.http.get(encodeURI('http://localhost:8080/iWorld/bbq/rubs/gewuerze'))
       .retry(3)
       .map(response => response.json() as Spice[])
