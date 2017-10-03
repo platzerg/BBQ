@@ -21,7 +21,7 @@ module.exports = {
     output: {
         //path: path.join(ROOT, 'dist'),
         // path: '/Users/platzerworld/Development/Projects/Angular2/BBQ/iWorld/src/main/webapp',
-      path: '/Users/platzerworld/Development/Projects/Angular2/BBQ/iWorld/target/iWorld',
+        path: '/Users/platzerworld/Development/Projects/Angular2/BBQ/iWorld/target/iWorld',
         publicPath: '/iWorld/'
 
     },
@@ -31,6 +31,10 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.js', '.json']
     },
+    // generate webpack://
+    // devtool: 'eval',
+    // generate source-map into the folder
+    // devtool: 'source-map',
     module: {
         rules: [
             {enforce: 'pre', test: /\.ts$/, loader: 'tslint-loader', exclude: /(node_modules)/},
