@@ -20,7 +20,6 @@ import { Observable } from 'rxjs/Observable';
 import { RubActions } from '../../actions/rubs';
 
 export function allRubs(state: IAppState) {
-  debugger;
   return state.rubs.all;
 }
 

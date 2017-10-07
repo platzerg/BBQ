@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
 import { IAppState } from '../app.state';
 import { Rub } from '../model/rub';
-import C from "../constants";
+import C from '../constants';
 
 @Injectable()
 export class SpiceActions {

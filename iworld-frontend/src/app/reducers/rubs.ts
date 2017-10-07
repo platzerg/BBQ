@@ -1,5 +1,5 @@
 import { IRubState } from './../app.state';
-import C from "../constants";
+import C from '../constants';
 const INITIAL_STATE: IRubState = {
   all: []
 };

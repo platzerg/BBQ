@@ -97,7 +97,6 @@ export class RubdetailComponent implements OnInit, OnChanges, DoCheck, AfterCont
     });
 
     const gpl = this.route.snapshot.data['rub'];
-    debugger;
 
     this.paramsIdSubscription$ = this.route.params.subscribe(params => {
       console.log('GPL Param from subscription: ' + params['id']); // (+) converts string 'id' to a number
@@ -128,7 +127,6 @@ export class RubdetailComponent implements OnInit, OnChanges, DoCheck, AfterCont
         this.gewuerzMischung = this.rub.gewuerzMischung;
       }
     } else {
-      debugger;
       this.rubService.getRubTemplate()
         .subscribe(
           (rubTemplate: Rub) => {

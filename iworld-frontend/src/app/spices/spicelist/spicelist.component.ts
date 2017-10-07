@@ -133,16 +133,16 @@ export class SpicelistComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if(this.get$) {
+    if (this.get$) {
       this.get$.unsubscribe();
     }
-    if(this.add$) {
+    if (this.add$) {
       this.add$.unsubscribe();
     }
-    if(this.edit$) {
+    if (this.edit$) {
       this.edit$.unsubscribe();
     }
-    if(this.delete$) {
+    if (this.delete$) {
       this.delete$.unsubscribe();
     }
   }

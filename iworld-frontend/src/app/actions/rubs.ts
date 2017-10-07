@@ -3,7 +3,7 @@ import { NgRedux } from '@angular-redux/store';
 import { IAppState } from '../app.state';
 import { Rub } from '../model/rub';
 import {RubService} from '../rubs/services/rub.service';
-import C from "../constants";
+import C from '../constants';
 
 @Injectable()
 export class RubActions {
@@ -11,7 +11,6 @@ export class RubActions {
               private rubservice: RubService) {}
 
   addRub(rub: Rub) {
-    debugger;
     this.redux.dispatch({ type: C.ADD_RUB, payload: rub });
   }
 
