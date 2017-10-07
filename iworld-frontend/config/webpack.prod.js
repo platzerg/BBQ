@@ -17,7 +17,7 @@ module.exports = webpackMerge(commonConfig, {
         'polyfill': './polyfills.ts'
     },
     output: {
-      publicPath: '/iWorld/',
+        publicPath: '/iWorld/',
         filename: '[name].[chunkhash].js',
         chunkFilename: '[name].[chunkhash].js'
     },

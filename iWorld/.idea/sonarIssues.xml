@@ -13,6 +13,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../iworld-frontend/config/webpack.prod.js">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../iworld-frontend/package.json">
           <value>
             <set />
@@ -34,6 +39,36 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../iworld-frontend/src/app/spices/spicelist/spicelist.component.ts">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../es6-todomvc/.eslintrc">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../es6-todomvc/karma.conf.js">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../es6-todomvc/package.json">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../es6-todomvc/readme.md">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../es6-todomvc/src/helpers.js">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../es6-todomvc/webpack.config.babel.js">
           <value>
             <set />
           </value>
